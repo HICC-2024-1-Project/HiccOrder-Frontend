@@ -1,0 +1,27 @@
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0.5rem;
+  height: 3rem;
+  padding: 0 2rem;
+  cursor: pointer;
+  font-family: var(--sans-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  background: black;
+  color: white;
+  transition: transform 0.1s ease-out;
+}
+button:active {
+  transform: scale(0.98);
+}
+button[small] {
+  height: 2rem;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+}
+button[primary] {
+  background: #ff643c;
+}
