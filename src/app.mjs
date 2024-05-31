@@ -1,5 +1,7 @@
 'use strict';
 
+import config from './config.mjs';
+
 import express from './express.mjs';
 import http from 'http';
 
