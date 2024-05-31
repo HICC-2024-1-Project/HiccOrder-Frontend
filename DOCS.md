@@ -60,25 +60,34 @@
 
 - `/node_modules`
 - `/src`
+  - `/modules`
+    - `/middlewares`
+    - `engine.mjs`
   - `/public`
     - `/components`
     - `/modules`
     - `/resources`
-      - `master.css`
     - `favicon.ico`
     - `robots.txt`
   - `/routes`
-    - `dashboard.mjs`
-    - `login.mjs`
+    - `auth.mjs`
+    - `dash.mjs`
     - `root.mjs`
     - `user.mjs`
   - `/views`
-    - `/dashboard`
+    - `/auth`
+    - `/dash`
     - `/error`
-    - `/login`
     - `/user`
+  - `app.mjs`
+  - `config.mjs`
+  - `express.mjs`
 - `package-lock.json`
 - `package.json`
+
+### `/src/modules`
+
+웹 서버에서 사용하는 기능들이 구현된 모듈들이 들어있습니다.
 
 ### `/src/public`
 
