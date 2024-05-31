@@ -1,7 +1,20 @@
+:root {
+  --button-bg: black;
+  --button-fg: white;
+  --button-ol: rgb(80, 80, 80);
+  --button-disabled-bg: rgb(128, 128, 128);
+  --button-disabled-fg: white;
+  --button-disabled-ol: rgb(180, 180, 180);
+  --button-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+}
+
 button {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  margin: 0;
+  outline: none;
   border: none;
   border-radius: 0.5rem;
   height: 3rem;
@@ -10,18 +23,43 @@ button {
   font-family: var(--sans-serif);
   font-size: 1rem;
   font-weight: 700;
-  background: black;
-  color: white;
-  transition: transform 0.1s ease-out;
+  background: var(--button-bg);
+  color: var(--button-fg);
+  box-shadow: inset 0 0 0 1px var(--button-ol);
+  transition: transform 0.1s ease-out, background 0.2s ease-out,
+    color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
-button:active {
+button:disabled,
+button[disabled] {
+  background: var(--button-disabled-bg);
+  color: var(--button-disabled-fg);
+  box-shadow: inset 0 0 0 1px var(--button-disabled-ol);
+  cursor: not-allowed;
+}
+button:focus-visible {
+  outline: solid 0.25rem var(--th);
+  outline-offset: 0.25rem;
+}
+button:not(:disabled):active {
   transform: scale(0.98);
 }
-button[small] {
+
+/* 다른 스타일의 버튼 */
+
+button[size='small'] {
   height: 2rem;
   padding: 0 1rem;
   font-size: 0.85rem;
 }
+button[shadow] {
+  box-shadow: var(--button-shadow);
+}
+
+/* 다른 타입의 버튼 */
+
 button[primary] {
-  background: #ff643c;
+  --button-bg: var(--th);
+}
+button[primary] {
+  --button-bg: var(--th);
 }
