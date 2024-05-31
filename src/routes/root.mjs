@@ -3,11 +3,11 @@
 import express from 'express';
 const router = express.Router();
 
-import dashboardRouter from './dashboard.mjs';
-router.use('/dashboard', dashboardRouter);
+import dashRouter from './dash.mjs';
+router.use('/dash', dashRouter);
 
-import loginRouter from './login.mjs';
-router.use('/login', loginRouter);
+import authRouter from './auth.mjs';
+router.use('/auth', authRouter);
 
 import userRouter from './user.mjs';
 router.use('/user', userRouter);
