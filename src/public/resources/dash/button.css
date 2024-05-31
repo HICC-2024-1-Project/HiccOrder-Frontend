@@ -8,8 +8,9 @@
   --button-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
 }
 
-button {
-  display: flex;
+button,
+[type='button'] {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -23,43 +24,55 @@ button {
   font-family: var(--sans-serif);
   font-size: 1rem;
   font-weight: 700;
+  text-decoration: none;
   background: var(--button-bg);
   color: var(--button-fg);
   box-shadow: inset 0 0 0 1px var(--button-ol);
   transition: transform 0.1s ease-out, background 0.2s ease-out,
     color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
+
 button:disabled,
-button[disabled] {
+button[disabled],
+[type='button']:disabled,
+[type='button'][disabled] {
   background: var(--button-disabled-bg);
   color: var(--button-disabled-fg);
   box-shadow: inset 0 0 0 1px var(--button-disabled-ol);
   cursor: not-allowed;
 }
-button:focus-visible {
+button:focus-visible,
+[type='button']:focus-visible {
   outline: solid 0.25rem var(--th);
   outline-offset: 0.25rem;
 }
-button:not(:disabled):active {
+button:not(:disabled):active,
+button:not([disabled]):active,
+[type='button']:not(:disabled):active,
+[type='button']:not([disabled]):active {
   transform: scale(0.98);
 }
 
 /* 다른 스타일의 버튼 */
 
-button[size='small'] {
+button[size='small'],
+[type='button'][size='small'] {
   height: 2rem;
   padding: 0 1rem;
   font-size: 0.85rem;
 }
-button[shadow] {
+button[shadow],
+[type='button'][shadow] {
   box-shadow: var(--button-shadow);
 }
 
 /* 다른 타입의 버튼 */
 
-button[primary] {
+button[primary],
+[type='button'][primary] {
   --button-bg: var(--th);
 }
-button[primary] {
+button[primary],
+[type='button'][primary] {
   --button-bg: var(--th);
 }
