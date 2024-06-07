@@ -1,4 +1,5 @@
 **/.DS_store
 
+/config
 **/node_modules
 **/package-lock.json

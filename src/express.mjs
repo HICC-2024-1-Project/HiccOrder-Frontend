@@ -1,5 +1,7 @@
 'use strict';
 
+import config from './config.mjs';
+
 import express from 'express';
 
 import path from 'path';
@@ -12,8 +14,16 @@ const app = express();
 /* static (public) 파일 설정 */
 app.use(express.static(path.resolve(__dirname, './public')));
 
+/* 기능 설정 */
+app.disable('x-powered-by');
+
+/* 미들웨어 설정 */
+import middlewares from './modules/middlewares/index.mjs';
+app.use(middlewares.cookies());
+app.use(middlewares.headers(config.headers));
+
 /* 템플릿 엔진 설정 */
-import TemplateEngine from './engine.mjs';
+import TemplateEngine from './modules/engine.mjs';
 
 const engine = new TemplateEngine({
   views: path.resolve(__dirname, './views'),

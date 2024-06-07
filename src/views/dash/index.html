@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="/resources/dash/master.css" rel="stylesheet" />
+    <link href="/resources/dash/button.css" rel="stylesheet" />
+    <script src="/components/dash/master.js" type="module"></script>
+
+    <link href="index.css" rel="stylesheet" />
+
+    <title>Dashboard</title>
+  </head>
+
+  <body>
+    <header></header>
+
+    <wrapper>
+      <aside>
+        <a href="/dash/booth" type="button">Booth</a>
+        <a href="/dash/menu" type="button">Menu</a>
+        <button>test</button>
+      </aside>
+
+      <main>
+        <custom-button></custom-button>
+        <import src="panels/#{panel}.html"></import>
+      </main>
+    </wrapper>
+  </body>
+</html>

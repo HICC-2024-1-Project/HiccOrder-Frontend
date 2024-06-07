@@ -3,8 +3,8 @@
 import express from 'express';
 const router = express.Router();
 
-router.get('/menu', (req, res) => {
-  res.render('dashboard/index', { panel: 'menu' });
+router.get('/', (req, res) => {
+  res.render('login/index');
 });
 
 export default router;

@@ -1,18 +1,6 @@
-# 힉오더 프론트엔드
+# 실행과 개발
 
-## 목차
-
-- [실행 환경 및 개발 환경](#실행-환경-및-개발-환경)
-  - [실행 환경 구성](#실행-환경-구성)
-  - [개발 환경 구성](#개발-환경-구성)
-- [디렉토리 구조](#디렉토리-구조)
-- [CSS 작성]
-- [Custom Element]
-- [템플릿 엔진]
-
-## 실행 환경 및 개발 환경
-
-### 실행 환경 구성
+## 실행
 
 1. Node.js 설치
 
@@ -26,19 +14,39 @@
    npm i
    ```
 
-3. 실행
+3. 설정 파일 설치 (작성)
+
+   설정 파일 리포지토리에서 설정 파일을 클론하거나 복사 해 옵니다. 설정 파일들은 `config` 디렉토리를 만들어 전부 넣으면 됩니다.
+
+4. 실행
 
    터미널에서 다음의 명령어를 서버를 실행합니다.
 
    ```
-   npm run start -p 포트번호
+   npm run prod -p 포트번호
    ```
 
-### 개발 환경 구성
+## 개발
 
 1. 실행 환경 구성
 
-   먼저 앞 목차의 실행 환경을 구성합니다.
+   1.1. 먼저 앞 목차의 실행 환경을 구성합니다.
+
+   1.2. Nodemon 설치
+
+   터미널에서 다음의 명령어를 사용하여 Nodemon을 설치합니다.
+
+   ```
+   npm i -g nodemon
+   ```
+
+   1.3. 실행
+
+   터미널에서 다음의 명령어를 서버를 실행합니다.
+
+   ```
+   npm run dev -p 포트번호
+   ```
 
 2. 텍스트 에디터
 
@@ -59,26 +67,36 @@
 ## 디렉토리 구조
 
 - `/node_modules`
+- `/config`
 - `/src`
+  - `/modules`
+    - `/middlewares`
+    - `engine.mjs`
   - `/public`
     - `/components`
     - `/modules`
     - `/resources`
-      - `master.css`
     - `favicon.ico`
     - `robots.txt`
   - `/routes`
-    - `dashboard.mjs`
-    - `login.mjs`
+    - `auth.mjs`
+    - `dash.mjs`
     - `root.mjs`
     - `user.mjs`
   - `/views`
-    - `/dashboard`
+    - `/auth`
+    - `/dash`
     - `/error`
-    - `/login`
     - `/user`
+  - `app.mjs`
+  - `config.mjs`
+  - `express.mjs`
 - `package-lock.json`
 - `package.json`
+
+### `/src/modules`
+
+웹 서버에서 사용하는 기능들이 구현된 모듈들이 들어있습니다.
 
 ### `/src/public`
 
