@@ -26,7 +26,7 @@ async function request(path = "", data = {}, method, contentType) {
       try {
         const json = await response.json();
         if (json.messages[0].message == "Token is invalid or expired") {
-          const newToken = request(
+          const newToken = await request(
             (path = "auth/refresh/"),
             (data = {
               refresh: localStorage.refreshToken,
@@ -34,13 +34,14 @@ async function request(path = "", data = {}, method, contentType) {
             (method = "post"),
             (contentType = "application/json")
           )
-            .then((resp) => {
-              localStorage.accessToken = resp.accessToken;
-              return request(path, data, method, contentType);
+            .then((resp) => resp.json())
+            .then((json) => {
+              localStorage.accessToken = json.data.access;
             })
             .catch((error) => {
               throw error;
             });
+          return request(path, data, method, contentType);
         }
       } catch (error) {
         throw error;
