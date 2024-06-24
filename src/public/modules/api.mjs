@@ -38,14 +38,9 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
           options.headers.Authorization &&
           json.messages[0].message === 'Token is invalid or expired'
         ) {
-          request(
-            (method = 'POST'),
-            (path = 'auth/refresh/'),
-            (contentType = 'application/json'),
-            (data = {
-              refreshToken: localStorage.refreshToken,
-            })
-          )
+          request('POST', 'auth/refresh/', 'application/json', {
+            refresh: localStorage.refreshToken,
+          })
             .then((data) => {
               localStorage.accessToken = data.access;
               resolve(request(method, path, contentType, data));
@@ -78,7 +73,7 @@ async function APIPatchRequest(path, data) {
 }
 
 async function APIDeleteRequest(path, data) {
-  return request('GET', path, 'application/json', data);
+  return request('DELETE', path, 'application/json', data);
 }
 
 export { APIGetRequest, APIPostRequest, APIPatchRequest, APIDeleteRequest };
