@@ -65,6 +65,7 @@ class TemplateEngine {
   processDocument(file, document, scope = {}) {
     this.processInjection(file, document, scope);
     this.processImportTag(file, document, scope);
+    this.processUri(file, document, scope);
   }
 
   processInjection(file, document, scope = {}) {
@@ -89,6 +90,33 @@ class TemplateEngine {
       const importDocument = HTML.parse(this.getTemplate(importFile));
       this.processDocument(importFile, importDocument, scope);
       element.replaceWith(...importDocument.childNodes);
+    }
+  }
+
+  processUri(file, document, scope = {}) {
+    let srcElements = document.querySelectorAll('[src]');
+    for (const element of srcElements) {
+      const src = element.getAttribute('src');
+      if (!src || src.startsWith('/') || src.match(/^https?:\/?\/?/)) {
+        continue;
+      } else {
+        let newUri = path.resolve(path.dirname(file), src);
+        newUri = newUri.replace(/\\/g, '/');
+        newUri = newUri.substring(scope.settings.views.length);
+        element.setAttribute('src', newUri);
+      }
+    }
+    let hrefElements = document.querySelectorAll('[href]');
+    for (const element of hrefElements) {
+      const href = element.getAttribute('href');
+      if (!href || href.startsWith('/') || href.match(/^https?:\/?\/?/)) {
+        continue;
+      } else {
+        let newUri = path.resolve(path.dirname(file), href);
+        newUri = newUri.replace(/\\/g, '/');
+        newUri = newUri.substring(scope.settings.views.length);
+        element.setAttribute('href', newUri);
+      }
     }
   }
 
