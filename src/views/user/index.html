@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="theme-color" content="#ff643c" />
+
+    <script src="/modules/injections.mjs" type="module"></script>
+    <script src="/components/user/master.mjs" type="module"></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
+    <link href="index.css" rel="stylesheet" />
+
+    <title>힉오더</title>
+  </head>
+
+  <body>
+    <section id="cover">
+      <div class="image">
+        <img src="" />
+      </div>
+
+      <div class="gradient"></div>
+
+      <div class="shadow"></div>
+    </section>
+
+    <nav id="nav">
+      <div class="left desc">
+        <div class="booth"></div>
+        <span>/</span>
+        <div class="table"></div>
+      </div>
+
+      <div class="right">
+        <button id="button-lang">
+          <span class="icon">
+            <span class="material-symbols-outlined"> language </span>
+          </span>
+        </button>
+        <button id="button-history">
+          <span class="icon">
+            <span class="material-symbols-outlined"> history </span>
+          </span>
+        </button>
+      </div>
+    </nav>
+
+    <main id="main">
+      <header id="header">
+        <div class="desc">
+          <div class="booth"></div>
+          <div class="table"></div>
+        </div>
+      </header>
+
+      <section id="menu"></section>
+
+      <section id="gradient"></section>
+    </main>
+
+    <section id="panel-cart" phase="close">
+      <div class="bg" id="button-panel-cart-close"></div>
+
+      <div class="fg-content">
+        <div class="content cart">
+          <div class="title">
+            <div class="text">담은 메뉴</div>
+            <button id="button-panel-cart-cart-close" class="close">
+              <span class="material-symbols-outlined"> close </span>
+            </button>
+          </div>
+          <div class="list"></div>
+          <div class="total">
+            <div class="count"></div>
+            <div class="price"></div>
+          </div>
+        </div>
+
+        <div class="content order">
+          <div class="title">
+            <div class="text">담은 메뉴</div>
+            <button id="button-panel-cart-order-close" class="close">
+              <span class="material-symbols-outlined"> close </span>
+            </button>
+          </div>
+          <div class="message">
+            <div class="main"></div>
+            <div class="sub"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fg-message"></div>
+
+      <div class="fg-control">
+        <button id="button-panel-cart-left">
+          <span class="text">직원 호출</span>
+        </button>
+        <button id="button-panel-cart-right" disabled>
+          <span class="text">담은 메뉴 보기</span>
+          <span class="count" linemessage phase="hide"></span>
+        </button>
+      </div>
+    </section>
+
+    <section id="panel-options" class="panel-left" phase="close">
+      <div class="fg-content"></div>
+    </section>
+
+    <section id="panel-history" class="panel-left" phase="close">
+      <div class="fg-content"></div>
+    </section>
+
+    <section id="panel-menu" class="panel-left" phase="close">
+      <div class="fg-content"></div>
+    </section>
+
+    <script src="index.mjs" type="module"></script>
+  </body>
+</html>
