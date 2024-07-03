@@ -15,6 +15,7 @@
   
 .order-item:hover {
     background-color: #ffeee9;
+    border-radius: 10px;
   }
   
 .order-item .order-icon {

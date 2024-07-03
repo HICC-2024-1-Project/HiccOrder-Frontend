@@ -97,5 +97,5 @@ button {
   cursor: pointer;
   position: absolute;
   right: 0px; /* 오른쪽 아래에 고정 */
-  bottom: 20px; /* 아래쪽 하단에 고정 */
+  bottom: 100px; /* 아래쪽 하단에 고정 */
 }

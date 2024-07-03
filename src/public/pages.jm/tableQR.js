@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 해당 테이블의 주문 내역 페이지로 이동하는 구조
     const qrData = `https://domain.com/orderHistory.html?table=${tableIndex}`;
     // 테이블 번호별로 해당 url 생성하게 함
+    // 문자열을 큐알로 바꾸는 기능
 
     // QR 코드 컨테이너 비우기
     qrCodeContainer.innerHTML = "";
