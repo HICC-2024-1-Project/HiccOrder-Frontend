@@ -1,0 +1,84 @@
+<!-- 주문내역 페이지 상세: 테이블 별 주문내역 페이지 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>테이블 상세</title>
+  <link rel="stylesheet" href="/src/public/resources/styles.css">
+  <link rel="stylesheet" href="/src/public/resources/orderHistory.css">
+  <!-- navigate.js 파일 포함 -->
+  <script src="/src/public/resources/navigate.js"></script> 
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <button class="menu-btn" onclick="navigateTo('booth.html')">부스 생성</button>
+      <button class="menu-btn" onclick="navigateTo('tableManagement.html')">테이블 관리</button>
+      <button class="menu-btn" onclick="navigateTo('boothManagement.html')">부스 관리</button>
+      <button class="menu-btn" onclick="navigateTo('menuManagement.html')">메뉴 관리</button>
+      <button class="menu-btn active" onclick="navigateTo('orderHistory.html')">주문 내역</button>
+      <button class="menu-btn" onclick="navigateTo('orderRecord.html')">주문기록 확인</button>
+      <button class="menu-btn" onclick="navigateTo('tableQR.html')">테이블 QR</button>
+      <button class="menu-btn" onclick="navigateTo('popup.html')">팝업 전용창</button>
+      <button class="menu-btn" onclick="navigateTo('payment.html')">결제</button>
+    </div>
+
+    <div class="main-content">
+      <div class="title-bar">주문 내역</div>
+      <div class="order-details">
+        <!-- 테이블별 주문 내역 추가 -->
+      </div>
+      <button class="add-menu-btn">메뉴 추가하기</button>
+      <button class="back-btn">뒤로가기</button>
+      <button class="save-btn">저장하기</button>
+      <button class="payment-btn">결제하기</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const orderDetails = document.querySelector(".order-details");
+      const params = new URLSearchParams(window.location.search);
+      const tableIndex = params.get("table");
+      
+      // 저장된 테이블 목록을 로드
+      const savedTables = JSON.parse(localStorage.getItem("tables")) || [];
+      const table = savedTables[tableIndex];
+
+      // 테이블 상세 정보 표시
+      const tableDetails = document.createElement("div");
+      tableDetails.innerHTML = `
+        <h2>${table.name}</h2>
+        <div class="order-entry">
+          <span class="order-icon" style="background-color: ${table.color};"></span>
+          <input type="text" value="${table.name}" />
+        </div>
+      `;
+      orderDetails.appendChild(tableDetails);
+
+      // '뒤로가기' 버튼 이벤트
+      document.querySelector(".back-btn").addEventListener("click", function() {
+        window.history.back();
+      });
+
+      // '결제하기' 버튼 이벤트
+      document.querySelector(".payment-btn").addEventListener("click", function() {
+        window.location.href = "payment.html";
+      });
+
+      // '저장하기' 버튼 이벤트
+      document.querySelector(".save-btn").addEventListener("click", function() {
+        // 로컬 스토리지에 저장된 데이터를 업데이트
+        savedTables[tableIndex] = {
+          name: document.querySelector(".order-entry input").value,
+          color: table.color
+        };
+        localStorage.setItem("tables", JSON.stringify(savedTables));
+        alert("저장되었습니다.");
+      });
+    });
+  </script>
+</body>
+</html>

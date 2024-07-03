@@ -1,0 +1,52 @@
+<!-- 테이블 QR 페이지 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>테이블 QR</title>
+  <link rel="stylesheet" href="/src/public/resources/styles.css" />
+  <link rel="stylesheet" href="/src/public/resources/tableQR.css"> <!--테이블큐알 페이지 전용 스타일-->
+  <!-- navigate.js 파일 포함 -->
+  <script src="/src/public/resources/navigate.js"></script> 
+  <!-- 큐알 코드 생성 라이브러리 포함 -->
+  <script src="/src/public/resources/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <button class="menu-btn" onclick="navigateTo('booth.html')">부스 생성</button>
+      <button class="menu-btn" onclick="navigateTo('tableManagement.html')">테이블 관리</button>
+      <button class="menu-btn" onclick="navigateTo('boothManagement.html')">부스 관리</button>
+      <button class="menu-btn" onclick="navigateTo('menuManagement.html')">메뉴 관리</button>
+      <button class="menu-btn" onclick="navigateTo('orderHistory.html')">주문 내역</button>
+      <button class="menu-btn" onclick="navigateTo('orderRecord.html')">주문기록 확인</button>
+      <button class="menu-btn active" onclick="navigateTo('tableQR.html')">테이블 QR</button>
+      <button class="menu-btn" onclick="navigateTo('popup.html')">팝업 전용창</button>
+      <button class="menu-btn" onclick="navigateTo('payment.html')">결제</button>
+    </div>
+
+    <div class="main-content">
+      <div class="title-bar">테이블 QR</div>
+      <h2>해당 테이블명을 누르면 QR이 생성됩니다.</h2>
+      <div class="table-list">
+          <!-- 테이블 목록 추가되는 곳 -->
+           <!-- '다시 생성하기' 버튼은 테이블 각각에 할당되는 것이므로 js에서 정의함 -->
+      </div>
+    </div>
+
+    <!-- 큐알코드 팝업창 -->
+     <div id="qr-popup" class="qr-popup">
+      <div class="qr-popup-content">
+        <span class="close-btn" onclick="closeQRPopup()">&times;</span>
+        <h2>테이블 QR 코드</h2>
+        <div id="qrcode" style="width: 250px; height: 250px; margin: auto; margin-top: 15px;"></div>
+        <p id="qr-timer"></p>
+      </div>
+     </div>
+  </div>
+
+  <script src="/src/public/pages.jm/tableQR.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!-- 테이블 관리 페이지 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>테이블 관리</title>
+    <link rel="stylesheet" href="/src/public/resources/styles.css" />
+    <link rel="stylesheet" href="/src/public/resources/tableManagement.css" />
+    <!-- navigate.js 파일 포함 -->
+    <script src="/src/public/resources/navigate.js"></script> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <button class="menu-btn" onclick="navigateTo('booth.html')">부스 생성</button>
+        <button class="menu-btn active" onclick="navigateTo('tableManagement.html')">테이블 관리</button>
+        <button class="menu-btn" onclick="navigateTo('boothManagement.html')">부스 관리</button>
+        <button class="menu-btn" onclick="navigateTo('menuManagement.html')">메뉴 관리</button>
+        <button class="menu-btn" onclick="navigateTo('orderHistory.html')">주문 내역</button>
+        <button class="menu-btn" onclick="navigateTo('orderRecord.html')">주문기록 확인</button>
+        <button class="menu-btn" onclick="navigateTo('tableQR.html')">테이블 QR</button>
+        <button class="menu-btn" onclick="navigateTo('popup.html')">팝업 전용창</button>
+        <button class="menu-btn" onclick="navigateTo('payment.html')">결제</button>
+      </div>
+
+      <div class="main-content">
+        <div class="title-bar">테이블 관리</div>
+        <h2>주문 받을 테이블 개수만큼 저장하세요</h2>
+        <div class="tableManagement">
+          <button class="add-btn">추가하기</button>
+        </div>
+        <button class="save-btn">저장하기</button>
+      </div>
+    </div>
+
+    <script src="/src/public/pages.jm/tableManagement.js"></script>
+  </body>
+</html>

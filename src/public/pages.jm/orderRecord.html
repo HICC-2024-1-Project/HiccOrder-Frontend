@@ -1,0 +1,72 @@
+<!-- 주문 기록 페이지 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주문기록 확인</title>
+    <link rel="stylesheet" href="/src/public/resources/styles.css" />
+    <link rel="stylesheet" href="/src/public/resources/orderRecord.css" />
+    <!-- navigate.js 파일 불러오기 -->
+    <script src="/src/public/resources/navigate.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <button class="menu-btn" onclick="navigateTo('booth.html')">
+          부스 생성
+        </button>
+        <button class="menu-btn" onclick="navigateTo('tableManagement.html')">
+          테이블 관리
+        </button>
+        <button class="menu-btn" onclick="navigateTo('boothManagement.html')">
+          부스 관리
+        </button>
+        <button class="menu-btn" onclick="navigateTo('menuManagement.html')">
+          메뉴 관리
+        </button>
+        <button class="menu-btn" onclick="navigateTo('orderHistory.html')">
+          주문 내역
+        </button>
+        <button
+          class="menu-btn active"
+          onclick="navigateTo('orderRecord.html')"
+        >
+          주문기록 확인
+        </button>
+        <button class="menu-btn" onclick="navigateTo('tableQR.html')">
+          테이블 QR
+        </button>
+        <button class="menu-btn" onclick="navigateTo('popup.html')">
+          팝업 전용창
+        </button>
+        <button class="menu-btn" onclick="navigateTo('payment.html')">
+          결제
+        </button>
+      </div>
+
+      <div class="main-content">
+        <div class="title-bar">주문기록 확인</div>
+        <h2>실시간 매출확인</h2>
+        <table class="order-table">
+          <!-- 표 만들때 쓰는 헤더 -->
+          <!-- https://developer.mozilla.org/ko/docs/Web/HTML/Element/thead 참고 -->
+          <thead>
+            <tr>
+              <th>메뉴명</th>
+              <th>테이블 번호</th>
+              <th>주문 시간</th>
+              <th>개수</th>
+              <th>결제 여부</th>
+              <th>결제수단</th>
+            </tr>
+          </thead>
+          <!-- 주문 기록 여기에 넣기.. -->
+        </table>
+      </div>
+    </div>
+
+    <script src="/src/public/pages.jm/orderRecord.js"></script>
+  </body>
+</html>
