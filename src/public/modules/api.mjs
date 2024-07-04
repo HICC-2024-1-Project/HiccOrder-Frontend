@@ -23,12 +23,16 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
 
   const res = await fetch(url, options);
   if (200 <= res.status && res.status <= 299) {
-    if (options.headers['Content-Type'] === 'text/plain') {
-      return res.text();
-    } else if (options.headers['Content-Type'] === 'application/json') {
-      return res.json();
-    } else {
-      return res.blob();
+    try {
+      if (options.headers['Content-Type'] === 'text/plain') {
+        return await res.text();
+      } else if (options.headers['Content-Type'] === 'application/json') {
+        return await res.json();
+      } else {
+        return await res.blob();
+      }
+    } catch (error) {
+      return null;
     }
   } else if (res.status === 403) {
     return new Promise(async (resolve, reject) => {
