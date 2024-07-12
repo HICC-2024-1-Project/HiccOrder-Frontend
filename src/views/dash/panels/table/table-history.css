@@ -1,0 +1,110 @@
+/* orderHistory.css */
+
+/* 주문 내역 기본 페이지 스타일 */
+.order-list {
+    margin-top: 20px;
+  }
+  
+.order-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+.order-item:hover {
+    background-color: #ffeee9;
+    border-radius: 10px;
+  }
+  
+.order-item .order-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+.order-item .order-name {
+    flex: 1;
+    font-size: 25px;
+  }
+  
+  /* 상세 페이지 스타일 */
+  .order-details {
+    margin-top: 20px;
+  }
+  
+  .order-entry {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .order-entry .order-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .order-entry input, .order-entry .order-quantity, .order-entry .order-price {
+    width: 200px;
+    height: 50px;
+    padding: 5px;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  
+  .order-entry .delete-btn {
+    background-color: #ff643c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .save-btn, .back-btn, .payment-btn {
+    background-color: #ff643c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .add-menu-btn {
+    background-color: #000000;
+    color: white;
+    width: 120px;
+    height: 36px;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+  }
+
+  
+  .back-btn {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+  }
+  
+  .save-btn {
+    position: absolute;
+    right: 160px;
+    bottom: 20px;
+  }
+  
+  .payment-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+  }
+  

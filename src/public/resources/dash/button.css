@@ -17,7 +17,7 @@ button,
   margin: 0;
   outline: none;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   height: 3rem;
   padding: 0 2rem;
   cursor: pointer;
@@ -27,7 +27,7 @@ button,
   text-decoration: none;
   background: var(--button-bg);
   color: var(--button-fg);
-  box-shadow: inset 0 0 0 1px var(--button-ol);
+  border: solid 1px var(--button-ol);
   transition: transform 0.1s ease-out, background 0.2s ease-out,
     color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
@@ -38,7 +38,7 @@ button[disabled],
 [type='button'][disabled] {
   background: var(--button-disabled-bg);
   color: var(--button-disabled-fg);
-  box-shadow: inset 0 0 0 1px var(--button-disabled-ol);
+  border: solid 1px var(--button-ol);
   cursor: not-allowed;
 }
 button:focus-visible,
@@ -75,4 +75,17 @@ button[primary],
 button[primary],
 [type='button'][primary] {
   --button-bg: var(--th);
+}
+
+/* 저장하기 */
+.save-btn {
+  background-color: #ff643c;
+  width: 160px; /* 1.5rem */
+  height: 48px; /* 0.5rem */
+  border-radius: 10px 0 0 10px;
+  font-size: 20px; /* 0.2rem */
+  cursor: pointer;
+  position: absolute;
+  right: 0px; /* 오른쪽 아래에 고정 */
+  bottom: 100px; /* 아래쪽 하단에 고정 */
 }

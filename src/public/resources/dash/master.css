@@ -3,7 +3,7 @@
 :root {
   --fg: white;
   --bg: black;
-  --th: #ff643c;
+  --th: rgb(255, 100, 60);
 
   --sans-serif: 'Pretendard', sans-serif;
 }
@@ -18,4 +18,13 @@ body {
 
 * {
   box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
 }
