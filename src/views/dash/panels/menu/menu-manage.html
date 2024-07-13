@@ -1,0 +1,23 @@
+<link href="menu-manage.css" rel="stylesheet" />
+
+<style src="menu-manage.mjs" type="module"></style>
+
+<section id="menu">
+  <h2>메뉴 관리</h2>
+  <div class="menu-management">
+    <input type="checkbox" id="layerpopup" />
+    <label for="layerpopup">추가하기</label>
+    <div id="layer_bg">
+      <div id="popup">
+        <h2>
+          메뉴 추가
+          <label for="layerpopup">x</label>
+        </h2>
+        <input type="text" id="manu-name" placeholder="메뉴 이름" />
+        <input type="text" id="manu-price" placeholder="가격" />
+        <button type="button" id="add-menu">추가</button>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="save-menu">저장하기</button>
+</section>

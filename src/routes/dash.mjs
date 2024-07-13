@@ -5,35 +5,35 @@ const router = express.Router();
 
 router.get('/booth', (req, res) => {
   res.render('dash/index', {
-    panel: 'booth/index',
+    panel: 'booth/booth-index',
     title: '부스 관리',
   });
 });
 
 router.get('/menu', (req, res) => {
   res.render('dash/index', {
-    panel: 'menu/index',
+    panel: 'menu/menu-index',
     title: '메뉴 관리',
   });
 });
 
 router.get('/table/', (req, res) => {
   res.render('dash/index', {
-    panel: 'table/index',
+    panel: 'table/table-index',
     title: '테이블 관리',
   });
 });
 
 router.get('/table/manage', (req, res) => {
   res.render('dash/index', {
-    panel: 'table/manage',
+    panel: 'table/table-manage',
     title: '테이블 관리',
   });
 });
 
 router.get('/table/:tid', (req, res) => {
   res.render('dash/index', {
-    panel: 'table/table',
+    panel: 'table/table-table',
     title: '테이블 관리',
   });
 });
@@ -52,7 +52,7 @@ router.get('/table/:tid/pay', (req, res) => {
 
 router.get('/order', (req, res) => {
   res.render('dash/index', {
-    panel: 'order/index',
+    panel: 'order/order-index',
     title: '주문 현황',
   });
 });

@@ -1,0 +1,40 @@
+<link href="booth-index.css" rel="stylesheet" />
+
+<style src="booth-index.mjs" type="module"></style>
+
+<section id="booth">
+  <h2>부스 생성</h2>
+  <form>
+    <label>부스 사진</label>
+    <div>
+      <img id="booth-photo" src="" alt="부스 사진" style="display: none" />
+      <input type="file" id="booth-photo-input" accept="image/*" />
+      <button type="button" id="preview-button">미리보기</button>
+    </div>
+    <label for="booth-name">부스 이름</label>
+    <div>
+      <input type="text" id="booth-name" placeholder="부스 이름을 입력하세요" />
+    </div>
+    <label>은행 선택</label>
+    <div>
+      <select id="bank">
+        <option value="shinhan">신한은행</option>
+        <option value="woori">우리은행</option>
+        <option value="etc">기타</option>
+      </select>
+    </div>
+    <label>예금주명</label>
+    <div>
+      <input type="text" id="account-name" placeholder="예금주명" />
+    </div>
+    <label>계좌번호</label>
+    <div>
+      <input type="text" id="account-number" placeholder="계좌번호" />
+    </div>
+    <label>송금테스트</label>
+    <div>
+      <button type="button" id="send-test">송금테스트(아직 미구현)</button>
+    </div>
+    <button type="button" id="save-booth">저장하기</button>
+  </form>
+</section>
