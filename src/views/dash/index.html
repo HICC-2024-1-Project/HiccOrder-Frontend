@@ -9,6 +9,11 @@
     <meta name="format-detection" content="telephone=no" />
     <meta name="theme-color" content="#ff643c" />
 
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+
     <link href="/resources/dash/master.css" rel="stylesheet" />
     <link href="/resources/dash/button.css" rel="stylesheet" />
     <script src="/resources/dash/master.mjs" type="module"></script>
@@ -22,21 +27,53 @@
   <body>
     <header>
       <div class="left">
-        <button id="button-menu">m</button>
-        <a href="/dash">
-          <p>힉오더</p>
+        <div class="button" id="button-menu" state="open">
+          <div class="line top"></div>
+          <div class="line bottom"></div>
+        </div>
+        <a class="logo" href="/dash">
+          <img src="/resources/dash/logo.svg" />
         </a>
       </div>
       <div class="center"></div>
-      <div class="right"></div>
+      <div class="right">
+        <div class="account" id="button-account" state="close">
+          <div class="info">
+            <div class="name">부스 이름</div>
+          </div>
+          <div class="dropdown">
+            <div class="button logout">로그아웃</div>
+          </div>
+        </div>
+      </div>
     </header>
 
     <wrapper state="open">
       <aside>
-        <a href="/dash/booth" type="button">부스 관리</a>
-        <a href="/dash/menu" type="button">메뉴 관리</a>
-        <a href="/dash/table" type="button">테이블 관리</a>
-        <a href="/dash/order" type="button">주문 현황</a>
+        <a href="/dash/booth" type="button">
+          <div class="icon">
+            <span class="material-symbols-outlined"> store </span>
+          </div>
+          <div class="text">부스 관리</div>
+        </a>
+        <a href="/dash/menu" type="button">
+          <div class="icon">
+            <span class="material-symbols-outlined"> restaurant_menu </span>
+          </div>
+          <div class="text">메뉴 관리</div>
+        </a>
+        <a href="/dash/table" type="button">
+          <div class="icon">
+            <span class="material-symbols-outlined"> table_restaurant </span>
+          </div>
+          <div class="text">테이블 관리</div>
+        </a>
+        <a href="/dash/order" type="button">
+          <div class="icon">
+            <span class="material-symbols-outlined"> list_alt </span>
+          </div>
+          <div class="text">주문 현황</div>
+        </a>
       </aside>
 
       <main>

@@ -39,15 +39,24 @@ router.get('/table/:tid', (req, res) => {
 });
 
 router.get('/table/:tid/order', (req, res) => {
-  res.render('dash/index', { panel: 'table/table-order' });
+  res.render('dash/index', {
+    panel: 'table/table-order',
+    title: '주문 현황',
+  });
 });
 
 router.get('/table/:tid/qr', (req, res) => {
-  res.render('dash/index', { panel: 'table/table-qr' });
+  res.render('dash/index', {
+    panel: 'table/table-qr',
+    title: '테이블 관리',
+  });
 });
 
 router.get('/table/:tid/pay', (req, res) => {
-  res.render('dash/index', { panel: 'table/table-pay' });
+  res.render('dash/index', {
+    panel: 'table/table-pay',
+    title: '주문 현황',
+  });
 });
 
 router.get('/order', (req, res) => {

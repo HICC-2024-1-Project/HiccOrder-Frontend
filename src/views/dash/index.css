@@ -11,6 +11,7 @@ header {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000000;
 }
 header > .left {
   padding: 0rem 1rem;
@@ -21,8 +22,47 @@ header > .left {
   justify-content: flex-start;
   align-items: center;
 }
-#button-menu {
-  display: none;
+header > .left > .button {
+  position: relative;
+  width: 0rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  opacity: 0;
+  transition: width 0.2s ease-out, opacity 0.2s ease-out;
+}
+header > .left > .button > .line {
+  position: absolute;
+  width: 100%;
+  border-top: solid 0.15rem rgb(128, 128, 128);
+  transition: transform 0.2s ease-out, top 0.2s ease-out, bottom 0.2s ease-out;
+}
+header > .left > .button > .line.top {
+  top: 0.35rem;
+}
+header > .left > .button > .line.bottom {
+  bottom: 0.35rem;
+}
+header > .left > .button[state='open'] > .line.top {
+  top: calc(0.75rem - (0.075rem));
+  transform: rotate(45deg);
+}
+header > .left > .button[state='open'] > .line.bottom {
+  bottom: calc(0.75rem - (0.075rem));
+  transform: rotate(-45deg);
+}
+header > .left > .logo {
+  height: 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--th);
+  text-decoration: none;
+  margin-left: 0.85rem;
+}
+header > .left > .logo > img {
+  height: 100%;
 }
 header > .right {
   padding: 0rem 1rem;
@@ -32,6 +72,93 @@ header > .right {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  position: relative;
+}
+header > .right > .account {
+  position: absolute;
+  top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 1.5rem;
+  background: white;
+  box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.15);
+  transition: box-shadow ease-out 0.1s, border-radius ease-out 0.1s;
+  user-select: none;
+  overflow: hidden;
+}
+header > .right > .account[state='close'] {
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.05);
+  transition: box-shadow ease-out 0.2s, border-radius ease-out 0.2s;
+}
+header > .right > .account > .info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 3rem;
+  max-width: 12rem;
+  padding: 1rem 1rem;
+  transition: padding ease-out 0.1s;
+}
+header > .right > .account[state='close'] > .info {
+  height: 2rem;
+  padding: 0.5rem 1rem;
+  transition: padding ease-out 0.2s;
+  cursor: pointer;
+}
+header > .right > .account > .info > .name {
+  font-size: 1rem;
+  font-weight: 600;
+  word-break: keep-all;
+  white-space: nowrap;
+}
+header > .right > .account > .dropdown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 12rem;
+  max-height: 8rem;
+  transition: width ease-out 0.1s, max-height ease-out 0.1s;
+}
+header > .right > .account[state='close'] > .dropdown {
+  width: 0;
+  max-height: 0;
+  pointer-events: none;
+  transition: width ease-out 0.2s, max-height ease-out 0.2s;
+}
+header > .right > .account > .dropdown > .button {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  height: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+}
+header > .right > .account > .dropdown > .button:first-child {
+  height: 2.5rem;
+  padding-top: 1rem;
+  border-top: solid 1px rgb(210, 210, 210);
+}
+header > .right > .account > .dropdown > .button:last-child {
+  height: 2.5rem;
+  padding-bottom: 1rem;
+}
+header > .right > .account > .dropdown > .button:first-child:last-child {
+  height: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+@media (max-width: 900px) {
+  header > .left > .button {
+    opacity: 1;
+    width: 1.5rem;
+  }
 }
 
 wrapper {
@@ -56,15 +183,19 @@ wrapper[state='close'] aside {
 }
 aside > a[type='button'] {
   --button-bg: rgb(240, 240, 240);
-  --button-fg: black;
+  --button-fg: rgb(128, 128, 128);
   --button-ol: rgb(240, 240, 240);
   width: calc(100% - 1rem);
   height: 3rem;
   padding: 0 1rem;
+  padding-left: 0.75rem;
   display: flex;
   justify-content: flex-start;
   margin-bottom: 1rem;
   white-space: nowrap;
+}
+aside > a[type='button']:hover {
+  --button-fg: black;
 }
 aside > a[type='button'][selected] {
   --button-bg: white;
@@ -72,13 +203,26 @@ aside > a[type='button'][selected] {
   --button-ol: white;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.05);
 }
+aside > a[type='button'] > .icon,
+aside > a[type='button'] > .text {
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+aside > a[type='button'] > .icon {
+  padding-right: 0.35rem;
+}
+aside > a[type='button'] > .icon > span {
+  font-size: 1.35rem;
+}
 
 main {
   width: calc(100% - 15rem);
   height: calc(100% + 4rem);
   margin-top: -4rem;
   overflow: hidden;
-  transition: width ease-out 0.2s;
+  transition: width ease-out 0.2s, height ease-out 0.2s, margin 0.2s ease-out;
 }
 wrapper[state='close'] main {
   width: 100%;
@@ -89,17 +233,20 @@ main > .title {
   align-items: center;
   width: 100%;
   height: 4rem;
+  transition: height ease-out 0.2s;
 }
 main > .title > h1 {
   font-size: 1.75rem;
+  font-weight: 600;
 }
 main > .content {
   width: 100%;
   height: calc(100% - 4rem);
   padding: 1rem;
   background: white;
-  border-radius: 0.75rem;
+  border-radius: 1.5rem;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.05);
+  transition: height ease-out 0.2s;
 }
 main > .content > content {
   display: block;
@@ -116,9 +263,7 @@ main > .content > content {
   }
   main > .title {
     height: 3rem;
-  }
-  main > .title > h1 {
-    font-size: 1.5rem;
+    align-items: flex-start;
   }
   main > .content {
     height: calc(100% - 3rem);

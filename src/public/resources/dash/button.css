@@ -18,18 +18,16 @@ button,
   outline: none;
   border: none;
   border-radius: 0.75rem;
-  height: 3rem;
-  padding: 0 2rem;
+  height: 2.5rem;
+  padding: 0 1.5rem;
   cursor: pointer;
   font-family: var(--sans-serif);
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   background: var(--button-bg);
   color: var(--button-fg);
   border: solid 1px var(--button-ol);
-  transition: transform 0.1s ease-out, background 0.2s ease-out,
-    color 0.2s ease-out, box-shadow 0.2s ease-out;
 }
 
 button:disabled,
@@ -45,12 +43,6 @@ button:focus-visible,
 [type='button']:focus-visible {
   outline: solid 0.25rem var(--th);
   outline-offset: 0.25rem;
-}
-button:not(:disabled):active,
-button:not([disabled]):active,
-[type='button']:not(:disabled):active,
-[type='button']:not([disabled]):active {
-  transform: scale(0.98);
 }
 
 /* 다른 스타일의 버튼 */
