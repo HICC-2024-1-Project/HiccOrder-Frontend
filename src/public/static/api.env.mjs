@@ -1,3 +1,3 @@
 export default {
-  baseUri: 'http://junho.kim:8000',
+  baseUri: 'http://api.ho.ccc.vg:8000',
 };

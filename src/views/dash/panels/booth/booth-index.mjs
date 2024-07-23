@@ -1,3 +1,64 @@
+import { APIGetRequest, APIPatchRequest } from '/modules/api.mjs';
+
+const input = {
+  email: document.querySelector('#input-booth-index-email'),
+  name: document.querySelector('#input-booth-index-name'),
+  desc: document.querySelector('#input-booth-index-desc'),
+  bankName: document.querySelector('#input-booth-index-bank-name'),
+  bankAccountNumber: document.querySelector(
+    '#input-booth-index-bank-account-number'
+  ),
+  bankAccountOwner: document.querySelector(
+    '#input-booth-index-bank-account-owner'
+  ),
+};
+
+async function readBooth() {
+  const data = await APIGetRequest(`booth/${localStorage.booth}/`).catch(
+    (error) => {
+      console.log(error);
+    }
+  );
+
+  if (!data) {
+    return;
+  }
+
+  console.log(data);
+
+  input.email.value = data.email;
+  input.name.value = data.booth_name;
+  input.bankName.value = data.bank_name;
+  input.bankAccountNumber.value = data.account_number;
+  input.bankAccountOwner.value = data.banker_name;
+}
+
+readBooth();
+
+async function updateBooth() {
+  const data = await APIPatchRequest(`booth/${localStorage.booth}/`, {
+    booth_name: input.name.value,
+    bank_name: input.bankName.value,
+    account_number: input.bankAccountNumber.value,
+    banker_name: input.bankAccountOwner.value,
+  })
+    .catch((error) => {
+      console.log(error);
+    })
+    .then(() => {
+      window.location.reload();
+    });
+}
+
+async function updateBoothImage() {}
+
+document
+  .querySelector('#button-booth-index-update')
+  .addEventListener('click', () => {
+    updateBooth();
+  });
+
+/*
 // 부스 사진 업로드 및 미리보기
 const boothPhotoInput = document.getElementById('booth-photo-input');
 const boothPhoto = document.getElementById('booth-photo');
@@ -69,4 +130,4 @@ function loadBoothData() {
 }
 
 // 페이지 로드할 때 저장된 부스정보 로드
-loadBoothData();
+loadBoothData();*/

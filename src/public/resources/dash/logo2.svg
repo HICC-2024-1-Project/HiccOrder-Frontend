@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_2" data-name="레이어 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 263.87 139.58">
+  <defs>
+    <style>
+      .cls-1 {
+        filter: url(#drop-shadow-2);
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: #ea623f;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        filter: url(#drop-shadow-1);
+      }
+
+      .cls-3 {
+        filter: url(#drop-shadow-3);
+      }
+
+      .cls-4 {
+        fill: url(#_무제_그라디언트_17);
+      }
+
+      .cls-5 {
+        fill: url(#_무제_그라디언트_27);
+      }
+
+      .cls-6 {
+        filter: url(#drop-shadow-6);
+      }
+
+      .cls-6, .cls-7, .cls-8, .cls-9 {
+        fill: #231815;
+      }
+
+      .cls-7 {
+        filter: url(#drop-shadow-7);
+      }
+
+      .cls-8 {
+        filter: url(#drop-shadow-4);
+      }
+
+      .cls-9 {
+        filter: url(#drop-shadow-5);
+      }
+    </style>
+    <linearGradient id="_무제_그라디언트_17" data-name="무제 그라디언트 17" x1="17.75" y1="139.58" x2="17.75" y2="25.03" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".82" stop-color="#231815"/>
+    </linearGradient>
+    <linearGradient id="_무제_그라디언트_27" data-name="무제 그라디언트 27" x1="246.13" y1="114.55" x2="246.13" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset=".21" stop-color="#231815"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <filter id="drop-shadow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur-2" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-3" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur-3" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur-3" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-4" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur-4" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur-4" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-5" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur-5" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur-5" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-6" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur-6" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur-6" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="drop-shadow-7" filterUnits="userSpaceOnUse">
+      <feOffset dx="-1.7" dy="2.27"/>
+      <feGaussianBlur result="blur-7" stdDeviation=".85"/>
+      <feFlood flood-color="#767474" flood-opacity=".74"/>
+      <feComposite in2="blur-7" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="_레이어_1-2" data-name="레이어 1">
+    <path class="cls-4" d="M35.23,25.03l.26,13.2-3.76.44c-5.05,1.02-7.65,3.59-7.73,8.74l.58,8.93.2,13.93c0,2.82-1.09,5.51-3,7.53-.67.7-1.49,1.24-2.38,1.62l-6.18,2.66,7.32,4c1.89,1.08,3.26,2.88,3.81,4.98,1.22,4.7.7,11.78.7,11.94l-1,14.35h0c-.15,2.79.86,5.51,2.79,7.52l.28.3c.46.48,2.05.95,2.69,1.15l5.44.61v12.65l-9.7-.25c-1.01-.03-2.02-.21-2.98-.54l-.11-.04c-3.31-1.16-6.27-3.16-8.58-5.8l-2-2.29c-2.11-2.53-3.16-8.45-2.89-11.74l1.44-17.83.32-5.27c.02-.37,0-.75-.09-1.11-.69-2.62-2.57-4.77-5.1-5.8l-5.57-2.03v-9.91l6.26-1.51c2.73-.95,4.53-3.57,4.44-6.46l-.49-10.81-.5-17.52c.03-2.55.7-5.1,2.17-7.19.92-1.31,2.04-2.46,3.37-3.49,2.4-1.87,5.26-3.03,8.25-3.59,3.95-.74,8.04-1.02,11.73-1.36Z"/>
+    <path class="cls-5" d="M228.65,0l-.26,13.2,3.76.44c5.05,1.02,7.65,3.59,7.73,8.74l-.58,8.93-.2,13.93c0,2.82,1.09,5.51,3,7.53.67.7,1.49,1.24,2.38,1.62l6.18,2.66-7.32,4c-1.89,1.08-3.26,2.88-3.81,4.98-1.22,4.7-.7,11.78-.7,11.94l1,14.35h0c.15,2.79-.86,5.51-2.79,7.52l-.28.3c-.46.48-2.05.95-2.69,1.15l-5.44.61v12.65l9.7-.25c1.01-.03,2.02-.21,2.98-.54l.11-.04c3.31-1.16,6.27-3.16,8.58-5.8l2-2.29c2.11-2.53,3.16-8.45,2.89-11.74l-1.44-17.83-.32-5.27c-.02-.37,0-.75.09-1.11.69-2.62,2.57-4.77,5.1-5.8l5.57-2.03v-9.91l-6.26-1.51c-2.73-.95-4.53-3.57-4.44-6.46l.49-10.81.5-17.52c-.03-2.55-.7-5.1-2.17-7.19-.92-1.31-2.04-2.46-3.37-3.49-2.4-1.87-5.26-3.03-8.25-3.59-3.95-.74-8.04-1.02-11.73-1.36Z"/>
+    <path class="cls-2" d="M80.57,56.05l-15.3,2.43,1.04-5.57-12.52,2.26-.8,4.64-13.64,2.32-.87,9.57,5.65-.74c-3.37,3.16-5.51,8.09-4.26,11.87,1.33,4.02,5.19,5.71,6.43,6.26,4.19,1.85,12.16-.14,14.77-.94,2.51-.77,12.21-2.75,13.57-13.49.38-2.96-.42-5.62-1.39-7.65,1.68-.23,2.67-.56,5.12-1.06l2.18-9.89ZM64.04,75.62c-1.37,4.29-9.67,6.03-12.17,3.13-1.24-1.43-.97-3.88-.26-5.48,1.38-3.11,4.75-3.62,4.96-3.65,3.16-.58,7.8-1.16,10.96-1.74-1.36,1.13-2.72,2.26-4.09,3.39,1.12,2.23.81,3.73.61,4.35Z"/>
+    <polygon class="cls-1" points="85.44 52.92 82.39 85.18 93.7 83.88 98.83 50.66 85.44 52.92"/>
+    <polygon class="cls-3" points="38.13 95.53 37.52 105.27 79 99.88 78.39 110.49 90.61 109.18 94.13 87.1 38.13 95.53"/>
+    <polygon class="cls-8" points="123.96 85.18 123.96 90.66 99.7 94.05 98.83 103.62 158.65 95.71 161.19 85.51 136.49 88.97 138.34 82.49 123.96 85.18"/>
+    <polygon class="cls-9" points="171 38.49 167.29 93.91 199.87 88.23 202.89 75.47 179.65 82.2 182.83 46.6 205.44 43.36 208.11 32.81 171 38.49"/>
+    <polygon class="cls-6" points="194.31 56.34 193.73 66.2 211.82 64.11 209.73 88.23 221.21 87.1 228.38 29.09 215.41 31.53 213.44 53.91 194.31 56.34"/>
+    <path class="cls-7" d="M159.41,52.98c-.54-2.39-1.63-7.18-5.45-9.28-2.03-1.11-4.78-1.43-8.46-1.86-1.1-.13-2.03-.19-2.67-.23-.93,1.28-3.13,3.71-4.06,4.99,0-.03.02-.69.02-.72,0-.02.01-.66.01-.69,0-.12.07-3.37.09-3.92-8.37.57-14.3,3-17.74,4.75-1.93.99-4.28,2.4-6.39,4.26-5.57,4.92-7.62,10.77-8.19,13.71-.78,4.04-.68,7.59,1.25,11.01,3.44,6.09,12.93,5.94,14.35,6.06,1.17.1,2.41.18,3.74.09,8.23-.59,11.38-.83,20.25-4.14,4.27-1.6,9.43-5.4,12.1-11.86.58-1.4,2.51-6.25,1.16-12.17ZM147.87,60.31c-.64,3.42-3.83,5.64-5.91,6.52-5.49,2.33-7.21,2.58-14.09,2.87-3.59.15-6.88-.27-8.26-2.52-1-1.63-.65-3.79-.61-4,.17-.96.62-2.14,1.91-3.57,4-4.39,11-5.44,14.17-5.91,3.1-.47,5.35-.44,7.65.17,1.64.44,3.69,1.02,4.7,2.87.8,1.48.54,3.03.43,3.57Z"/>
+  </g>
+</svg>

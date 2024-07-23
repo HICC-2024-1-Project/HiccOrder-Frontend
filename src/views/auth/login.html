@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="/modules/injections.mjs" type="module"></script>
+
+    <title>로그인 테스트</title>
+    <style>
+      body {
+        margin: 0;
+        background: rgb(240, 240, 240);
+      }
+    </style>
+  </head>
+  <body>
+    <link href="login.css" rel="stylesheet" />
+
+    <h3>매우 임시적으로 생긴 로그인 폼</h3>
+    <br />
+    <form>
+      <input id="auth-login-id" type="text" placeholder="아이디" />
+      <br />
+      <input id="auth-login-pw" type="password" placeholder="비밀번호" />
+      <br />
+      <span id="auth-login-message">&nbsp;</span>
+    </form>
+    <br />
+    <button id="button-auth-login">로그인</button>
+
+    <script src="login.mjs" type="module"></script>
+  </body>
+</html>

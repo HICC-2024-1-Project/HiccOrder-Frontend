@@ -1,0 +1,55 @@
+#booth-index {
+  width: 100%;
+  max-width: 60rem;
+}
+
+.set-profile {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 1rem;
+}
+.set-profile > .inputs {
+  width: calc(100% - 17rem);
+}
+.set-profile > .profile {
+  width: 16rem;
+}
+.profile > .image {
+  width: 16rem;
+  height: 16rem;
+  border-radius: 0.75rem;
+  background-color: rgb(240, 240, 240);
+}
+.set-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.set-bank {
+  display: flex;
+  gap: 1rem;
+}
+.set-bank > *:nth-child(1) {
+  flex: 1;
+}
+.set-bank > *:nth-child(2) {
+  flex: 2;
+}
+.set-bank > *:nth-child(3) {
+  flex: 1;
+}
+
+h3 {
+  font-size: 1.25rem;
+  padding-bottom: 1rem;
+}
+
+.part {
+  border-bottom: solid 1px rgb(230, 230, 230);
+  margin-bottom: 1rem;
+}
+.part button {
+  margin-bottom: 1rem;
+}

@@ -2,7 +2,7 @@ window.Math.rem = (n = 1) => {
   return n * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
 
-window.cookies = (name) => {
+window.getCookie = (name) => {
   let cookies = document.cookie
     ? ((s) => {
         const o = {};
@@ -14,6 +14,16 @@ window.cookies = (name) => {
       })(document.cookie)
     : {};
   return cookies[name];
+};
+
+window.setCookie = (name, value, expire) => {
+  var expires = '';
+  if (expire) {
+    var date = new Date();
+    date.setTime(date.getTime() + expire);
+    expires = '; expires=' + date.toUTCString();
+  }
+  document.cookie = name + '=' + (value || '') + expires + '; path=/';
 };
 
 function vh() {

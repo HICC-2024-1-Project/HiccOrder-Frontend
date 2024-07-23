@@ -32,17 +32,17 @@
           <div class="line bottom"></div>
         </div>
         <a class="logo" href="/dash">
-          <img src="/resources/dash/logo.svg" />
+          <img src="/resources/dash/logo2.svg" />
         </a>
       </div>
       <div class="center"></div>
       <div class="right">
         <div class="account" id="button-account" state="close">
           <div class="info">
-            <div class="name">부스 이름</div>
+            <div class="name">...</div>
           </div>
           <div class="dropdown">
-            <div class="button logout">로그아웃</div>
+            <div class="button logout" id="button-logout">로그아웃</div>
           </div>
         </div>
       </div>
@@ -70,9 +70,15 @@
         </a>
         <a href="/dash/order" type="button">
           <div class="icon">
-            <span class="material-symbols-outlined"> list_alt </span>
+            <span class="material-symbols-outlined"> grid_view </span>
           </div>
           <div class="text">주문 현황</div>
+        </a>
+        <a href="/dash/history" type="button">
+          <div class="icon">
+            <span class="material-symbols-outlined"> list_alt </span>
+          </div>
+          <div class="text">주문 기록</div>
         </a>
       </aside>
 
@@ -88,6 +94,6 @@
       </main>
     </wrapper>
 
-    <script src="index.js" type="module"></script>
+    <script src="index.mjs" type="module"></script>
   </body>
 </html>

@@ -1,3 +1,5 @@
+import { APIGetRequest, APIDeleteRequest } from '/modules/api.mjs';
+
 document.querySelector('#button-menu').addEventListener('click', () => {
   const wrapper = document.querySelector('body > wrapper');
   const button = document.querySelector('#button-menu');
@@ -43,3 +45,31 @@ function onResize() {
 }
 window.addEventListener('resize', onResize);
 onResize();
+
+async function readBooth() {
+  const data = await APIGetRequest(`booth/${localStorage.booth}/`).catch(
+    (error) => {
+      console.log(error);
+    }
+  );
+
+  if (!data) {
+    return;
+  }
+
+  const name = document.querySelector(`#button-account .name`);
+  name.innerHTML = data.booth_name || localStorage.booth;
+}
+readBooth();
+
+async function logout() {
+  delete localStorage.accessToken;
+  delete localStorage.refreshToken;
+  delete localStorage.booth;
+  const data = await APIDeleteRequest('auth/');
+  window.location.href = '/auth/login';
+}
+
+document.querySelector('#button-logout').addEventListener('click', () => {
+  logout();
+});

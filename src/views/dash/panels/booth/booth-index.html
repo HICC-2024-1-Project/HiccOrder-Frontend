@@ -1,92 +1,80 @@
 <link href="booth-index.css" rel="stylesheet" />
 
-<style src="booth-index.mjs" type="module"></style>
-
 <section id="booth-index">
-  <ho-input-string
-    id="input-booth-index-name"
-    type="text"
-    value="test"
-    placeholder="부스 이름"
-    label="부스 이름"
-    message=""
-  ></ho-input-string>
+  <div class="part">
+    <h3>부스 정보</h3>
+    <div class="set-profile">
+      <div class="inputs">
+        <ho-input-string
+          id="input-booth-index-email"
+          type="text"
+          value="test"
+          placeholder="부스 아이디"
+          label="부스 아이디"
+          message=""
+          disabled
+        ></ho-input-string>
 
-  <ho-input-string
-    id="input-booth-index-desc"
-    type="text"
-    value="test"
-    placeholder="부스 이름"
-    label="부스 이름"
-    message=""
-  ></ho-input-string>
+        <ho-input-string
+          id="input-booth-index-name"
+          type="text"
+          value="test"
+          placeholder="부스 이름"
+          label="부스 이름"
+          message=""
+        ></ho-input-string>
+      </div>
+      <siv class="profile">
+        <label>부스 이미지</label>
+        <div class="image"></div>
+      </siv>
+    </div>
+  </div>
 
-  <div class="set-bank">
-    <ho-input-select
-      id="input-booth-index-bank-name"
-      type="text"
-      value="test"
-      placeholder="계좌번호"
-      label="계좌번호"
-      message=""
-    ></ho-input-select>
-    <ho-input-string
-      id="input-booth-index-bank-account-number"
-      type="text"
-      value="test"
-      placeholder="계좌번호"
-      label="계좌번호"
-      message=""
-    ></ho-input-string>
-    <ho-input-string
-      id="input-booth-index-bank-account-owner"
-      type="text"
-      value="test"
-      placeholder="예금주"
-      label="예금주"
-      message=""
-    ></ho-input-string>
+  <div class="part">
+    <h3>송금 계좌 정보</h3>
+    <div class="set-bank">
+      <ho-input-select
+        id="input-booth-index-bank-name"
+        value="test"
+        placeholder="은행"
+        label="은행"
+        message=""
+      >
+        <option value="" disabled selected>은행 선택</option>
+        <option value="국민은행">국민은행</option>
+        <option value="신한은행">신한은행</option>
+        <option value="하나은행">하나은행</option>
+        <option value="기업은행">기업은행</option>
+        <option value="쀕">몰라은행</option>
+      </ho-input-select>
+      <ho-input-string
+        id="input-booth-index-bank-account-number"
+        type="text"
+        value="test"
+        placeholder="계좌번호"
+        label="계좌번호"
+        message=""
+      ></ho-input-string>
+      <ho-input-string
+        id="input-booth-index-bank-account-owner"
+        type="text"
+        value="test"
+        placeholder="예금주"
+        label="예금주"
+        message=""
+      ></ho-input-string>
+    </div>
+
+    <div class="set-right">
+      <button id="button-booth-index-qr-test">송금 QR 테스트</button>
+    </div>
   </div>
 
   <div class="set-right">
-    <button id="button-booth-index-qr-test">송금 QR 테스트</button>
-  </div>
-
-  <div class="set-right">
+    <button id="button-booth-index-edit">수정하기</button>
     <button id="button-booth-index-update">변경사항 저장</button>
   </div>
-
-  <form>
-    <label>부스 사진</label>
-    <div>
-      <img id="booth-photo" src="" alt="부스 사진" style="display: none" />
-      <input type="file" id="booth-photo-input" accept="image/*" />
-      <button type="button" id="preview-button">미리보기</button>
-    </div>
-    <label for="booth-name">부스 이름</label>
-    <div>
-      <input type="text" id="booth-name" placeholder="부스 이름을 입력하세요" />
-    </div>
-    <label>은행 선택</label>
-    <div>
-      <select id="bank">
-        <option value="shinhan">신한은행</option>
-        <option value="woori">우리은행</option>
-        <option value="etc">기타</option>
-      </select>
-    </div>
-    <label>예금주명</label>
-    <div>
-      <input type="text" id="account-name" placeholder="예금주명" />
-    </div>
-    <label>계좌번호</label>
-    <div>
-      <input type="text" id="account-number" placeholder="계좌번호" />
-    </div>
-    <label>송금테스트</label>
-    <div>
-      <button type="button" id="send-test">송금테스트(아직 미구현)</button>
-    </div>
-    <button type="button" id="save-booth">저장하기</button>
-  </form>
 </section>
+
+<script src="booth-index.mjs" type="module"></script>

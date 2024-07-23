@@ -1,5 +1,5 @@
 export default customElements.define(
-  'ho-input-string',
+  'ho-input-select',
 
   class extends HTMLElement {
     constructor() {
@@ -20,7 +20,7 @@ export default customElements.define(
           flex-direction: column;
           margin-bottom: 1rem;
         }
-        :host > input {
+        :host > .select {
           font-size: 1rem;
           font-weight: 400;
           width: 100%;
@@ -31,15 +31,20 @@ export default customElements.define(
           border-radius: 0.75rem;
           background: rgb(240,240,240);
         }
-        :host > input:focus {
+        :host > .select:focus {
           border-color: rgb(128,128,128);
         }
-        :host > input:disabled {
-          color: rgb(128,128,128);
-        }
-        :host > input::placeholder,
-        :host > input::-webkit-input-placeholder {
-          color: rgb(150,150,150);
+        :host > .select > select,
+        :host > .select > select:focus {
+          font-size: 1rem;
+          font-weight: 400;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          border: none;
+          background: transparent;
+          outline: none;
+          color: black;
         }
         :host > label {
           line-height: 1.25rem;
@@ -55,12 +60,17 @@ export default customElements.define(
       `;
       shadow.appendChild(style);
 
-      const input = document.createElement('input');
-      input.type = this.getAttribute('type');
-      input.value = this.getAttribute('value');
-      input.placeholder = this.getAttribute('placeholder');
-      input.disabled = this.hasAttribute('disabled');
-      input.spellcheck = false;
+      console.log(this.innerHTML);
+
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('select');
+
+      const select = document.createElement('select');
+      select.value = this.getAttribute('value');
+      select.disabled = this.hasAttribute('disabled');
+
+      select.innerHTML = this.innerHTML;
+      wrapper.appendChild(select);
 
       const label = document.createElement('label');
       label.innerHTML = this.getAttribute('label');
@@ -69,8 +79,9 @@ export default customElements.define(
       message.classList.add('message');
       message.innerHTML = this.getAttribute('message');
 
+      this.innerHTML = '';
       shadow.appendChild(label);
-      shadow.appendChild(input);
+      shadow.appendChild(wrapper);
       shadow.appendChild(message);
     }
 
@@ -78,30 +89,10 @@ export default customElements.define(
 
     adoptedCallback() {}
 
-    static observedAttributes = [
-      'type',
-      'value',
-      'label',
-      'message',
-      'placeholder',
-      'disabled',
-    ];
-
-    get type() {
-      return this.getAttribute('type');
-    }
-
-    set type(newValue) {
-      if (newValue) {
-        this.setAttribute('type', newValue);
-      } else {
-        this.removeAttribute('type');
-      }
-      this.shadowRoot.querySelector('input').type = newValue || '';
-    }
+    static observedAttributes = ['value', 'label', 'message', 'disabled'];
 
     get value() {
-      return this.shadowRoot?.querySelector('input').value;
+      return this.shadowRoot?.querySelector('select').value;
     }
 
     set value(newValue) {
@@ -110,20 +101,7 @@ export default customElements.define(
       } else {
         this.removeAttribute('value');
       }
-      this.shadowRoot.querySelector('input').value = newValue || '';
-    }
-
-    get placeholder() {
-      return this.getAttribute('placeholder');
-    }
-
-    set placeholder(newValue) {
-      if (newValue) {
-        this.setAttribute('placeholder', newValue);
-      } else {
-        this.removeAttribute('placeholder');
-      }
-      this.shadowRoot.querySelector('input').placeholder = newValue || '';
+      this.shadowRoot.querySelector('select').value = newValue || '';
     }
 
     get disabled() {
@@ -136,7 +114,7 @@ export default customElements.define(
       } else {
         this.removeAttribute('disabled');
       }
-      this.shadowRoot.querySelector('input').disabled = newValue != undefined;
+      this.shadowRoot.querySelector('select').disabled = newValue != undefined;
     }
 
     get label() {

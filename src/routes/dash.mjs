@@ -3,6 +3,10 @@
 import express from 'express';
 const router = express.Router();
 
+router.get('/', (req, res) => {
+  res.redirect('/dash/booth');
+});
+
 router.get('/booth', (req, res) => {
   res.render('dash/index', {
     panel: 'booth/booth-index',
@@ -40,7 +44,7 @@ router.get('/table/:tid', (req, res) => {
 
 router.get('/table/:tid/order', (req, res) => {
   res.render('dash/index', {
-    panel: 'table/table-order',
+    panel: 'table/table-history',
     title: '주문 현황',
   });
 });
@@ -63,6 +67,13 @@ router.get('/order', (req, res) => {
   res.render('dash/index', {
     panel: 'order/order-index',
     title: '주문 현황',
+  });
+});
+
+router.get('/history', (req, res) => {
+  res.render('dash/index', {
+    panel: 'history/history-index',
+    title: '주문 기록',
   });
 });
 

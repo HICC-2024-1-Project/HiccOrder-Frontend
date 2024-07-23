@@ -42,15 +42,14 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
           options.headers.Authorization &&
           json.messages[0].message === 'Token is invalid or expired'
         ) {
-          request('POST', 'auth/refresh/', 'application/json', {
-            refresh: localStorage.refreshToken,
-          })
-            .then((data) => {
-              localStorage.accessToken = data.access;
+          refreshToken()
+            .then(() => {
               resolve(request(method, path, contentType, data));
             })
-            .catch((error) => {
-              reject(error);
+            .catch(() => {
+              delete localStorage.accessToken;
+              delete localStorage.refreshToken;
+              delete localStorage.booth;
             });
         } else {
           reject(res);
@@ -62,6 +61,35 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
   } else {
     throw res;
   }
+}
+
+async function refreshToken() {
+  return new Promise((resolve, reject) => {
+    fetch(apiEnv.baseUri + '/api/auth/refresh/', {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      redirect: 'follow',
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify({
+        refresh: localStorage.refreshToken,
+      }),
+    })
+      .then(async (res) => {
+        if (res.status === 200) {
+          const data = await res.json();
+          localStorage.accessToken = data.token.access;
+          resolve();
+        } else {
+          reject();
+        }
+      })
+      .catch(reject);
+  });
 }
 
 async function APIGetRequest(path) {
