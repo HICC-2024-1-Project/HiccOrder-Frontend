@@ -1,37 +1,8 @@
 <link href="table-history.css" rel="stylesheet" />
-
-<script src="/resources/dash/navigate.js"></script>
+<script src="/src/routes/dash.mjs" type="module"></script>
 <script src="table-history.mjs" type="module"></script>
 
 <div class="container">
-  <div class="sidebar">
-    <button class="menu-btn" onclick="navigateTo('booth.html')">
-      부스 생성
-    </button>
-    <button class="menu-btn" onclick="navigateTo('tableManagement.html')">
-      테이블 관리
-    </button>
-    <button class="menu-btn" onclick="navigateTo('boothManagement.html')">
-      부스 관리
-    </button>
-    <button class="menu-btn" onclick="navigateTo('menuManagement.html')">
-      메뉴 관리
-    </button>
-    <button class="menu-btn active" onclick="navigateTo('orderHistory.html')">
-      주문 내역
-    </button>
-    <button class="menu-btn" onclick="navigateTo('orderRecord.html')">
-      주문기록 확인
-    </button>
-    <button class="menu-btn" onclick="navigateTo('tableQR.html')">
-      테이블 QR
-    </button>
-    <button class="menu-btn" onclick="navigateTo('popup.html')">
-      팝업 전용창
-    </button>
-    <button class="menu-btn" onclick="navigateTo('payment.html')">결제</button>
-  </div>
-
   <div class="main-content">
     <div class="title-bar">주문 내역</div>
     <h2>주문내역을 확인하고 싶은 테이블을 선택하세요</h2>
