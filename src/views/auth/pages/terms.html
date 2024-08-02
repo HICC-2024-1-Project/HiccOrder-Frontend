@@ -1,0 +1,28 @@
+<div class="back">
+  <span onclick="window.history.back();" class="material-symbols-outlined">
+    arrow_back
+  </span>
+</div>
+
+<h1>이용약관 동의</h1>
+
+<div class="inputs">
+  <div class="terms">
+    <div class="content">
+      <p>개인정보를 아무데나 팔아넘기겠습니다.</p>
+    </div>
+  </div>
+
+  <ho-input-checkbox
+    id="input-auth-terms-checkbox"
+    value=""
+    label="이용약관에 동의합니다"
+    message=""
+  ></ho-input-checkbox>
+</div>
+
+<button id="button-auth-accept" disabled>다음</button>
+
+<div class="bottom-margin"></div>
+
+<script src="terms.mjs" type="module"></script>

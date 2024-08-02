@@ -1,5 +1,5 @@
 export default customElements.define(
-  'ho-input-string',
+  'ho-input-checkbox',
 
   class extends HTMLElement {
     constructor() {
@@ -17,33 +17,55 @@ export default customElements.define(
         }
         :host {
           display: flex;
-          flex-direction: column;=
+          flex-direction: column;
+          margin-bottom: 1rem;
         }
-        :host > input {
-          font-size: 1rem;
-          font-weight: 400;
+        :host > .wrapper {
+          position: relative;
           width: 100%;
-          height: 2.5rem;
-          padding: 0rem 0.75rem;
+        }
+        :host > .wrapper > input {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          border: none;
           outline: none;
-          border: solid 0.1rem rgb(210, 210, 210);
-          border-radius: 0.75rem;
-          background: rgb(240,240,240);
+          opacity: 0;
+          cursor: pointer;
         }
-        :host > input:focus {
-          border-color: rgb(80, 80, 80);
+        :host > .wrapper > .content {
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          pointer-events: none;
+          justify-content: flex-end;
         }
-        :host > input:disabled {
-          color: rgb(80, 80, 80);
+        :host > .wrapper > .content > .checkbox {
+          display: flex;
+          width: 1.25rem;
+          height: 1.25rem;
+          border-radius: 0.35rem;
+          border: solid 1px rgb(180, 180, 180);
         }
-        :host > input::placeholder,
-        :host > input::-webkit-input-placeholder {
-          color: rgb(180,180,180);
+        :host > .wrapper > .content > .checkbox > span {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.25rem;
+          color: white;
         }
-        :host > label {
+        :host > .wrapper > input:checked ~ .content > .checkbox {
+          background: black;
+        }
+        :host > .wrapper > .content > label {
           line-height: 1.25rem;
           font-size: 0.8rem;
           font-weight: 600;
+          padding-left: 0.5rem;
         }
         :host > .message {
           line-height: 1rem;
@@ -51,26 +73,42 @@ export default customElements.define(
           font-weight: 400;
           color: rgb(128,128,128);
           min-height: 1rem;
+          text-align: right;
         }
       `;
       shadow.appendChild(style);
 
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('wrapper');
+
       const input = document.createElement('input');
-      input.type = this.getAttribute('type');
+      input.type = 'checkbox';
       input.value = this.getAttribute('value');
-      input.placeholder = this.getAttribute('placeholder');
       input.disabled = this.hasAttribute('disabled');
-      input.spellcheck = false;
+
+      const content = document.createElement('div');
+      content.classList.add('content');
+
+      const checkbox = document.createElement('div');
+      checkbox.classList.add('checkbox');
+      checkbox.innerHTML += `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />`;
+      checkbox.innerHTML += `<span class="material-symbols-outlined"> check </span>`;
 
       const label = document.createElement('label');
       label.innerHTML = this.getAttribute('label');
+
+      content.appendChild(checkbox);
+      content.appendChild(label);
+
+      wrapper.appendChild(input);
+      wrapper.appendChild(content);
 
       const message = document.createElement('div');
       message.classList.add('message');
       message.innerHTML = this.getAttribute('message');
 
-      shadow.appendChild(label);
-      shadow.appendChild(input);
+      this.innerHTML = '';
+      shadow.appendChild(wrapper);
       shadow.appendChild(message);
     }
 
@@ -78,52 +116,19 @@ export default customElements.define(
 
     adoptedCallback() {}
 
-    static observedAttributes = [
-      'type',
-      'value',
-      'label',
-      'message',
-      'placeholder',
-      'disabled',
-    ];
+    static observedAttributes = ['value', 'label', 'message', 'disabled'];
 
-    get type() {
-      return this.getAttribute('type');
+    get checked() {
+      return this.shadowRoot?.querySelector('input').checked;
     }
 
-    set type(newValue) {
+    set checked(newValue) {
       if (newValue) {
-        this.setAttribute('type', newValue);
+        this.setAttribute('checked', newValue);
       } else {
-        this.removeAttribute('type');
+        this.removeAttribute('checked');
       }
-      this.shadowRoot.querySelector('input').type = newValue || '';
-    }
-
-    get value() {
-      return this.shadowRoot?.querySelector('input').value;
-    }
-
-    set value(newValue) {
-      if (newValue) {
-        this.setAttribute('value', newValue);
-      } else {
-        this.removeAttribute('value');
-      }
-      this.shadowRoot.querySelector('input').value = newValue || '';
-    }
-
-    get placeholder() {
-      return this.getAttribute('placeholder');
-    }
-
-    set placeholder(newValue) {
-      if (newValue) {
-        this.setAttribute('placeholder', newValue);
-      } else {
-        this.removeAttribute('placeholder');
-      }
-      this.shadowRoot.querySelector('input').placeholder = newValue || '';
+      this.shadowRoot.querySelector('input').checked = newValue || '';
     }
 
     get disabled() {
@@ -172,14 +177,6 @@ export default customElements.define(
       if (this[name]) {
         this[name] = newValue;
       }
-    }
-
-    focus() {
-      this.shadowRoot.querySelector('input').focus();
-    }
-
-    blur() {
-      this.shadowRoot.querySelector('input').blur();
     }
 
     addEventListener(name, func, options) {

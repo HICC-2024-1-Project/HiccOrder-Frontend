@@ -27,7 +27,7 @@ button,
   text-decoration: none;
   background: var(--button-bg);
   color: var(--button-fg);
-  border: solid 1px var(--button-ol);
+  border: solid 0.1rem var(--button-ol);
 }
 
 button:disabled,
@@ -36,7 +36,7 @@ button[disabled],
 [type='button'][disabled] {
   background: var(--button-disabled-bg);
   color: var(--button-disabled-fg);
-  border: solid 1px var(--button-ol);
+  border: solid 0.1rem var(--button-ol);
   cursor: not-allowed;
 }
 button:focus-visible,
@@ -49,9 +49,10 @@ button:focus-visible,
 
 button[size='small'],
 [type='button'][size='small'] {
-  height: 2rem;
-  padding: 0 1rem;
-  font-size: 0.85rem;
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  border-radius: 0.5rem;
 }
 button[shadow],
 [type='button'][shadow] {
@@ -64,9 +65,11 @@ button[primary],
 [type='button'][primary] {
   --button-bg: var(--th);
 }
-button[primary],
-[type='button'][primary] {
-  --button-bg: var(--th);
+button[second],
+[type='button'][second] {
+  --button-bg: white;
+  --button-fg: black;
+  --button-ol: rgb(210, 210, 210);
 }
 
 /* 저장하기 */
