@@ -1,42 +1,26 @@
 <link href="menu-index.css" rel="stylesheet" />
-<script src="menu-index.mjs" type="module"></script>
 
-<section id="header">
-  <h3>메뉴 관리</h3>
-</section>
+<style src="menu-index.mjs" type="module"></style>
 
-
-<section id="menu-index">
-<div id="menu">
-  <div class="category">
-    <div class="content">
-      <div class="menu">
-        <div class="wrapper">
-          <div class="imagePlace">이미지</div>
-          <div class="content">
-            <div class="main">
-              <div class="info">
-                <div class="title">
-                  <span class="text">메뉴를 추가하세요!!!!!</span>
-                </div>
-                <div class="desc">설명</div>  
-              </div>
-            </div>
-            <div class="price">
-              <span class="single">가격(원)</span>
-            </div>
-          </div>
-        </div>
-      </div>
+<section id="menu">
+  <h2>메뉴 관리</h2>
+  <div class="menu-management">
+    <div class="table-row">
+      <input type="text" placeholder="메뉴 이름" value="메뉴 1" />
+      <input type="text" placeholder="가격" value="5,000원" />
+      <button type="button">삭제</button>
     </div>
+    <div class="table-row">
+      <input type="text" placeholder="메뉴 이름" value="메뉴 2" />
+      <input type="text" placeholder="가격" value="10,000원" />
+      <button type="button">삭제</button>
+    </div>
+    <div class="table-row">
+      <input type="text" placeholder="메뉴 이름" />
+      <input type="text" placeholder="가격" />
+      <button type="button">삭제</button>
+    </div>
+    <button type="button" id="add-menu">추가하기</button>
   </div>
-</div>
-</div>
-
-<div class="set-right">
-  <a href="/dash/menu/menu-manage" type="button">
-    <div class="text">메뉴 추가</div>
-  </a>
-</div>
-
+  <button type="button" id="save-menu">저장하기</button>
 </section>
