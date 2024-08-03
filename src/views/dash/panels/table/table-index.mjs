@@ -1,56 +1,112 @@
-// 테이블 추가
-document.getElementById('add-table').addEventListener('click', function () {
-  const tableManagement = document.querySelector('.table-management');
-  const tableRows = tableManagement.querySelectorAll('.table-row');
-  const nextTableNumber = tableRows.length + 1;
+import {
+  APIGetRequest,
+  APIPostRequest,
+  APIDeleteRequest,
+} from "/modules/api.mjs";
 
-  const newRow = document.createElement('div');
-  newRow.className = 'table-row';
-  newRow.innerHTML = `
-      <input type="text" value="테이블 ${nextTableNumber}" readonly>
-  `;
-  tableManagement.appendChild(newRow);
-});
+document.addEventListener("DOMContentLoaded", function () {
+  const addButton = document.querySelector(".add-btn");
+  const saveButton = document.querySelector(".save-btn");
+  const tableList = document.querySelector(".table-list");
 
-// 테이블 삭제
-document.getElementById('delete-table').addEventListener('click', function () {
-  const tableManagement = document.querySelector('.table-management');
-  const tableRows = tableManagement.querySelectorAll('.table-row');
-  if (tableRows.length < 2) {
-    alert('최소 한 개의 테이블이 필요합니다.');
-    return;
-  } else tableManagement.removeChild(tableRows[tableRows.length - 1]);
-});
+  let tableCount = 0;
 
-// 데이터 저장하기
-document.getElementById('save-table').addEventListener('click', function () {
-  const tableData = [];
-  document.querySelectorAll('.table-management .table-row').forEach((row) => {
-    tableData.push(row.querySelector('input').value);
-  });
-  localStorage.setItem('tableData', JSON.stringify(tableData));
-  alert('테이블 정보가 저장되었습니다.');
-});
-
-// 테이블 정보 불러오기
-function loadTableData() {
-  const tableData = JSON.parse(localStorage.getItem('tableData'));
-  if (tableData) {
-    const tableManagement = document.querySelector('.table-management');
-    const tableRows = tableManagement.querySelectorAll('.table-row');
-
-    for (let i = 0; i < 3; i++) {
-      tableManagement.removeChild(tableRows[i]);
+  // 서버에서 테이블 목록을 불러오는 함수
+  async function loadTableData() {
+    try {
+      const response = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+      const tableData = response.data;
+      tableData.forEach((table) => {
+        addTableToDOM(table.id, table.table_name);
+      });
+      tableCount = tableData.length; // 테이블 수 업데이트
+    } 
+    catch (error) {
+      console.log(error);
     }
-    tableData.forEach((tableName, index) => {
-      const newRow = document.createElement('div');
-      newRow.className = 'table-row';
-      newRow.innerHTML = `
-              <input type="text" value="${tableName}" readonly>
-          `;
-      tableManagement.appendChild(newRow);
-    });
   }
+
+  // DOM에 테이블 항목을 추가하는 함수
+  function addTableToDOM(id, name) {
+    const tableItem = document.createElement("div");
+    tableItem.className = "table-item";
+    tableItem.dataset.id = id;
+    tableItem.innerHTML = `
+        <h3>${name}</h3>
+        <button onclick="location.href = '/table/${id}/qr'">QR 생성</button>
+        <button onclick="location.href = '/table/${id}/history'">주문 현황</button>
+        <button onclick="location.href = '/table/${id}/payment'">결제</button>
+        <button class="delete-btn">삭제</button>
+    `;
+
+    // 테이블 삭제
+    // Delete
+    tableItem
+      .querySelector(".delete-btn")
+      .addEventListener("click", async function () {
+        try {
+          await APIDeleteRequest("booth/${localStorage.booth}/table/${id}");
+          tableItem.remove();
+        } 
+        catch (error) {
+          console.log(error);
+        }
+      });
+
+    tableList.appendChild(tableItem);
+  }
+
+  // 테이블 추가 함수
+  // POST
+  addButton.addEventListener("click", async function () {
+    const newTableName = tableNameInput.value.trim();
+    if (newTableName == "") {
+      alert("테이블 이름을 입력하세요");
+      return;
+    }
+    try {
+      const response = await APIPostRequest(
+        "booth/${localStorage.booth}/table",
+        {
+          table_name: newTableName,
+        }
+      );
+      // 테이블 추가 성공
+      if (response.status == 204) {
+        tableList.innerHTML = "";
+        loadTableData();
+      }
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  });
+
+  loadTableData();
+});
+
+/* import { APIGetRequest } from '/modules/api.mjs';
+
+// 모든 테이블 정보 불러오기
+// 로컬에 저장된 booth, accessToken을 사용해서 서버에서 테이블 정보 불러오기
+async function loadTableData() {
+  const response = await APIGetRequest('booth/${localStorage.booth}/table/')
+  .catch((error) => {
+    console.log(error);
+  })
+
+  .then(response => {
+    const tableData = response;
+    const tableManagement = document.querySelector('.table-management');
+    tableData.forEach((table) => {
+      const row = document.createElement('div');
+      row.className = 'table-row';
+      rRow.dataset.id = table.id;
+      row.innerHTML = `<input type="text" value="${table.table_name}" readonly>`;
+      tableManagement.appendChild(row);
+    });
+  });
 }
 
 loadTableData();
+*/

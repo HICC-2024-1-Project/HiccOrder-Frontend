@@ -1,0 +1,58 @@
+.table-list {
+    display: flex;
+    flex-wrap: wrap;
+     gap: 20px;
+}
+  
+.table-item {
+    width: calc(50% - 20px);
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+  
+.table-item h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+  
+.table-item button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+  
+.table-item button.delete-btn {
+    background-color: #ff643c;
+    color: white;
+}
+  
+.add-table {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+  
+.add-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.save-btn {
+    background-color: #ff643c;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+  

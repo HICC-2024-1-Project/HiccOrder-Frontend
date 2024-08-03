@@ -6,34 +6,41 @@ document.addEventListener("DOMContentLoaded", function () {
   const qrCodeContainer = document.getElementById("qrcode");
   const qrTimer = document.getElementById("qr-timer");
 
-  // (로컬)저장된 테이블 목록을 불러옴
-  const savedTables = JSON.parse(localStorage.getItem("tables")) || [];
+  // 서버에서 테이블 목록 불러오기
+  async function loadTableData() {
+    try {
+      const response = await APIGetRequest(
+        'booth/${localStorage.booth}/table/'
+      );
+      const tableData = response.data;
+      tableData.forEach((table, index) => {
+        addTableToDOM(table.id, table.table_name);
+      });
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 
-  // 테이블 목록을 생성하는 함수
-  // tableManagement.js 에서 가져옴
-  savedTables.forEach((table, index) => {
+  // 테이블 목록을 DOM 에 추가
+  function addTableToDOM(id, name) {
     const tableItem = document.createElement("div");
     tableItem.className = "table-item";
     // 테이블 이름 누르면 큐알코드 생성
     // 다시 생성하기 버튼 누르면 큐알코드 생성
     tableItem.innerHTML = `
-      <span class="table-icon" style="background-color: ${
-        index % 2 === 0 ? "#ff643c" : "#000000"
-      };"></span>
-      <span class="table-name" onclick="generateQRCode(${index})">테이블 ${
-      index + 1
-    }</span>
-      <button onclick="generateQRCode(${index})">다시 생성하기</button>
+      <span class="table-name" onclick="generateQRCode(${id})">${name}</span>
+      <button onclick="generateQRCode(${id})">다시 생성하기</button>
     `;
     tableList.appendChild(tableItem);
-  });
+  }
 
   // QR 코드 생성하는 함수
-  window.generateQRCode = function (tableIndex) {
+  window.generateQRCode = function (tableId) {
     const table = savedTables[tableIndex];
     // domain.com 에 사용하는 도메인 이름 넣으면
     // 해당 테이블의 주문 내역 페이지로 이동하는 구조
-    const qrData = `https://domain.com/orderHistory.html?table=${tableIndex}`;
+    const qrData = `https://domain.com/orderHistory.html?table=${tableId}`;
     // 테이블 번호별로 해당 url 생성하게 함
     // 문자열을 큐알로 바꾸는 기능
 
@@ -73,4 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
   window.closeQRPopup = function () {
     qrPopup.style.display = "none";
   };
+
+  loadTableData();
 });
