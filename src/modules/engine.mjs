@@ -108,6 +108,9 @@ class TemplateEngine {
     }
     let hrefElements = document.querySelectorAll('[href]');
     for (const element of hrefElements) {
+      if (element.tagName === 'A') {
+        continue;
+      }
       const href = element.getAttribute('href');
       if (!href || href.startsWith('/') || href.match(/^https?:\/?\/?/)) {
         continue;

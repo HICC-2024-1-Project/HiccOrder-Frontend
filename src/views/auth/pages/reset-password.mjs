@@ -22,7 +22,7 @@ async function verify() {
     return;
   }
 
-  if (!email.value.match(/[^@]+@[^.]\.[^.]/)) {
+  if (!email.value.match(/[^@]+@[^.]+\.[^.]+/)) {
     email.message = '올바른 이메일을 입력해주세요.';
     email.focus();
     return;
@@ -65,7 +65,7 @@ async function reset() {
     return;
   }
 
-  if (!email.value.match(/[^@]+@[^.]\.[^.]/)) {
+  if (!email.value.match(/[^@]+@[^.]+\.[^.]+/)) {
     email.message = '올바른 이메일을 입력해주세요.';
     email.focus();
     return;

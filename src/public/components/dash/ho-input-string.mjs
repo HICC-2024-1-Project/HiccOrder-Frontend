@@ -33,12 +33,18 @@ export default customElements.define(
         :host > input:focus {
           border-color: rgb(80, 80, 80);
         }
-        :host > input:disabled {
-          color: rgb(80, 80, 80);
-        }
         :host > input::placeholder,
         :host > input::-webkit-input-placeholder {
           color: rgb(180,180,180);
+        }
+        :host > input:disabled {
+          color: rgb(80, 80, 80);
+          border-color: rgb(150,150,150);
+          background: rgb(180,180,180);
+        }
+        :host > input:disabled::placeholder,
+        :host > input:disabled::-webkit-input-placeholder {
+          color: rgb(128,128,128);
         }
         :host > label {
           line-height: 1.25rem;
@@ -131,12 +137,13 @@ export default customElements.define(
     }
 
     set disabled(newValue) {
-      if (newValue != undefined) {
-        this.setAttribute('disabled', '');
-      } else {
+      if (newValue === false) {
         this.removeAttribute('disabled');
+      } else {
+        this.setAttribute('disabled', '');
       }
-      this.shadowRoot.querySelector('input').disabled = newValue != undefined;
+      this.shadowRoot.querySelector('input').disabled =
+        this.hasAttribute('disabled');
     }
 
     get label() {

@@ -1,8 +1,7 @@
 import { APIPostRequest } from '/modules/api.mjs';
 
-document
-  .querySelector('#button-auth-register')
-  .addEventListener('click', register);
+const button = document.querySelector('#button-auth-register');
+button.addEventListener('click', register);
 
 async function register() {
   const email = document.querySelector('#input-auth-register-email');
@@ -19,7 +18,7 @@ async function register() {
     return;
   }
 
-  if (!email.value.match(/[^@]+@[^.]\.[^.]/)) {
+  if (!email.value.match(/[^@]+@[^.]+\.[^.]+/)) {
     email.message = '올바른 이메일을 입력해주세요.';
     email.focus();
     return;
@@ -44,14 +43,22 @@ async function register() {
     return;
   }
 
+  button.disabled = true;
   APIPostRequest('auth/sign/', {
     email: email.value,
     password: password.value,
   })
     .then((data) => {
-      console.log(data);
+      localStorage.booth = data.user.email;
+      localStorage.accessToken = data.token.access;
+      localStorage.refreshToken = data.token.refresh;
+
+      window.setCookie('booth', data.user.email, 1000 * 60 * 60 * 24 * 365);
+
+      window.location.href = '/booth';
     })
     .catch(async (error) => {
+      button.disabled = false;
       if (error.status === 400) {
         email.message = '이미 사용 중인 이메일입니다.';
         email.focus();
