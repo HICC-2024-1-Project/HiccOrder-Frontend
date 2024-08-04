@@ -18,7 +18,6 @@ export default customElements.define(
         :host {
           display: flex;
           flex-direction: column;
-          margin-bottom: 1rem;
         }
         :host > .select {
           font-size: 1rem;
@@ -27,12 +26,12 @@ export default customElements.define(
           height: 2.5rem;
           padding: 0rem 0.75rem;
           outline: none;
-          border: solid 0.1rem rgb(240,240,240);
+          border: solid 0.1rem rgb(210, 210, 210);
           border-radius: 0.75rem;
           background: rgb(240,240,240);
         }
         :host > .select:focus {
-          border-color: rgb(128,128,128);
+          border-color: rgb(80, 80, 80);
         }
         :host > .select > select,
         :host > .select > select:focus {
@@ -52,15 +51,14 @@ export default customElements.define(
           font-weight: 600;
         }
         :host > .message {
-          line-height: 1.25rem;
+          line-height: 1rem;
           font-size: 0.7rem;
           font-weight: 400;
           color: rgb(128,128,128);
+          min-height: 1rem;
         }
       `;
       shadow.appendChild(style);
-
-      console.log(this.innerHTML);
 
       const wrapper = document.createElement('div');
       wrapper.classList.add('select');

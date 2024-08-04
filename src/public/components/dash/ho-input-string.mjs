@@ -46,6 +46,9 @@ export default customElements.define(
         :host > input:disabled::-webkit-input-placeholder {
           color: rgb(128,128,128);
         }
+        :host > input:read-only:focus {
+          border-color: rgb(210, 210, 210);
+        }
         :host > label {
           line-height: 1.25rem;
           font-size: 0.8rem;
@@ -66,6 +69,7 @@ export default customElements.define(
       input.value = this.getAttribute('value');
       input.placeholder = this.getAttribute('placeholder');
       input.disabled = this.hasAttribute('disabled');
+      input.readOnly = this.hasAttribute('readOnly');
       input.spellcheck = false;
 
       const label = document.createElement('label');
@@ -91,6 +95,7 @@ export default customElements.define(
       'message',
       'placeholder',
       'disabled',
+      'readonly',
     ];
 
     get type() {
@@ -144,6 +149,20 @@ export default customElements.define(
       }
       this.shadowRoot.querySelector('input').disabled =
         this.hasAttribute('disabled');
+    }
+
+    get readonly() {
+      return this.hasAttribute('readonly');
+    }
+
+    set readonly(newValue) {
+      if (newValue === false) {
+        this.removeAttribute('readonly');
+      } else {
+        this.setAttribute('readonly', '');
+      }
+      this.shadowRoot.querySelector('input').readOnly =
+        this.hasAttribute('readonly');
     }
 
     get label() {
