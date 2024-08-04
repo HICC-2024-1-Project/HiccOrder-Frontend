@@ -96,12 +96,13 @@ async function reset() {
     return;
   }
 
-  APIPatchRequest('auth/password/verify/', {
+  APIPostRequest('auth/password/verify/', {
     email: email.value,
-    code: code.value,
+    verify_number: code.value,
     password: password.value,
   })
     .then((data) => {
+      alert('비밀번호가 변경되었습니다. 다시 로그인하십시오.');
       console.log(data);
     })
     .catch(async (error) => {
