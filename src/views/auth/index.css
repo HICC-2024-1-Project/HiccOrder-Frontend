@@ -141,14 +141,6 @@ main > .links > .content {
   justify-content: center;
   align-items: center;
 }
-main > .links > hr {
-  width: 100%;
-  height: 0;
-  border: none;
-  border-top: solid 0.1rem;
-  border-color: rgb(210, 210, 210);
-  margin: 0;
-}
 main > .links > .content > a {
   font-size: 0.8rem;
   color: rgb(180, 180, 180);

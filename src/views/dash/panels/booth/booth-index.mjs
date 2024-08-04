@@ -1,4 +1,8 @@
-import { APIGetRequest, APIPatchRequest } from '/modules/api.mjs';
+import {
+  APIGetRequest,
+  APIPatchRequest,
+  APIDeleteRequest,
+} from '/modules/api.mjs';
 
 const input = {
   email: document.querySelector('#input-booth-index-email'),
@@ -12,6 +16,7 @@ const input = {
     '#input-booth-index-bank-account-owner'
   ),
 };
+const image = document.querySelector('#booth-index-image');
 
 async function readBooth() {
   const data = await APIGetRequest(`booth/${localStorage.booth}/`).catch(
@@ -24,38 +29,89 @@ async function readBooth() {
     return;
   }
 
-  console.log(data);
-
   input.email.value = data.email;
   input.name.value = data.booth_name;
   input.bankName.value = data.bank_name;
   input.bankAccountNumber.value = data.account_number;
   input.bankAccountOwner.value = data.banker_name;
+  image.src = data.booth_image_url || '';
 }
 
 readBooth();
 
 async function updateBooth() {
-  const data = await APIPatchRequest(`booth/${localStorage.booth}/`, {
+  await APIPatchRequest(`booth/${localStorage.booth}/`, {
     booth_name: input.name.value,
     bank_name: input.bankName.value,
     account_number: input.bankAccountNumber.value,
     banker_name: input.bankAccountOwner.value,
   })
-    .catch((error) => {
-      console.log(error);
-    })
     .then(() => {
       window.location.reload();
+    })
+    .catch((error) => {
+      if (error.status == 400) {
+        error.json().then((errorData) => {
+          console.log(errorData);
+          input.name.message = `<span style="color:red;">${
+            errorData.booth_name || ''
+          }</span>`;
+          input.bankName.message = `<span style="color:red;">${
+            errorData.bank_name || ''
+          }</span>`;
+          input.bankAccountNumber.message = `<span style="color:red;">${
+            errorData.account_number || ''
+          }</span>`;
+          input.bankAccountOwner.message = `<span style="color:red;">${
+            errorData.banker_name || ''
+          }</span>`;
+        });
+      }
+
+      console.error(error);
     });
 }
 
 async function updateBoothImage() {}
 
+async function deleteBooth() {
+  if (
+    !confirm(
+      '정말로 회원을 탈퇴하시겠습니까? 회원 탈퇴 시 모든 부스 관련 정보가 즉시 제거되며 복구할 수 없습니다.'
+    )
+  ) {
+    return;
+  }
+
+  if (
+    prompt(
+      `회원 탈퇴를 계속하려면 아래의 입력창에 '${window.localStorage.booth}'를 입력하여 주십시오`
+    ) !== window.localStorage.booth
+  ) {
+    return;
+  }
+
+  await APIDeleteRequest(`auth/sign/`)
+    .then(() => {
+      alert('회원 탈퇴가 정상적으로 처리되었습니다.');
+
+      window.location.href = '/';
+    })
+    .catch((error) => {
+      error.json().then(console.log);
+    });
+}
+
 document
   .querySelector('#button-booth-index-update')
   .addEventListener('click', () => {
     updateBooth();
+  });
+
+document
+  .querySelector('#button-booth-index-delete')
+  .addEventListener('click', () => {
+    deleteBooth();
   });
 
 /*
