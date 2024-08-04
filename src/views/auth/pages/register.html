@@ -1,0 +1,42 @@
+<div class="back">
+  <span onclick="window.history.back();" class="material-symbols-outlined">
+    arrow_back
+  </span>
+</div>
+
+<h1>계정 등록</h1>
+
+<div class="inputs">
+  <ho-input-string
+    id="input-auth-register-email"
+    type="text"
+    value=""
+    placeholder="이메일"
+    label="이메일"
+    message=""
+  ></ho-input-string>
+
+  <ho-input-string
+    id="input-auth-register-password"
+    type="password"
+    value=""
+    placeholder="비밀번호"
+    label="비밀번호"
+    message=""
+  ></ho-input-string>
+
+  <ho-input-string
+    id="input-auth-register-password-retype"
+    type="password"
+    value=""
+    placeholder="비밀번호 재입력"
+    label="비밀번호 재입력"
+    message=""
+  ></ho-input-string>
+</div>
+
+<button id="button-auth-register">계정 등록</button>
+
+<div class="bottom-margin"></div>
+
+<script src="register.mjs" type="module"></script>

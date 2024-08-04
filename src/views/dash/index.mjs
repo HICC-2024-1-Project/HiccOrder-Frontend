@@ -66,8 +66,12 @@ async function logout() {
   delete localStorage.accessToken;
   delete localStorage.refreshToken;
   delete localStorage.booth;
-  const data = await APIDeleteRequest('auth/');
-  window.location.href = '/auth/login';
+
+  window.setCookie('booth', '', -10000);
+
+  await APIDeleteRequest('auth/');
+
+  window.location.href = '/';
 }
 
 document.querySelector('#button-logout').addEventListener('click', () => {

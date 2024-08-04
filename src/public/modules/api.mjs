@@ -50,6 +50,9 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
               delete localStorage.accessToken;
               delete localStorage.refreshToken;
               delete localStorage.booth;
+              window.setCookie('booth', '', -10000);
+
+              window.location.href = '/';
             });
         } else {
           reject(res);
