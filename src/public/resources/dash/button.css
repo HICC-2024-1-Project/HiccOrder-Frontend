@@ -2,6 +2,9 @@
   --button-bg: black;
   --button-fg: white;
   --button-ol: rgb(80, 80, 80);
+  --button-hover-bg: rgb(60, 60, 60);
+  --button-hover-fg: white;
+  --button-hover-ol: rgb(80, 80, 80);
   --button-disabled-bg: rgb(128, 128, 128);
   --button-disabled-fg: white;
   --button-disabled-ol: rgb(180, 180, 180);
@@ -29,6 +32,12 @@ button,
   color: var(--button-fg);
   border: solid 0.1rem var(--button-ol);
 }
+button:hover,
+[type='button']:hover {
+  background: var(--button-hover-bg);
+  color: var(--button-hover-fg);
+  border-color: var(--button-hover-ol);
+}
 
 button:disabled,
 button[disabled],
@@ -36,7 +45,7 @@ button[disabled],
 [type='button'][disabled] {
   background: var(--button-disabled-bg);
   color: var(--button-disabled-fg);
-  border: solid 0.1rem var(--button-ol);
+  border-color: var(--button-ol);
   cursor: not-allowed;
 }
 button:focus-visible,
@@ -64,12 +73,18 @@ button[shadow],
 button[primary],
 [type='button'][primary] {
   --button-bg: var(--th);
+  --button-hover-bg: rgb(40, 40, 40);
+  --button-hover-fg: white;
+  --button-hover-ol: rgb(80, 80, 80);
 }
 button[second],
 [type='button'][second] {
   --button-bg: white;
   --button-fg: black;
   --button-ol: rgb(210, 210, 210);
+  --button-hover-bg: rgb(240, 240, 240);
+  --button-hover-fg: black;
+  --button-hover-ol: rgb(210, 210, 210);
 }
 
 /* 저장하기 */
