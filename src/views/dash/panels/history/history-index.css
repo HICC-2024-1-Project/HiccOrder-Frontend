@@ -24,6 +24,22 @@
 .history-table th {
   background-color: #f0f0f0;
   color: #333;
+  cursor: pointer; 
+}
+
+.arrow {
+  font-family: 'Material Symbols Outlined';
+  font-weight: bold;
+  padding-top: 0px;
+  vertical-align: bottom;
+}
+
+.arrowDisable{
+  color: rgba(0, 0, 0, 0.438);
+  font-family: 'Material Symbols Outlined';
+  font-weight: lighter;
+  padding-top: 0px;
+  vertical-align: bottom;
 }
 
 .history-table tbody tr:nth-child(even) {
