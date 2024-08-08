@@ -1,8 +1,4 @@
-import {
-  APIGetRequest,
-  APIPostRequest,
-  APIDeleteRequest,
-} from "/modules/api.mjs";
+import {  APIGetRequest,  APIPostRequest,  APIDeleteRequest } from '/modules/api.mjs';
 
 document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.querySelector(".add-btn");
@@ -15,15 +11,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // 서버에서 테이블 목록을 불러오는 함수
   async function loadTableData() {
     try {
-      const response = await APIGetRequest(
-        `booth/${localStorage.booth}/table/`
-      );
+      const response = await APIGetRequest(`booth/${localStorage.booth}/table/`);
       const tableData = response.data;
       tableData.forEach((table) => {
         addTableToDOM(table.id, table.table_name);
       });
       tableCount = tableData.length; // 테이블 수 업데이트
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
   }
@@ -47,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .querySelector(".delete-btn")
       .addEventListener("click", async function () {
         try {
-          await APIDeleteRequest("booth/${localStorage.booth}/table/${id}");
+          await APIDeleteRequest('booth/${localStorage.booth}/table/${id}');
           tableItem.remove();
         } catch (error) {
           console.log(error);
@@ -60,15 +55,15 @@ document.addEventListener("DOMContentLoaded", function () {
   // 테이블 추가 함수
   // POST
   addButton.addEventListener("click", async function () {
-    const newTableName = tableNameInput.value.trim();
+    const newTableName = tableNameInput.value.trim(); // 사용자가 실수로 공백 입력한경우, 문자 앞뒤 공백 제거 trim()
     if (newTableName == "") {
       alert("테이블 이름을 입력하세요");
       return;
     }
     try {
-      const response = await APIPostRequest(
-        "booth/${localStorage.booth}/table",
-        {
+      // booth id 가져오기
+      const boothId = localStorage.booth;
+      const response = await APIPostRequest('booth/${localStorage.booth}/table/', {
           table_name: newTableName,
         }
       );
