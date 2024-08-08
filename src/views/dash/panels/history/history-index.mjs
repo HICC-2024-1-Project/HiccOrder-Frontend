@@ -5,6 +5,8 @@ const menuInfo = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
 localStorage.setItem('orderKey', 'timestamp');
 localStorage.setItem('orderSort', 'asc');
 
+let totalSales = 0;
+
 const MAIN = {
   async displayHistory(orders) {
     let html = '';
@@ -91,7 +93,7 @@ const MAIN = {
       });
     }
   },
-  // 여기서 그만!!
+  
   getHistoryElement(order) {
     const tableName = this.getTableName(order.table_id);
     const menuName = this.getMenuName(order.menu_id);
@@ -107,8 +109,10 @@ const MAIN = {
     html += `<td>${menuName}</td>`; // 메뉴명
     html += `<td>${order.quantity}</td>`; // 개수
     html += `<td>${price.toLocaleString('ko-KR')}원</td>`; // 가격
-
-    if (order.state === "결제 완료") html += `<td>o</td>`; // 결제 여부
+    if (order.state === "결제 완료") { // 결제 여부
+      html += `<td>o</td>`; 
+      totalSales += price;
+    }
     else html += `<td>x</td>`;
     html += `</tr>`;
     return html;
@@ -180,6 +184,8 @@ async function init() {
   orders = sortByKey(orders, 'timestamp', 'asc');
 
   MAIN.displayHistory(orders);
+
+  document.querySelector('#header').innerHTML = `<h3>총 매출!!!: ${totalSales.toLocaleString('ko-KR')}원</h3>`;
 }
 
 init();

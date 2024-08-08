@@ -4,6 +4,9 @@ const tableInfo = await APIGetRequest(`booth/${localStorage.booth}/table/`);
 const menuInfo = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
 const tables = await APIGetRequest(`booth/${localStorage.booth}/table/`);
 
+console.log(typeof(tableInfo[2].id));
+console.log(menuInfo);
+
 /*
 console.log(tables); // 모든 테이블
 //console.log(tables[0]);
@@ -203,8 +206,31 @@ async function zzz(a) {
   */
 }
 
+function sortByKey(array, key, order) {
+  return array.sort((a, b) => {
+    let x = a[key];
+    let y = b[key];
+    if (typeof x === 'string') {
+        x = x.toLowerCase();
+        y = y.toLowerCase();
+    }
+
+    console.log(a);
+    console.log(key);
+    console.log(x);
+
+    if (order === 'asc') {
+        return x < y ? -1 : x > y ? 1 : 0;
+    } 
+    else 
+    {
+        return x > y ? -1 : x < y ? 1 : 0;
+    }
+  });
+}
 
 async function init() {
+  orders = sortByKey(orders, 'timestamp', 'asc');
   MAIN.displayOrder(orders);
 }
 

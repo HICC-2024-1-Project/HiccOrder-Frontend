@@ -17,23 +17,31 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    /*justify-content: space-evenly;*/
     align-items: flex-start;
     gap: 1rem;
+
+
+    /*dsadsa*/
+    /*justify-content: space-evenly;*/
 }
 
 #order-index > .part > .order {
     display: flex;
-    max-width: 17rem;
-    min-width: 14rem;
+    
     width: 31.5%;
     height: 11rem;
-    flex-wrap: wrap;
     background: var(--bg);
     border-radius: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     justify-content: center;
+    
+
+    /*dsadsa*/
+    max-width: 17rem;
+    min-width: 14rem;
+
+    /*flex: 1 1 13rem;*/
 }
 
 #order-index > .part > .order-completed {
