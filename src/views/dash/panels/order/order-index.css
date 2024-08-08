@@ -1,0 +1,23 @@
+.history-table {
+    width: 1106px;
+    /* 셀 간의 경계선 합치기 */
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.history-table th,
+.history-table td {
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    text-align: center;
+}
+
+.history-table th {
+    background-color: #ffffff;
+    color: #333;
+}
+
+.history-table tbody tr:nth-child(even) {
+    /* 짝수행 배경색 조정 */
+    background-color: #ffeee9;
+}
