@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const response = await APIGetRequest(`booth/${localStorage.booth}/table/`);
       const tableData = response.data;
+      
       tableData.forEach((table) => {
         addTableToDOM(table.id, table.table_name);
       });
@@ -61,8 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
     try {
-      // booth id 가져오기
-      const boothId = localStorage.booth;
       const response = await APIPostRequest('booth/${localStorage.booth}/table/', {
           table_name: newTableName,
         }
@@ -73,7 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // 입력칸초기화
         tableNameInput.value = "";
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
   });
