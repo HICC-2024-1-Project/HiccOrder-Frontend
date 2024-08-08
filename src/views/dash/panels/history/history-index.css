@@ -1,7 +1,14 @@
 /* 주문기록 확인 스타일 */
+.main-content {
+  width: 100%;
+  max-width: 60rem;
+  display: flex;
+}
+
 
 .history-table {
-  width: 1106px;
+  /*width: 1000px;*/
+  width: 100%;
   /* 셀 간의 경계선 합치기! */
   border-collapse: collapse;
   margin-top: 20px;
