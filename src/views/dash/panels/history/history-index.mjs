@@ -1,5 +1,25 @@
-// 주문기록 확인 페이지
+import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
+const tableInfo = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+const menuInfo = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
+const tables = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+
+var orders = [];
+for (const table of tables) {
+  const orderList = await APIGetRequest(`booth/${localStorage.booth}/order/${table.id}/`)
+  .catch((error) => {
+    console.log(error);
+    return 0;
+  });
+
+  if(orderList) {
+    for (const order of orderList) {
+      orders.push(order);
+    }
+  }
+}
+
+/*
 document.addEventListener('DOMContentLoaded', function () {
   const orderTableBody = document.querySelector('.order-table tbody');
 
@@ -38,3 +58,78 @@ document.addEventListener('DOMContentLoaded', function () {
   // const now = new Date();
   // const orderTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 });
+*/
+
+const MAIN = {
+  async displayHistory(orders) {
+    document.querySelector('.history-table')
+    .innerHTML = '<thead><tr><th>주문 시간</th><th>테이블 이름</th><th>메 뉴 명</th><th>개 수</th><th>가 격</th><th>결제 여부</th></tr></thead>';
+
+    let html = '';
+    const historyElement = document.createElement('tbody');
+    for (const order of orders) {
+      html = this.getHistoryElement(order);
+      historyElement.innerHTML += html;
+      document.querySelector('.history-table').appendChild(historyElement);
+    }    
+  },
+  // 여기서 그만!!
+  getHistoryElement(order) {
+    const tableName = this.getTableName(order.table_id);
+    const menuName = this.getMenuName(order.menu_id);
+    const menuPrice = this.getMenuPrice(order.menu_id);
+
+    console.log(typeof(menuPrice));
+    console.log(typeof(order.quantity));
+    const price = menuPrice * order.quantity;
+    console.log(menuPrice);
+    console.log(order.quantity);
+    console.log(price);
+
+    const element = document.createElement('tbody');
+    let html = '';
+    html += `<tr>`;
+    html += `<td>${order.timestamp
+      .split('T')[1]
+      .substring(0, 8)}</td>`; // 주문시간
+    html += `<td>${tableName}</td>`; // 테이블이름
+    html += `<td>${menuName}</td>`; // 메뉴명
+    html += `<td>${order.quantity}</td>`; // 개수
+    html += `<td>${price.toLocaleString('ko-KR')}원</td>`; // 가격
+
+    if (order.state === "결제 완료") html += `<td>o</td>`; // 결제 여부
+    else html += `<td>x</td>`;
+    html += `</tr>`;
+    return html;
+  },
+
+  // 테이블 이름
+  getTableName(index) {
+    for (const table of tableInfo) {
+      if(table.id === index) return table.table_name;
+    }
+    return 0;
+  },
+  
+  // 메뉴 이름
+  getMenuName(index) {
+    for (const menu of menuInfo) {
+      if(menu.id === index) return menu.menu_name;
+    }
+    return 0;
+  },
+
+  // 메뉴 가격
+  getMenuPrice(index) {
+    for (const menu of menuInfo) {
+      if(menu.id === index) return menu.price;
+    }
+    return 0;
+  },
+}
+
+async function init() {
+  MAIN.displayHistory(orders);
+}
+
+init();

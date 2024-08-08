@@ -1,72 +1,50 @@
 import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
+const tableInfo = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+const menuInfo = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
+const tables = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+
 /*
-1. 모든 테이블 정보를 가져온다
-GET booth/{boothid}/table/
-2. 각 테이블마다 주문 정보를 가져와서 대충 로컬에 저장한다.
-GET booth/{boothid}/order/{tableid}/
-const orderHistory = [
-    {
-        "timestamp": "2024-01-17 22:07:20",
-        "menu_id" : 1,
-        "menu_name": "오뎅국",
-        "price" : 5000,
-        "quantity" : 1,
-        "state": "조리중"
-    },
-    {
-        "timestamp": "2024-01-17 22:07:20",
-        "menu_id" : 1,
-        "menu_name": "오뎅국",
-        "price" : 5000,
-        "quantity" : 1,
-        "state": "조리중"
-    },
-]; 대충 이래된다 치고..
-3. 버튼 누르면 상태 변경!
-그리고 for문 해서 조리중을 먼저 배치하고
-나머지 애들 넣으면 될듯
+console.log(tables); // 모든 테이블
+//console.log(tables[0]);
+//console.log(tables[1]);
+//console.log(tables[2]);
+//console.log(tables[2].id);
+//await APIDeleteRequest(`booth/${localStorage.booth}/table/171/`);
+
+// 1번 테이블에 메뉴 주문
+const index = Number(tables[0].id);
+const index2 = Number(tables[1].id);
+const t1 = await APIGetRequest(`booth/${localStorage.booth}/table/${index}/`);
+const menu1 = await APIGetRequest(`booth/${localStorage.booth}/menu/50/`);
+
+const a12 = await APIPostRequest(`booth/${localStorage.booth}/order/${index2}/`, {
+	"content":[
+		{
+			"menu_id" : 50,
+			"menu_name": "1번",
+			"quantity" : 150,
+		},
+	],
+});
+
+const t1_order = await APIGetRequest(`booth/${localStorage.booth}/order/${index}/`);
+const t2_order = await APIGetRequest(`booth/${localStorage.booth}/order/${index2}/`);
 */
+var orders = [];
+for (const table of tables) {
+  const orderList = await APIGetRequest(`booth/${localStorage.booth}/order/${table.id}/`)
+  .catch((error) => {
+    console.log(error);
+    return 0;
+  });
 
-
-const a = await APIGetRequest(`booth/${localStorage.booth}/table/`);
-console.log(a);
-
-
-// get 열심히 해서 이렇게 별개의 리스트를 만들자
-const orders = [
-  // 근데 timestamp에 따라서 정렬하고 싶은데,,, 일단 나중에 할까?
-  {
-    timestamp: "22:07:20",
-    table_id : 1,
-    menu_id : 1,
-    menu_name: "오뎅국",
-    price : 5000,
-    quantity : 1,
-    state: "조리중" // 조리중, 조리 완료, 취소, 
-    // 결제 완료 -> 얘는 histoy에서!
-  },
-  {   
-    timestamp: "22:08:20",
-    table_id : 2,
-    menu_id : 1,
-    menu_name: "된장국",
-    price : 5000,
-    quantity : 5,
-    state: "취소"
-  },
-  {   
-    timestamp: "22:08:20",
-    table_id : 2,
-    menu_id : 1,
-    menu_name: "ㅋㄴㅇㄴㅁ",
-    price : 5000,
-    quantity : 5,
-    state: "조리중"
-  },
-];
-
-console.log(orders);
+  if(orderList) {
+    for (const order of orderList) {
+      orders.push(order);
+    }
+  }
+}
 
 const MAIN = {
   // 주문 현황 표시
@@ -77,7 +55,11 @@ const MAIN = {
 
     // 상태가 조리중인경우
     for (const [orderID, order] of Object.entries(orders)) {  
-      if (order.state === "조리중") {
+
+      console.log(order.table_id);
+      console.log(tableInfo.table_name);
+      
+      if (order.state === "주문완료") {
         orderElement = this.getOrderElement(order, orderID);
         document.querySelector('.part').appendChild(orderElement);
         console.log(orderElement);
@@ -89,43 +71,45 @@ const MAIN = {
 
           // post....
           console.log(orders[orderIndex]);
+          zzz(orders[orderIndex]);
         });
         // 취소
         orderElement.querySelector('#button-order-cancel').addEventListener('click', (event) => {
           let target = event.target;
-          const orderIndex = this.getMenuID(target);
+          const orderIndex = this.getOrderID(target);
 
           // post....
           console.log(orders[orderIndex]);
+          zzz(orders[orderIndex]);
         });
       }
     }
 
     // 나머지놈들
     for (const [orderID, order] of Object.entries(orders)) { 
-      if (order.state !== "조리중") {
-        if(order.state === "취소") {
-          orderElement = this.getOrderCancelElement(order)
-        }
-        else {
-          orderElement = this.getOrderCompeleElement(order);
-        }
+      if (order.state !== "주문완료") {
+        if(order.state === "취소") orderElement = this.getOrderCancelElement(order)
+        else orderElement = this.getOrderCompeleElement(order);
       }
+
       document.querySelector('.part').appendChild(orderElement);
     }
   },
 
   getOrderElement(order, orderID) {
+    const tableName = this.getTableName(order.table_id);
+    const menuName = this.getMenuName(order.menu_id);
+    console.log(order);
     const element = document.createElement('div');
     element.classList.add('order');
     element.setAttribute('order', orderID);
     let html = ``;
     html += `<div class="state">`;
     html += `  <div class="info">`;
-    html += `    <div class="table">${order.table_id}</div>`;
-    html += `    <div class="time">${order.timestamp}</div>`;
+    html += `    <div class="table">${tableName}</div>`;
+    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
     html += `  </div>`;
-    html += `  <div class="quantity">${order.menu_name} x ${order.quantity}개</div>`;
+    html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
     html += `    <div class="button">`;
     html += `    <div class="set-left">`;
     html += `      <button id="button-order-cancel">주문 취소</button>`;
@@ -140,15 +124,18 @@ const MAIN = {
   },
 
   getOrderCompeleElement(order) {
+    const tableName = this.getTableName(order.table_id);
+    const menuName = this.getMenuName(order.menu_id);
+
     const element = document.createElement('div');
     element.classList.add('order-completed');
     let html = ``;
     html += `<div class="state">`;
     html += `  <div class="info">`;
-    html += `    <div class="table">${order.table_id}</div>`;
-    html += `    <div class="time">${order.timestamp}</div>`;
+    html += `    <div class="table">${tableName}</div>`;
+    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
     html += `  </div>`;
-    html += `  <div class="quantity">${order.menu_name} x ${order.quantity}개</div>`;
+    html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
     html += `    <div class="button">조리 완료</div>`;
     html += `  </div>`;
     html += `</div>`;    
@@ -157,20 +144,39 @@ const MAIN = {
   },
 
   getOrderCancelElement(order) {
+    const tableName = this.getTableName(order.table_id);
+    const menuName = this.getMenuName(order.menu_id);
+
     const element = document.createElement('div');
     element.classList.add('order-cancel');
     let html = ``;
     html += `<div class="state">`;
     html += `  <div class="info">`;
-    html += `    <div class="table">${order.table_id}</div>`;
-    html += `    <div class="time">${order.timestamp}</div>`;
+    html += `    <div class="table">${tableName}</div>`;
+    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
     html += `  </div>`;
-    html += `  <div class="quantity">${order.menu_name} x ${order.quantity}개</div>`;
+    html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
     html += `    <div class="button">취소 완료</div>`;
     html += `  </div>`;
     html += `</div>`;    
     element.innerHTML = html;
     return element;
+  },
+
+  // 테이블 이름
+  getTableName(index) {
+    for (const table of tableInfo) {
+      if(table.id === index) return table.table_name;
+    }
+    return 0;
+  },
+
+  // 메뉴 이름
+  getMenuName(index) {
+    for (const menu of menuInfo) {
+      if(menu.id === index) return menu.menu_name;
+    }
+    return 0;
   },
 
   // 상태변경할 때 쓰임
@@ -183,6 +189,20 @@ const MAIN = {
     return orderIndex;
   }
 };
+
+async function zzz(a) {
+  console.log(a);
+  console.log(a.table_id);
+  console.log(a.order_id);
+  const orderID = Number(a.order_id);
+  alert("아직 값 변경이 안됩니다!!")
+  /*
+  await APIPostRequest(`booth/${localStorage.booth}/order/${a.table_id}/${orderID}/`, {
+    state: "취소",
+  });
+  */
+}
+
 
 async function init() {
   MAIN.displayOrder(orders);
