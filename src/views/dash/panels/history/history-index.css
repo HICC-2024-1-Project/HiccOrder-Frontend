@@ -5,26 +5,37 @@
 }
 
 .order-cell {
-  background-color: #FF643C;
-  border-radius: 10px;
+  background-color: #ff643c;
+  border-radius: 20px;
   padding: 20px;
-  width: 300px;
-  height: 200px;
-  box-sizing: border-box;
+  width: 280px;
+  height: 187px;
 }
 
 .order-cell h2 {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .order-cell .order-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 공간 만들기 */
   margin-top: 10px;
 }
 
-.order-cell .order-buttons button {
-  background-color: #ff643c;
+/* 주문취소 버튼 */
+.order-cell .order-buttons .cancel-button {
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* 주문확인 버튼 */
+.order-cell .order-buttons .confirm-button {
+  background-color: black;
   color: white;
   border: none;
   border-radius: 5px;
@@ -33,10 +44,12 @@
   font-size: 16px;
 }
 
+/* 주문확인 완료 시 바뀌는 버튼 (= 처리완료 버튼) */
 .order-cell .order-buttons button.complete {
-  background-color: #4caf50;
+  background-color: #acacac;
 }
 
+/* 주문취소 완료 시 바뀌는 버튼 */
 .order-cell .order-buttons button.cancelled {
-  background-color: #777;
+  background-color: #828282;
 }

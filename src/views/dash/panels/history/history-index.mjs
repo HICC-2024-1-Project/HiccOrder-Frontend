@@ -40,21 +40,23 @@ document.addEventListener("DOMContentLoaded", function () {
     
     // 메뉴 * 수량
     const orderDetails = document.createElement("p");
-    orderDetails.textContent = `${order.menu_name} x ${order.quantity}`;
+    orderDetails.textContent = `${order.menu_name} * ${order.quantity}`;
     
     const orderButtons = document.createElement("div");
     orderButtons.className = "order-buttons";
     
     // 주문취소
     const cancelButton = document.createElement("button");
+    cancelButton.className = "cancel-button";
     cancelButton.textContent = "주문 취소";
     // 누르면 주문 취소
     cancelButton.addEventListener("click", () => cancelOrder(order, orderCell, cancelButton));
     
     // 주문확인
     const confirmButton = document.createElement("button");
+    confirmButton.className = "confirm-button";
     confirmButton.textContent = "주문 확인";
-    // 누르면 주문 확인
+    // 누르면 주문 확인 (처리완료)
     confirmButton.addEventListener("click", () => confirmOrder(order, confirmButton));
     
     orderCell.appendChild(tableName);
@@ -75,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const boothId = localStorage.booth;
       const response = await APIDeleteRequest(`booth/${boothId}/order/${order.table_id}/${order.order_id}/`);
       
-      if (response.status === 204) {
+      if (response.status == 204) {
         button.textContent = "취소 완료";
         button.disabled = true;
         button.className = "cancelled";
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const boothId = localStorage.booth;
       const response = await APIPostRequest(`booth/${boothId}/order/${order.table_id}/${order.order_id}/`, {});
       
-      if (response.status === 204) {
+      if (response.status == 204) {
         button.textContent = "처리 완료";
         button.className = "complete";
         // 일단 처리완료 버튼으로 바뀐 상태일때는 배경색변화 없고
