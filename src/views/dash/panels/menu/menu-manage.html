@@ -1,23 +1,73 @@
 <link href="menu-manage.css" rel="stylesheet" />
+<link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+      rel="stylesheet"
+    />
 
-<style src="menu-manage.mjs" type="module"></style>
+<section id="menu-index">
+  <div class="top">
+    <button id="arrow">
+      <span class="material-symbols-outlined"> arrow_back </span>
+    </button>
+    <div class="title">메뉴 수정</div>
+  </div>
+  <div class="part">
+    <div class="set-profile">
+      <siv class="profile">
+        <label>메뉴 이미지</label>
+        <div class="image"></div>
+      </siv>
+      <div class="inputs">
+        <ho-input-select
+          id="input-menu-category"
+          value="test"
+          placeholder="카테고리"
+          label="카테고리"
+          message=""
+        >
+          <option value="" disabled selected>카테고리 선택</option>
+          <option value="국">국</option>
+          <option value="볶음">볶음</option>
+          <option value="주류">주류</option>
+          <option value="기타">기타</option>
+        </ho-input-select>
 
-<section id="menu">
-  <h2>메뉴 관리</h2>
-  <div class="menu-management">
-    <input type="checkbox" id="layerpopup" />
-    <label for="layerpopup">추가하기</label>
-    <div id="layer_bg">
-      <div id="popup">
-        <h2>
-          메뉴 추가
-          <label for="layerpopup">x</label>
-        </h2>
-        <input type="text" id="manu-name" placeholder="메뉴 이름" />
-        <input type="text" id="manu-price" placeholder="가격" />
-        <button type="button" id="add-menu">추가</button>
+        <ho-input-string
+          id="input-menu-name"
+          type="text"
+          value=""
+          placeholder="메뉴 이름"
+          label="메뉴 이름"
+          message=""
+        ></ho-input-string>
+
+        <ho-input-string
+          id="input-menu-price"
+          type="text"
+          value=""
+          placeholder="메뉴 가격"
+          label="메뉴 가격"
+          message=""
+        ></ho-input-string>
+      </div>
+    </div>
+    <div class="part">
+      <div class="set-description">
+        <ho-input-string
+        id="input-menu-descr"
+        type="text"
+        value=""
+        placeholder="메뉴 설명"
+        label="메뉴 설명(선택)"
+        message=""
+      ></ho-input-string>  
       </div>
     </div>
   </div>
-  <button type="button" id="save-menu">저장하기</button>
+
+  <div class="set-right">
+    <button id="button-menu-index-update">저장하기</button>
+  </div>
 </section>
+
+<script src="menu-manage.mjs" type="module"></script>

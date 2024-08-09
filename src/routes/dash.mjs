@@ -30,6 +30,14 @@ router.get('/menu', (req, res) => {
   });
 });
 
+router.get('/menu/:menuId', (req, res) => {
+  res.render('dash/index', {
+    panel: 'menu/menu-manage',
+    title: '메뉴 수정',
+    mid: req.params.menuId // 캐신기
+  });
+});
+
 router.get('/table/', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-index',
