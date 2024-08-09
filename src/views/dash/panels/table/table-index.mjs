@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
       tableNameInput.value = "";
 
       // 전체 테이블 목록 다시 가져오기
+      // 오류
       loadTableData();
     })
     .catch ((error) => {
