@@ -1,237 +1,87 @@
-import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
+import { APIGetRequest } from '/modules/api.mjs';
 
-const tableInfo = await APIGetRequest(`booth/${localStorage.booth}/table/`);
-const menuInfo = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
-const tables = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+document.addEventListener('DOMContentLoaded', function () {
+  const orderTableBody = document.querySelector('.history-table tbody');
 
-console.log(typeof(tableInfo[2].id));
-console.log(menuInfo);
+  // 부스의 모든 주문 내역을 서버에서 불러오기
+  async function loadOrders() {
+    try {
+      const boothId = localStorage.booth;
+      const orderResponse = await APIGetRequest(`booth/${boothId}/order/`);
+      const orders = orderResponse.data.content;
 
-/*
-console.log(tables); // 모든 테이블
-//console.log(tables[0]);
-//console.log(tables[1]);
-//console.log(tables[2]);
-//console.log(tables[2].id);
-//await APIDeleteRequest(`booth/${localStorage.booth}/table/171/`);
+      // 시간별로 정렬
+      orders.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-// 1번 테이블에 메뉴 주문
-const index = Number(tables[0].id);
-const index2 = Number(tables[1].id);
-const t1 = await APIGetRequest(`booth/${localStorage.booth}/table/${index}/`);
-const menu1 = await APIGetRequest(`booth/${localStorage.booth}/menu/50/`);
+      // 주문 기록을 테이블에 추가
+      orders.forEach(order => {
+        addOrderRecord(order);
+      });
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  }
 
-const a12 = await APIPostRequest(`booth/${localStorage.booth}/order/${index2}/`, {
-	"content":[
-		{
-			"menu_id" : 50,
-			"menu_name": "1번",
-			"quantity" : 150,
-		},
-	],
+  // 주문 기록을 테이블에 추가하는 함수
+  function addOrderRecord(record) {
+    const row = document.createElement('tr');
+
+    row.innerHTML = `
+      <td>${record.menu_name}</td>
+      <td>${record.table_id}</td>
+      <td>${new Date(record.timestamp).toLocaleTimeString()}</td>
+      <td>${record.quantity}</td>
+      <td>${record.paid ? 'O' : 'X'}</td>
+      <td>${record.payment_method || '-'}</td>
+    `;
+
+    orderTableBody.appendChild(row);
+  }
+
+  // 페이지 로드 시 주문 기록을 불러옴
+  loadOrders();
 });
 
-const t1_order = await APIGetRequest(`booth/${localStorage.booth}/order/${index}/`);
-const t2_order = await APIGetRequest(`booth/${localStorage.booth}/order/${index2}/`);
-*/
-var orders = [];
-for (const table of tables) {
-  const orderList = await APIGetRequest(`booth/${localStorage.booth}/order/${table.id}/`)
-  .catch((error) => {
-    console.log(error);
-    return 0;
-  });
 
-  if(orderList) {
-    for (const order of orderList) {
-      orders.push(order);
+
+/* 
+document.addEventListener('DOMContentLoaded', function () {
+    const orderTableBody = document.querySelector('.order-table tbody');
+  
+    // (로컬)저장된 테이블 목록 로드
+    const savedTables = JSON.parse(localStorage.getItem('tables')) || [];
+  
+    // 서버 or 로컬 저장소에서 저장된 주문 기록 데이터 가져오기
+  
+    // 주문기록을 테이블에 추가하는 함수 addOrderRecord
+    function addOrderRecord(record) {
+      // 새로운 tr 행 생성
+      const row = document.createElement('tr');
+  
+      // 새로운 행 내부 요소HTML을
+      // 주문 기록 데이터(메뉴, 테이블 번호, 주문시각, 수량, 결제여부, 결제수단)로 채움
+      row.innerHTML = `   
+              <td>${record.menu}</td>
+              <td>${record.tableNumber}</td>
+              <td>${record.orderTime}</td>
+              <td>${record.quantity}</td>
+              <td>${record.paid}</td>
+              <td>${record.paymentMethod}</td>
+          `;
+  
+      // 새로 만든 행을 추가
+      orderTableBody.appendChild(row);
     }
-  }
-}
-
-const MAIN = {
-  // 주문 현황 표시
-  async displayOrder(orders) {
-    document.querySelector('.part').innerHTML = '';
-    
-    let orderElement = '';
-
-    // 상태가 조리중인경우
-    for (const [orderID, order] of Object.entries(orders)) {  
-
-      console.log(order.table_id);
-      console.log(tableInfo.table_name);
-      
-      if (order.state === "주문완료") {
-        orderElement = this.getOrderElement(order, orderID);
-        document.querySelector('.part').appendChild(orderElement);
-        console.log(orderElement);
-
-        // 조리 완료(여기서 post 하면 됨)
-        orderElement.querySelector('#button-order-complete').addEventListener('click', (event) => {
-          let target = event.target;
-          const orderIndex = this.getOrderID(target);
-
-          // post....
-          console.log(orders[orderIndex]);
-          zzz(orders[orderIndex]);
-        });
-        // 취소
-        orderElement.querySelector('#button-order-cancel').addEventListener('click', (event) => {
-          let target = event.target;
-          const orderIndex = this.getOrderID(target);
-
-          // post....
-          console.log(orders[orderIndex]);
-          zzz(orders[orderIndex]);
-        });
-      }
-    }
-
-    // 나머지놈들
-    for (const [orderID, order] of Object.entries(orders)) { 
-      if (order.state !== "주문완료") {
-        if(order.state === "취소") orderElement = this.getOrderCancelElement(order)
-        else orderElement = this.getOrderCompeleElement(order);
-      }
-
-      document.querySelector('.part').appendChild(orderElement);
-    }
-  },
-
-  getOrderElement(order, orderID) {
-    const tableName = this.getTableName(order.table_id);
-    const menuName = this.getMenuName(order.menu_id);
-    console.log(order);
-    const element = document.createElement('div');
-    element.classList.add('order');
-    element.setAttribute('order', orderID);
-    let html = ``;
-    html += `<div class="state">`;
-    html += `  <div class="info">`;
-    html += `    <div class="table">${tableName}</div>`;
-    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
-    html += `  </div>`;
-    html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
-    html += `    <div class="button">`;
-    html += `    <div class="set-left">`;
-    html += `      <button id="button-order-cancel">주문 취소</button>`;
-    html += `    </div>`;
-    html += `    <div class="set-right">`;
-    html += `      <button id="button-order-complete">조리 완료</button>`;
-    html += `    </div>`;
-    html += `  </div>`;
-    html += `</div>`;    
-    element.innerHTML = html;
-    return element;
-  },
-
-  getOrderCompeleElement(order) {
-    const tableName = this.getTableName(order.table_id);
-    const menuName = this.getMenuName(order.menu_id);
-
-    const element = document.createElement('div');
-    element.classList.add('order-completed');
-    let html = ``;
-    html += `<div class="state">`;
-    html += `  <div class="info">`;
-    html += `    <div class="table">${tableName}</div>`;
-    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
-    html += `  </div>`;
-    html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
-    html += `    <div class="button">조리 완료</div>`;
-    html += `  </div>`;
-    html += `</div>`;    
-    element.innerHTML = html;
-    return element;
-  },
-
-  getOrderCancelElement(order) {
-    const tableName = this.getTableName(order.table_id);
-    const menuName = this.getMenuName(order.menu_id);
-
-    const element = document.createElement('div');
-    element.classList.add('order-cancel');
-    let html = ``;
-    html += `<div class="state">`;
-    html += `  <div class="info">`;
-    html += `    <div class="table">${tableName}</div>`;
-    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
-    html += `  </div>`;
-    html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
-    html += `    <div class="button">취소 완료</div>`;
-    html += `  </div>`;
-    html += `</div>`;    
-    element.innerHTML = html;
-    return element;
-  },
-
-  // 테이블 이름
-  getTableName(index) {
-    for (const table of tableInfo) {
-      if(table.id === index) return table.table_name;
-    }
-    return 0;
-  },
-
-  // 메뉴 이름
-  getMenuName(index) {
-    for (const menu of menuInfo) {
-      if(menu.id === index) return menu.menu_name;
-    }
-    return 0;
-  },
-
-  // 상태변경할 때 쓰임
-  getOrderID(target) {
-    while (!target.classList.contains('order')) {
-      target = target.parentElement;
-    }
-    const orderID = target.getAttribute('order');
-    const orderIndex = Number(orderID);
-    return orderIndex;
-  }
-};
-
-async function zzz(a) {
-  console.log(a);
-  console.log(a.table_id);
-  console.log(a.order_id);
-  const orderID = Number(a.order_id);
-  alert("아직 값 변경이 안됩니다!!")
-  /*
-  await APIPostRequest(`booth/${localStorage.booth}/order/${a.table_id}/${orderID}/`, {
-    state: "취소",
+  
+    // 페이지 로드 시 저장된 주문 기록을 테이블에 추가
+    orderRecords.forEach(addOrderRecord);
+  
+    // 사용자에서 주문을 했을 때 이걸
+    // 관리자형(메뉴, 테이블번호, 수량, 결제여부, 결제수단)으로 변환하는 과정이 필요함
+  
+    // 현재 시간 기록하는 함수
+    // const now = new Date();
+    // const orderTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   });
   */
-}
-
-function sortByKey(array, key, order) {
-  return array.sort((a, b) => {
-    let x = a[key];
-    let y = b[key];
-    if (typeof x === 'string') {
-        x = x.toLowerCase();
-        y = y.toLowerCase();
-    }
-
-    console.log(a);
-    console.log(key);
-    console.log(x);
-
-    if (order === 'asc') {
-        return x < y ? -1 : x > y ? 1 : 0;
-    } 
-    else 
-    {
-        return x > y ? -1 : x < y ? 1 : 0;
-    }
-  });
-}
-
-async function init() {
-  orders = sortByKey(orders, 'timestamp', 'asc');
-  MAIN.displayOrder(orders);
-}
-
-init();

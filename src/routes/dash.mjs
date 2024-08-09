@@ -3,7 +3,7 @@
 import express from 'express';
 const router = express.Router();
 
-router.get('*', (req, res, next) => {
+router.get("*", (req, res, next) => {
   if (!req.cookies.booth) {
     res.redirect(`/`);
     return;
@@ -12,8 +12,8 @@ router.get('*', (req, res, next) => {
   next();
 });
 
-router.get('/', (req, res) => {
-  res.redirect('/dash/booth');
+router.get("/", (req, res) => {
+  res.redirect("/dash/booth");
 });
 
 router.get('/booth', (req, res) => {

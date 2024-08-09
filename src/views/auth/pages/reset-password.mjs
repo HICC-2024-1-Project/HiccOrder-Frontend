@@ -37,7 +37,6 @@ async function createVerifyCode() {
       retype.disabled = false;
       button.disabled = false;
       code.focus();
-
       noty(
         '입력하신 이메일로 계정 인증 코드를 발송하였습니다. <br> 이메일 확인 후 인증 코드를 입력하여 주십시오.'
       );

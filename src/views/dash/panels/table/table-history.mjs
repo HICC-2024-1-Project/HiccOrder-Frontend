@@ -89,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       updateTotalPrice();
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
     }
   }

@@ -1,6 +1,26 @@
-<link href="order-index.css" rel="stylesheet" />
-<script src="order-index.mjs" type="module"></script>
+<!-- 실시간 주문 -->
+<script src="/src/routes/dash.mjs" type="module"></script>
+<link href="/src/views/dash/index.css" rel="stylesheet" />
+<script src="/src/views/dash/index.mjs" defer></script>
 
-<section id="order-index">
-  <div class="part"></div>
-</section>
+<link href="order-index.css" rel="stylesheet" />
+<script src="order-index.css" type="module"></script>
+
+<div class="main-content">
+  <div class="title-bar">주문 기록</div>
+  <h2>실시간 매출확인</h2>
+  <table class="history-table">
+    <!-- 표 만들때 쓰는 헤더 -->
+    <!-- https://developer.mozilla.org/ko/docs/Web/HTML/Element/thead 참고 -->
+    <thead>
+      <tr>
+        <th>메뉴명</th>
+        <th>테이블 번호</th>
+        <th>주문 시간</th>
+        <th>개수</th>
+        <th>결제 여부</th>
+      </tr>
+    </thead>
+    <tbody><!-- 주문 기록 여기에 --></tbody>
+  </table>
+</div>

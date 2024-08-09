@@ -8,20 +8,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.querySelector(".add-btn");
   const saveButton = document.querySelector(".save-btn");
   const tableList = document.querySelector(".table-list");
+  const tableNameInput = document.getElementById("table-name-input");
 
   let tableCount = 0;
 
   // 서버에서 테이블 목록을 불러오는 함수
   async function loadTableData() {
     try {
-      const response = await APIGetRequest(`booth/${localStorage.booth}/table/`);
+      const response = await APIGetRequest(
+        `booth/${localStorage.booth}/table/`
+      );
       const tableData = response.data;
       tableData.forEach((table) => {
         addTableToDOM(table.id, table.table_name);
       });
       tableCount = tableData.length; // 테이블 수 업데이트
-    } 
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -47,8 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
           await APIDeleteRequest("booth/${localStorage.booth}/table/${id}");
           tableItem.remove();
-        } 
-        catch (error) {
+        } catch (error) {
           console.log(error);
         }
       });
@@ -73,11 +74,11 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       // 테이블 추가 성공
       if (response.status == 204) {
-        tableList.innerHTML = "";
         loadTableData();
+        // 입력칸초기화
+        tableNameInput.value = "";
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   });
