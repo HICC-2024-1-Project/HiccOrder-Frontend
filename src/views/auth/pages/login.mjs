@@ -11,19 +11,19 @@ async function login() {
   password.message = '';
 
   if (!email.value) {
-    email.message = `<span style="color:red;">${'이메일을 입력해주세요.'}</span>`;
+    email.message = '이메일을 입력해주세요.';
     email.focus();
     return;
   }
 
   if (!email.value.match(/[^@]+@[^.]+\.[^.]+/)) {
-    email.message = `<span style="color:red;">${'올바른 이메일을 입력해주세요.'}</span>`;
+    email.message = '올바른 이메일을 입력해주세요.';
     email.focus();
     return;
   }
 
   if (!password.value) {
-    password.message = `<span style="color:red;">${'비밀번호를 입력해주세요.'}</span>`;
+    password.message = '비밀번호를 입력해주세요.';
     password.focus();
     return;
   }
@@ -45,11 +45,10 @@ async function login() {
     .catch(async (error) => {
       button.disabled = false;
       if (error.status === 400) {
+        password.message =
+          '로그인에 실패하였습니다. 이메일 혹은 비밀번호를 확인하여 주십시오.';
         password.focus();
-        noty(`로그인 실패. 이메일 혹은 비밀번호를 확인하여 주십시오.`, 'error');
-      } else if (error.status >= 500) {
-        noty(`서버 오류.`, 'error');
-        console.log(error);
       }
+      console.log(error);
     });
 }

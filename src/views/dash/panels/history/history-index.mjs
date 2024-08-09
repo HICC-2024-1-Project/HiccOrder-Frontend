@@ -2,7 +2,7 @@ import { APIGetRequest, APIPatchRequest, APIDeleteRequest, APIPostRequest } from
 
 document.addEventListener("DOMContentLoaded", function () {
   loadOrders();
-  
+
   async function loadOrders() {
     try {
       // 부스아이디: 로컬에서 가져옴
@@ -109,4 +109,3 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
-*/

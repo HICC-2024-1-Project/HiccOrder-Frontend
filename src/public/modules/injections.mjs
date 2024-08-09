@@ -1,5 +1,3 @@
-import Notification from './notification.mjs';
-
 window.Math.rem = (n = 1) => {
   return n * parseFloat(getComputedStyle(document.documentElement).fontSize);
 };

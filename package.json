@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/app.mjs",
   "scripts": {
-    "start": "node src/app.mjs -p 10080",
+    "prod": "node src/app.mjs",
     "dev": "nodemon src/app.mjs"
   },
   "author": "",

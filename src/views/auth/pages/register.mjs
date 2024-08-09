@@ -13,25 +13,25 @@ async function register() {
   retype.message = '';
 
   if (!email.value) {
-    email.message = `<span style="color:red;">${'이메일을 입력해주세요.'}</span>`;
+    email.message = '이메일을 입력해주세요.';
     email.focus();
     return;
   }
 
   if (!email.value.match(/[^@]+@[^.]+\.[^.]+/)) {
-    email.message = `<span style="color:red;">${'올바른 이메일을 입력해주세요.'}</span>`;
+    email.message = '올바른 이메일을 입력해주세요.';
     email.focus();
     return;
   }
 
   if (!password.value) {
-    password.message = `<span style="color:red;">${'바밀번호를 입력해주세요.'}</span>`;
+    password.message = '비밀번호를 입력해주세요.';
     password.focus();
     return;
   }
 
   if (!retype.value) {
-    retype.message = `<span style="color:red;">${'바밀번호를 다시 한 번 입력해주세요.'}</span>`;
+    retype.message = '비밀번호를 다시 한 번 입력해주세요.';
     retype.focus();
     return;
   }
@@ -60,11 +60,9 @@ async function register() {
     .catch(async (error) => {
       button.disabled = false;
       if (error.status === 400) {
-        noty('이미 사용 중인 이메일입니다.', 'error');
+        email.message = '이미 사용 중인 이메일입니다.';
         email.focus();
-      } else if (error.status >= 500) {
-        noty(`서버 오류.`, 'error');
-        console.log(error);
       }
+      console.log(error);
     });
 }

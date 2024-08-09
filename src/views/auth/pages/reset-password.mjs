@@ -2,13 +2,13 @@ import { APIPostRequest, APIPatchRequest } from '/modules/api.mjs';
 
 const button = document.querySelector('#button-auth-reset');
 
-button.addEventListener('click', updatePassword);
+button.addEventListener('click', reset);
 
 const button2 = document.querySelector('#button-auth-code');
 
-button2.addEventListener('click', createVerifyCode);
+button2.addEventListener('click', verify);
 
-async function createVerifyCode() {
+async function verify() {
   const email = document.querySelector('#input-auth-reset-email');
   const code = document.querySelector('#input-auth-reset-code');
   const password = document.querySelector('#input-auth-reset-password');
@@ -17,13 +17,13 @@ async function createVerifyCode() {
   email.message = '';
 
   if (!email.value) {
-    email.message = `<span style="color:red;">${'이메일을 입력해주세요.'}</span>`;
+    email.message = '이메일을 입력해주세요.';
     email.focus();
     return;
   }
 
   if (!email.value.match(/[^@]+@[^.]+\.[^.]+/)) {
-    email.message = `<span style="color:red;">${'올바른 이메일을 입력해주세요.'}</span>`;
+    email.message = '올바른 이메일을 입력해주세요.';
     email.focus();
     return;
   }
@@ -37,22 +37,18 @@ async function createVerifyCode() {
       retype.disabled = false;
       button.disabled = false;
       code.focus();
-      noty(
-        '입력하신 이메일로 계정 인증 코드를 발송하였습니다. <br> 이메일 확인 후 인증 코드를 입력하여 주십시오.'
-      );
     })
     .catch(async (error) => {
-      if (error.status === 404) {
-        password.focus();
-        noty(`입력한 이메일에 해당하는 계정을 찾을 수 없습니다.`, 'error');
-      } else if (error.status >= 500) {
-        noty(`서버 오류.`, 'error');
-        console.log(error);
-      }
+      code.disabled = false;
+      password.disabled = false;
+      retype.disabled = false;
+      button.disabled = false;
+      code.focus();
+      console.log(error);
     });
 }
 
-async function updatePassword() {
+async function reset() {
   const email = document.querySelector('#input-auth-reset-email');
   const code = document.querySelector('#input-auth-reset-code');
   const password = document.querySelector('#input-auth-reset-password');
