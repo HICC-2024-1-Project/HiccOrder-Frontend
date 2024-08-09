@@ -22,7 +22,6 @@
 }
 
 #menu > .category:first-child {
-  padding-top: 16px;
   background: white;
   margin-bottom: 1rem;
   border-bottom: solid 5px var(--bgl);

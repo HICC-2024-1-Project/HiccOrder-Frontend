@@ -1,7 +1,15 @@
 /* 주문기록 확인 스타일 */
+.main-content {
+  width: 100%;
+  max-width: 60rem;
+  display: flex;
+  min-width: 360px;
+}
+
 
 .history-table {
-  width: 1106px;
+  /*width: 1000px;*/
+  width: 100%;
   /* 셀 간의 경계선 합치기! */
   border-collapse: collapse;
   margin-top: 20px;
@@ -15,8 +23,40 @@
 }
 
 .history-table th {
-  background-color: #ffffff;
+  background-color: #f0f0f0;
   color: #333;
+  cursor: pointer; 
+}
+
+.history-table th .text{
+  padding-left: 0.8rem;
+  transition: padding-left 0.3s ease-out;
+}
+
+.arrow {
+  font-family: 'Material Symbols Outlined';
+  font-weight: bold;
+  vertical-align: bottom;
+}
+
+@media (max-width: 685px) {
+  .arrow {
+    display: none;
+  }
+  .arrowDisable {
+    display: none;
+  }
+  .history-table th .text{
+    padding-left: 0px;
+  }
+}
+
+.arrowDisable{
+  color: rgba(0, 0, 0, 0.438);
+  font-family: 'Material Symbols Outlined';
+  font-weight: lighter;
+  padding-top: 0px;
+  vertical-align: bottom;
 }
 
 .history-table tbody tr:nth-child(even) {

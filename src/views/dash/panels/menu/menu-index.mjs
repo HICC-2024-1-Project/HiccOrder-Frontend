@@ -1,4 +1,4 @@
-import { APIGetRequest, APIDeleteRequest } from '/modules/api.mjs';
+import { APIGetRequest, APIPatchRequest, APIDeleteRequest } from '/modules/api.mjs';
 
 const menus = await APIGetRequest(`booth/${localStorage.booth}/menu/`).catch(
   (error) => {
@@ -13,7 +13,8 @@ const MAIN = {
     let categories = {};
     
     for (const [menuID, menu] of Object.entries(menus)) {
-      if (!categories[menu.category]) {
+      //if (!categories[menu.category]) {
+      if ((!categories[menu.category]) && ((menu.category !== '삭제된 메뉴'))) {
         const categoryElement = this.getCategoryElement(menu);
         categories[menu.category] = categoryElement;
       }
@@ -38,9 +39,11 @@ const MAIN = {
         //window.location.reload();
       });
 
-      categories[menu.category]
-        .querySelector('.content')
-        .appendChild(menuElement);          
+      if (menu.category !== '삭제된 메뉴') {
+        categories[menu.category]
+          .querySelector('.content')
+          .appendChild(menuElement);          
+      }
     }
 
     document.querySelector('#menu').innerHTML = '';
@@ -120,8 +123,28 @@ const MAIN = {
 };
 
 async function deleteMenu(menuIndex) {
-  await APIDeleteRequest(`booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`);
-  window.location.reload();
+  await APIDeleteRequest(`booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`)
+  .then(() => {
+    window.location.reload();
+  })
+  .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
+    if (error.status == 500) {
+      console.log(menus[menuIndex]);
+      bug(menuIndex);
+      window.location.reload();
+    }
+  });
+}
+
+// ㅜㅜㅜ 버그남
+async function bug(menuIndex) {
+  alert('zz');
+  const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`, {
+    category: '삭제된 메뉴',
+    menu_name: menus[menuIndex].menu_name,
+    price: menus[menuIndex].price,
+    description: menus[menuIndex].description,
+  })
 }
 
 async function init() {

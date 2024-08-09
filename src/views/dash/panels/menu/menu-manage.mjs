@@ -38,12 +38,21 @@ async function init() {
         price: input.menuPrice.value,
         description: input.menuDescr.value,
       })
-        .catch((error) => {
-          console.log(error);
-        })
-        .then(() => {
-          window.location.reload();
-        });
+      .then(() => {
+        window.location.href = "/dash/menu";
+        alert('메뉴 정보가 저장되었습니다.');
+      })
+      .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
+        alert('입력을 완료하여 주십시오.');
+        if (error.status == 400) {
+          error.json().then((errorData) => {
+            input.menuCate.message = `<span style="color:red;">${errorData.category || ''}</span>`;
+            input.menuName.message = `<span style="color:red;">${errorData.menu_name || ''}</span>`;
+            input.menuPrice.message = `<span style="color:red;">${errorData.price || ''}</span>`;
+            input.menuDescr.message = `<span style="color:red;">${errorData.description || ''}</span>`;
+          })
+        }
+      });
     }
     else { // 추가하기
       const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/`, {  
@@ -52,26 +61,26 @@ async function init() {
         price: input.menuPrice.value,
         description: input.menuDescr.value,
       })
-        .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
-          console.log(error);
-        })
-        .then(() => {
-          window.location.reload();
-        });
+      .then(() => {
+        window.location.href = "/dash/menu";
+        alert('메뉴 정보가 저장되었습니다.');
+      })
+      .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
+        alert('입력을 완료하여 주십시오.');
+        if (error.status == 400) {
+          error.json().then((errorData) => {
+            input.menuCate.message = `<span style="color:red;">${errorData.category || ''}</span>`;
+            input.menuName.message = `<span style="color:red;">${errorData.menu_name || ''}</span>`;
+            input.menuPrice.message = `<span style="color:red;">${errorData.price || ''}</span>`;
+            input.menuDescr.message = `<span style="color:red;">${errorData.description || ''}</span>`;
+          })
+        }
+      });
     }
   }
   
   document.getElementById('button-menu-index-update').addEventListener('click', function () {
-    if (input.menuCate.value !== "" 
-      && input.menuName.value !== "" 
-      && input.menuPrice.value !== "") {
-      updateBooth();
-      window.location.href = "/dash/menu";
-      alert('메뉴 정보가 저장되었습니다.');
-    }
-    else {
-      alert('입력을 완료하여 주십시오.');
-    };
+    updateBooth();
   });
 }
 
