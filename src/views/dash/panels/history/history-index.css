@@ -1,55 +1,66 @@
-.order-list {
+/* 주문기록 확인 스타일 */
+.main-content {
+  width: 100%;
+  max-width: 60rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  min-width: 360px;
 }
 
-.order-cell {
-  background-color: #ff643c;
-  border-radius: 20px;
-  padding: 20px;
-  width: 280px;
-  height: 187px;
+
+.history-table {
+  /*width: 1000px;*/
+  width: 100%;
+  /* 셀 간의 경계선 합치기! */
+  border-collapse: collapse;
+  margin-top: 20px;
 }
 
-.order-cell h2 {
-  font-size: 22px;
-}
-
-.order-cell .order-buttons {
-  display: flex;
-  justify-content: space-between; /* 공간 만들기 */
-  margin-top: 10px;
-}
-
-/* 주문취소 버튼 */
-.order-cell .order-buttons .cancel-button {
-  background-color: white;
-  color: black;
-  border: none;
-  border-radius: 5px;
+.history-table th,
+.history-table td {
+  border: 1px solid #d9d9d9; /* 셀 경계선 */
   padding: 10px;
-  cursor: pointer;
-  font-size: 16px;
+  text-align: center;
 }
 
-/* 주문확인 버튼 */
-.order-cell .order-buttons .confirm-button {
-  background-color: black;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 16px;
+.history-table th {
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer; 
 }
 
-/* 주문확인 완료 시 바뀌는 버튼 (= 처리완료 버튼) */
-.order-cell .order-buttons button.complete {
-  background-color: #acacac;
+.history-table th .text{
+  padding-left: 0.8rem;
+  transition: padding-left 0.3s ease-out;
 }
 
-/* 주문취소 완료 시 바뀌는 버튼 */
-.order-cell .order-buttons button.cancelled {
-  background-color: #828282;
+.arrow {
+  font-family: 'Material Symbols Outlined';
+  font-weight: bold;
+  vertical-align: bottom;
+}
+
+@media (max-width: 685px) {
+  .arrow {
+    display: none;
+  }
+  .arrowDisable {
+    display: none;
+  }
+  .history-table th .text{
+    padding-left: 0px;
+  }
+}
+
+.arrowDisable{
+  color: rgba(0, 0, 0, 0.438);
+  font-family: 'Material Symbols Outlined';
+  font-weight: lighter;
+  padding-top: 0px;
+  vertical-align: bottom;
+}
+
+.history-table tbody tr:nth-child(even) {
+  /* 짝수 행(even)의 배경색을 #ffeee9로 설정 */
+  /* nth-child(even)은 css의 의사 클래스 선택자: 짝수번째 child를 선택 */
+  background-color: #ffeee9;
 }
