@@ -1,83 +1,87 @@
-// localStorage에서 메뉴 데이터를 초기화하거나, 없으면 빈 배열로 설정
-let menuData = JSON.parse(localStorage.getItem('menuData')) || [];
+import { APIGetRequest, APIPostRequest, APIPatchRequest } from '/modules/api.mjs';
 
-// 메뉴 사진 업로드 (미구현)
 
-// 메뉴 추가
-document.getElementById('add-menu').addEventListener('click', function () {
-  const menuManagement = document.querySelector('.menu-management');
-
-  const menuData = {
-    // 이건 booth.js에서.. 구조체
-    name: document.getElementById('manu-name').value,
-    price: document.getElementById('manu-price').value,
-  };
-
-  // 메뉴 추가 누르면 팝업창 꺼지면서 뒤에 내가 추가한 메뉴가 또 떠야하잖아..
-  const newRow = document.createElement('div');
-  newRow.className = 'menu-row';
-  newRow.innerHTML = `
-        <div name="menuName">${menuData.name}</div>
-        <div name="menuPrice">${menuData.price}</div>
-        <button type="button" id="edit-menu">수정(미구현)</button>
-        <button type="button" id="delete-menu">삭제</button>
-    `;
-  menuManagement.appendChild(newRow);
-});
-// 메뉴 추가 버튼으로 팝업창 닫기
-var layerpopup = document.getElementById('layerpopup');
-var add = document.getElementById('add-menu');
-add.addEventListener('click', function () {
-  layerpopup.checked = false;
-});
-
-// 데이터 저장하기 왜 안됨 ㅜㅜㅜㅜ
-// 아... 위에서 메뉴 추가할때 menuData가 다른 값으로 바뀌니깐 null이 되는건가?
-document.getElementById('save-menu').addEventListener('click', function () {
-  // 얘는 tableManagement.js에서.. 구조체 배열
-  const menusss = [];
-  document.querySelectorAll('.menu-management .menu-row').forEach((row) => {
-    console.log(row);
-    const menuData = {
-      name: row.querySelector(`[name="menuName"]`).innerHTML,
-      price: row.querySelector(`[name="menuPrice"]`).innerHTML,
-    };
-    // menuData.name = row.querySelector('input[type="text"]').value,
-    // menuData.price = row.querySelector('input[type="text"]')[1].value;
-    menusss.push(menuData);
-  });
-  localStorage.setItem('menusss', JSON.stringify(menusss));
-  alert('메뉴 정보가 저장되었습니다.');
-});
-
-// 데이터 불러오기 ok??? 아직 모름... 저장이 안되는데 뭐
-function loadMenuData() {
-  const menusss = JSON.parse(localStorage.getItem('menusss'));
-  if (menusss) {
-    const menuManagement = document.querySelector('.menu-management');
-    menusss.forEach((menuData, index) => {
-      const newRow = document.createElement('div');
-      newRow.className = 'menu-row';
-      newRow.innerHTML = `
-                <input type="text" value="${menuData.name}" readonly>
-                <input type="text" value="${menuData.price}" readonly>
-                <button type="button">삭제</button>
-            `;
-      menuManagement.appendChild(newRow);
-    });
+const menus = await APIGetRequest(`booth/${localStorage.booth}/menu/`).catch(
+  (error) => {
+    console.log(error);
   }
+);
+
+async function init() {
+  const input = {
+    menuCate: document.querySelector('#input-menu-category'),
+    menuName: document.querySelector('#input-menu-name'),
+    menuPrice: document.querySelector('#input-menu-price'),
+    menuDescr: document.querySelector('#input-menu-descr'),
+  };
+  
+  // 넘어온 데이터가 있으면 수정하기임!!!
+  if(localStorage.getItem('menuId') !== '-1') {
+    const menuData = await APIGetRequest(`booth/${localStorage.booth}/menu/${menus[localStorage.getItem('menuId')].id}/`);
+
+    input.menuCate.value = menuData.category;
+    input.menuName.value = menuData.menu_name;
+    input.menuPrice.value = menuData.price;
+    input.menuDescr.value = menuData.description;
+  }
+
+  document.getElementById('arrow').addEventListener('click', function () {
+    //history.back();
+    window.location.href = "/dash/menu";
+  });
+  
+  async function updateBooth() {
+    if(localStorage.getItem('menuId') !== '-1') {
+      const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/${menus[localStorage.getItem('menuId')].id}/`, {
+        category: input.menuCate.value,
+        menu_name: input.menuName.value,
+        price: input.menuPrice.value,
+        description: input.menuDescr.value,
+      })
+      .then(() => {
+        window.location.href = "/dash/menu";
+        alert('메뉴 정보가 저장되었습니다.');
+      })
+      .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
+        alert('입력을 완료하여 주십시오.');
+        if (error.status == 400) {
+          error.json().then((errorData) => {
+            input.menuCate.message = `<span style="color:red;">${errorData.category || ''}</span>`;
+            input.menuName.message = `<span style="color:red;">${errorData.menu_name || ''}</span>`;
+            input.menuPrice.message = `<span style="color:red;">${errorData.price || ''}</span>`;
+            input.menuDescr.message = `<span style="color:red;">${errorData.description || ''}</span>`;
+          })
+        }
+      });
+    }
+    else { // 추가하기
+      const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/`, {  
+        category: input.menuCate.value,
+        menu_name: input.menuName.value,
+        price: input.menuPrice.value,
+        description: input.menuDescr.value,
+      })
+      .then(() => {
+        window.location.href = "/dash/menu";
+        alert('메뉴 정보가 저장되었습니다.');
+      })
+      .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
+        alert('입력을 완료하여 주십시오.');
+        if (error.status == 400) {
+          error.json().then((errorData) => {
+            input.menuCate.message = `<span style="color:red;">${errorData.category || ''}</span>`;
+            input.menuName.message = `<span style="color:red;">${errorData.menu_name || ''}</span>`;
+            input.menuPrice.message = `<span style="color:red;">${errorData.price || ''}</span>`;
+            input.menuDescr.message = `<span style="color:red;">${errorData.description || ''}</span>`;
+          })
+        }
+      });
+    }
+  }
+  
+  document.getElementById('button-menu-index-update').addEventListener('click', function () {
+    updateBooth();
+  });
 }
 
-loadMenuData();
-
-// 삭제
-document
-  .querySelector('.menu-management')
-  .addEventListener('click', function (event) {
-    if (
-      event.target.tagName === 'BUTTON' &&
-      event.target.textContent === '삭제'
-    ) {
-      event.target.parentElement.remove();
-    }
-  });
+init();
