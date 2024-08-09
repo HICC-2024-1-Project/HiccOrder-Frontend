@@ -1,5 +1,5 @@
 // 주문내역 페이지
-import { APIGetRequest, APIPostRequest } from "/modules/api.mjs";
+import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
 document.addEventListener("DOMContentLoaded", function () {
   const orderDetails = document.querySelector(".order-details");

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadTableData() {
     try {
       const response = await APIGetRequest(
-        "booth/${localStorage.booth}/table/"
+        `booth/${localStorage.booth}/table/`
       );
       const tableData = response.data;
       tableData.forEach((table, index) => {
