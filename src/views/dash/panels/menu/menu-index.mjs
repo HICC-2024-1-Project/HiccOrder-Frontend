@@ -1,8 +1,4 @@
-import {
-  APIGetRequest,
-  APIPatchRequest,
-  APIDeleteRequest,
-} from '/modules/api.mjs';
+import { APIGetRequest, APIPatchRequest, APIDeleteRequest } from '/modules/api.mjs';
 
 const menus = await APIGetRequest(`booth/${localStorage.booth}/menu/`).catch(
   (error) => {
@@ -15,10 +11,10 @@ localStorage.setItem('menuId', -1);
 const MAIN = {
   async displayMenu(menus) {
     let categories = {};
-
+    
     for (const [menuID, menu] of Object.entries(menus)) {
       //if (!categories[menu.category]) {
-      if (!categories[menu.category] && menu.category !== '삭제된 메뉴') {
+      if ((!categories[menu.category]) && ((menu.category !== '삭제된 메뉴'))) {
         const categoryElement = this.getCategoryElement(menu);
         categories[menu.category] = categoryElement;
       }
@@ -30,25 +26,23 @@ const MAIN = {
         let target = event.target;
         const menuIndex = this.getMenuID(target);
         localStorage.setItem('menuId', menuIndex);
-        window.location.href = '/dash/menu/manage';
+        window.location.href = "/dash/menu/menu-manage";
       });
 
       // 메뉴 삭제
-      menuElement
-        .querySelector('#button-menu-delete')
-        .addEventListener('click', (event) => {
-          event.stopPropagation(); // 이벤트 버블링 방지
-          let target = event.target;
-          const menuIndex = this.getMenuID(target);
-          console.log(menuIndex);
-          deleteMenu(menuIndex);
-          //window.location.reload();
-        });
+      menuElement.querySelector('#button-menu-delete').addEventListener('click', (event) => {
+        event.stopPropagation(); // 이벤트 버블링 방지
+        let target = event.target;
+        const menuIndex = this.getMenuID(target);
+        console.log(menuIndex);
+        deleteMenu(menuIndex);
+        //window.location.reload();
+      });
 
       if (menu.category !== '삭제된 메뉴') {
         categories[menu.category]
           .querySelector('.content')
-          .appendChild(menuElement);
+          .appendChild(menuElement);          
       }
     }
 
@@ -80,7 +74,8 @@ const MAIN = {
       html += `  <div class="image">`;
       html += `    <img src="${menu.menu_img_url}" />`;
       html += `  </div>`;
-    } else {
+    }
+    else {
       html += `  <div class="imagePlace"></div>`;
     }
     html += `  <div class="content">`;
@@ -116,7 +111,7 @@ const MAIN = {
     const index = Number(menuID);
     let menuIndex = 0;
     for (const menu in menus) {
-      if (menus[menu].id === index) {
+      if(menus[menu].id === index) {
         console.log(menu);
         menuIndex = menu;
       }
@@ -124,42 +119,36 @@ const MAIN = {
     console.log(menuIndex);
 
     return menuIndex;
-  },
+  }
 };
 
 async function deleteMenu(menuIndex) {
-  await APIDeleteRequest(
-    `booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`
-  )
-    .then(() => {
+  await APIDeleteRequest(`booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`)
+  .then(() => {
+    window.location.reload();
+  })
+  .catch((error) => { // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
+    if (error.status == 500) {
+      console.log(menus[menuIndex]);
+      bug(menuIndex);
       window.location.reload();
-    })
-    .catch((error) => {
-      // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
-      if (error.status == 500) {
-        console.log(menus[menuIndex]);
-        bug(menuIndex);
-        window.location.reload();
-      }
-    });
+    }
+  });
 }
 
 // ㅜㅜㅜ 버그남
 async function bug(menuIndex) {
   alert('zz');
-  const data = await APIPatchRequest(
-    `booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`,
-    {
-      category: '삭제된 메뉴',
-      menu_name: menus[menuIndex].menu_name,
-      price: menus[menuIndex].price,
-      description: menus[menuIndex].description,
-    }
-  );
+  const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`, {
+    category: '삭제된 메뉴',
+    menu_name: menus[menuIndex].menu_name,
+    price: menus[menuIndex].price,
+    description: menus[menuIndex].description,
+  })
 }
 
 async function init() {
-  if (menus.length <= 0) return;
+  if(menus.length <= 0) return;
   MAIN.displayMenu(menus);
 }
 
