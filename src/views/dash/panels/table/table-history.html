@@ -1,23 +1,35 @@
 <link href="table-history.css" rel="stylesheet" />
 <script src="table-history.mjs" type="module"></script>
 
-<div class="main-content">
-  <div class="title-bar">테이블 관리 > <span id="table-name"></span> 주문내역</div>
-  <div class="order-details">
-    <thead>
-      <tr>
-        <th>메뉴명</th>
-        <th>수량</th>
-        <th>가격</th>
-      </tr>
-    </thead>
-    <tbody id="order-list">
-      <!-- 주문 목록 -->
-    </tbody>
-    <button class="add-menu-btn">메뉴 추가하기</button>
-    <div class="total-amount">합계: <span id="total-price"></span>원</div>
-    <button class="save-btn">저장하기</button>
+<script>
+  window.tid = `#{table}`;
+</script>
+
+<div class="title-bar">
+  테이블 관리 > <span id="table-name"></span> 주문내역
+</div>
+
+<div id="table-history-orders" class="orders">
+  <div class="table">
+    <div class="title">
+      <div class="item name">메뉴</div>
+      <div class="item quant">수량</div>
+      <div class="item price">가격</div>
+      <div class="item sum">합계</div>
+      <div class="item state">현황</div>
+      <div class="item"></div>
+    </div>
+    <div class="content"></div>
   </div>
+  <button class="add-menu-btn">메뉴 추가하기</button>
+  <div class="total-amount">합계: <span id="total-price"></span>원</div>
+  <button class="save-btn">저장하기</button>
+</div>
+
+<div class="controls">
+  <button class="add-menu-btn">메뉴 추가하기</button>
+  <div class="total-amount">합계: <span id="total-price"></span>원</div>
+  <button class="save-btn">저장하기</button>
 </div>
 
 <!--
