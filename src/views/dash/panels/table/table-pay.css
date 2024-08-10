@@ -11,6 +11,10 @@
   
   .qr-code {
     text-align: center;
+    margin: 10px;
+    padding: 20px;
+    background-color: #ffeee9;
+    border-radius: 20px;
   }
   
   .qr-code h3 {
@@ -23,6 +27,7 @@
     border-radius: 10px;
     padding: 20px;
     margin-bottom: 20px;
+    font-size: 26px;
   }
   
   .complete-payment-btn {
