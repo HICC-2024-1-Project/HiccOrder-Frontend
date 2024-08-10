@@ -31,6 +31,7 @@ button,
   background: var(--button-bg);
   color: var(--button-fg);
   border: solid 0.1rem var(--button-ol);
+  box-shadow: 0 0.1rem 0.25rem 0 rgba(0, 0, 0, 0.3);
 }
 button:hover,
 [type='button']:hover {
@@ -56,12 +57,13 @@ button:focus-visible,
 
 /* 다른 스타일의 버튼 */
 
-button[size='small'],
-[type='button'][size='small'] {
-  height: 1.5rem;
-  padding: 0 0.5rem;
+button[small],
+[type='button'][small] {
+  height: 2rem;
+  border-radius: 0.625rem;
   font-size: 0.8rem;
-  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  gap: 0.25rem;
 }
 button[shadow],
 [type='button'][shadow] {
@@ -72,10 +74,11 @@ button[shadow],
 
 button[primary],
 [type='button'][primary] {
-  --button-bg: var(--th);
-  --button-hover-bg: rgb(40, 40, 40);
+  --button-bg: rgb(255, 100, 60);
+  --button-ol: rgb(255, 51, 0);
+  --button-hover-bg: rgb(255, 80, 37);
   --button-hover-fg: white;
-  --button-hover-ol: rgb(80, 80, 80);
+  --button-hover-ol: rgb(255, 51, 0);
 }
 button[second],
 [type='button'][second] {

@@ -9,7 +9,8 @@
 }
 
 html {
-  font-size: calc(15px + (100vw - 1500px) / 400);
+  font-size: 15px;
+  /*font-size: calc(15px + (100vw - 1500px) / 400);*/
   font-family: var(--font-family);
 }
 
@@ -37,7 +38,7 @@ hr {
   border: none;
   border-top: solid 0.1rem;
   border-color: rgb(210, 210, 210);
-  margin: 0;
+  margin: 1rem 0;
 }
 
 label {

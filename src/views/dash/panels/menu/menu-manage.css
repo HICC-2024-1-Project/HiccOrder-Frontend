@@ -1,81 +1,67 @@
-#menu-index {
-    width: 100%;
-    max-width: 60rem;
-    min-width: 15rem;
-  }
-  
-  .set-profile {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 1rem;
-  }
-  .set-profile > .inputs {
-    width: calc(100% - 7rem);
-  }
-  .set-profile > .profile {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    /*max-width: 13.7rem;*/
-  }
-
-  .profile > .image {
-    display: flex;
-    width: 97%;
-    aspect-ratio: 1 / 1;
-    /*height: 13rem;*/
-    border-radius: 0.75rem;
-    background-color: rgb(240, 240, 240);
-  }
-
-.profile > label {
-  line-height: 1.25rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+#menu-manage {
+  width: 100%;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.form > .left {
+  flex: 1;
+}
+.form > .right {
+  width: 14rem;
+}
+h3 {
+  font-size: 1.25rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: solid 0.1rem;
+  border-color: rgb(210, 210, 210);
+}
+h3:first-child {
+  margin-top: 0;
+}
+h4 {
+  font-size: 1.25rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: solid 0.1rem;
+  border-color: rgb(210, 210, 210);
+}
+.form-margin {
+  width: 100%;
+  height: 5rem;
+}
+.part-margin {
+  width: 100%;
+  height: 2.5rem;
+}
+.set-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
-  .set-right {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-
-  .set-description {
-    display: flex;
-    gap: 1rem;
-  }
-  .set-description > *:nth-child(1) {
-    flex: 1;
-  }
-  
-  h3 {
-    font-size: 1.25rem;
-    padding-bottom: 1rem;
-  }
-
-  .top {
-    top: 0;
-    width: calc(100% - 2rem);
-    height: 3rem;
-    padding-bottom: 25px;
-    display: flex;
-    align-items: center;
-    border-bottom: solid 1px var(--bgl);
-  }
-
-  .top > #arrow {
-    display: flex;
-    color: black;
-    background-color: rgb(255, 255, 255);
-    border: none;
-    padding-right: 5px;
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px
-  }
-
-  .top > .title {
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
+#menu-manage-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.75rem;
+  background-color: rgb(240, 240, 240);
+  border: solid 0.1rem rgb(210, 210, 210);
+}
+#menu-manage-image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+#menu-manage-image > button {
+  position: absolute;
+  bottom: -1rem;
+  left: 0.75rem;
+}

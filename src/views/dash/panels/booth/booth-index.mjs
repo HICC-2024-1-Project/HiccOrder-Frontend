@@ -77,7 +77,7 @@ async function updateBoothImage() {}
 async function deleteBooth() {
   if (
     !confirm(
-      '정말로 회원을 탈퇴하시겠습니까? 회원 탈퇴 시 모든 부스 관련 정보가 즉시 제거되며 복구할 수 없습니다.'
+      '정말로 계정을 삭제하시겠습니까? 계정 삭제 시 모든 부스 관련 정보가 즉시 제거되며 복구할 수 없습니다.'
     )
   ) {
     return;
@@ -85,7 +85,7 @@ async function deleteBooth() {
 
   if (
     prompt(
-      `회원 탈퇴를 계속하려면 아래의 입력창에 '${window.localStorage.booth}'를 입력하여 주십시오`
+      `계정 삭제를 계속하려면 아래의 입력창에 '${window.localStorage.booth}'를 입력하여 주십시오`
     ) !== window.localStorage.booth
   ) {
     return;
@@ -93,7 +93,7 @@ async function deleteBooth() {
 
   await APIDeleteRequest(`auth/sign/`)
     .then(() => {
-      alert('회원 탈퇴가 정상적으로 처리되었습니다.');
+      alert('계정 삭제가 정상적으로 처리되었습니다.');
 
       window.location.href = '/';
     })

@@ -30,11 +30,19 @@ router.get('/menu', (req, res) => {
   });
 });
 
-router.get('/menu/manage', (req, res) => {
+router.get('/menu/create', (req, res) => {
   res.render('dash/index', {
     panel: 'menu/menu-manage',
-    title: '메뉴 수정',
-    mid: req.params.menuId, // 캐신기
+    title: '<a href="/dash/menu">메뉴 관리</a> / 메뉴 추가',
+    mid: '',
+  });
+});
+
+router.get('/menu/:mid', (req, res) => {
+  res.render('dash/index', {
+    panel: 'menu/menu-manage',
+    title: '<a href="/dash/menu">메뉴 관리</a> / 메뉴 수정',
+    mid: req.params.mid, // 캐신기
   });
 });
 

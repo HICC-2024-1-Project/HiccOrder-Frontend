@@ -61,6 +61,10 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
         reject(error);
       }
     });
+  } else if (res.status >= 500) {
+    const serverError = await res.blob();
+    console.error(serverError);
+    throw res;
   } else {
     throw res;
   }

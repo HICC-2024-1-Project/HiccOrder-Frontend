@@ -3,8 +3,8 @@
 <section id="booth-index">
   <h3>부스 정보</h3>
 
-  <div class="set-profile">
-    <div class="inputs">
+  <div class="form">
+    <div class="left">
       <ho-input-string
         id="input-booth-index-email"
         type="text"
@@ -24,68 +24,72 @@
         message=""
       ></ho-input-string>
     </div>
-
-    <siv class="profile">
+    <div class="right">
       <label>부스 이미지</label>
-      <div class="image">
-        <img id="booth-index-image" />
+      <div id="booth-index-image">
+        <button id="button-booth-index-image-upload" small>
+          이미지 업로드
+        </button>
       </div>
-    </siv>
+    </div>
   </div>
 
-  <hr />
+  <div class="form">
+    <div class="left">
+      <h3>송금 계좌 정보</h3>
 
-  <h3>송금 계좌 정보</h3>
+      <div class="set-bank">
+        <ho-input-select
+          id="input-booth-index-bank-name"
+          value="test"
+          placeholder="은행"
+          label="은행"
+          message=""
+        >
+          <option value="" disabled selected>은행 선택</option>
+          <option value="국민은행">국민은행</option>
+          <option value="신한은행">신한은행</option>
+          <option value="하나은행">하나은행</option>
+          <option value="기업은행">기업은행</option>
+          <option value="쀕">몰라은행</option>
+        </ho-input-select>
+        <ho-input-string
+          id="input-booth-index-bank-account-number"
+          type="text"
+          value="test"
+          placeholder="계좌번호"
+          label="계좌번호"
+          message=""
+        ></ho-input-string>
+        <ho-input-string
+          id="input-booth-index-bank-account-owner"
+          type="text"
+          value="test"
+          placeholder="예금주"
+          label="예금주"
+          message=""
+        ></ho-input-string>
+      </div>
 
-  <div class="set-bank">
-    <ho-input-select
-      id="input-booth-index-bank-name"
-      value="test"
-      placeholder="은행"
-      label="은행"
-      message=""
-    >
-      <option value="" disabled selected>은행 선택</option>
-      <option value="국민은행">국민은행</option>
-      <option value="신한은행">신한은행</option>
-      <option value="하나은행">하나은행</option>
-      <option value="기업은행">기업은행</option>
-      <option value="쀕">몰라은행</option>
-    </ho-input-select>
-    <ho-input-string
-      id="input-booth-index-bank-account-number"
-      type="text"
-      value="test"
-      placeholder="계좌번호"
-      label="계좌번호"
-      message=""
-    ></ho-input-string>
-    <ho-input-string
-      id="input-booth-index-bank-account-owner"
-      type="text"
-      value="test"
-      placeholder="예금주"
-      label="예금주"
-      message=""
-    ></ho-input-string>
+      <div class="set-right">
+        <button id="button-booth-index-qr-test">송금 QR 테스트</button>
+      </div>
+    </div>
+    <div class="right"></div>
   </div>
+
+  <div class="part-margin"></div>
 
   <div class="set-right">
-    <button id="button-booth-index-qr-test" second>송금 QR 테스트</button>
+    <button id="button-booth-index-update" primary>변경사항 저장</button>
   </div>
 
-  <hr />
+  <div class="form-margin"></div>
+
+  <h3>계정 삭제</h3>
 
   <div class="set-right">
-    <button id="button-booth-index-update">변경사항 저장</button>
-  </div>
-
-  <hr />
-
-  <h3>회원탈퇴</h3>
-
-  <div class="set-right">
-    <button id="button-booth-index-delete" second>회원탈퇴</button>
+    <button id="button-booth-index-delete">계정 삭제</button>
   </div>
 </section>
 
