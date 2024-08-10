@@ -3,6 +3,7 @@
   --fg: white;
   --bg: black;
   --th: rgb(255, 100, 60);
+  --thl: rgb(255, 230, 224);
 
   --sans-serif: 'Pretendard Variable', sans-serif;
   --font-family: var(--sans-serif);

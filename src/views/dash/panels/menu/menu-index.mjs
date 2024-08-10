@@ -5,12 +5,21 @@ const bid = localStorage.booth;
 (async () => {
   const menus = await APIGetRequest(`booth/${bid}/menu/`);
 
-  const categories = [];
+  let categories = [];
   for (const menu of menus) {
     if (!categories.includes(menu.category)) {
       categories.push(menu.category);
     }
   }
+
+  categories.sort((a, b) => {
+    if (a < b) {
+      return -1;
+    } else if (a > b) {
+      return 1;
+    }
+    return 0;
+  });
 
   const content = document.querySelector('#menu-index > .display > .content');
   content.innerHTML = '';
@@ -42,6 +51,4 @@ const bid = localStorage.booth;
     }
     content.appendChild(menusElement);
   }
-
-  console.log(menus);
 })();

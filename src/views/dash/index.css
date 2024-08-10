@@ -246,6 +246,10 @@ main > .title > h1 {
   font-size: 1.75rem;
   font-weight: 600;
 }
+main > .title > h1 > a {
+  color: inherit;
+  text-decoration: none;
+}
 main > .content {
   width: 100%;
   height: calc(100% - 4rem);
