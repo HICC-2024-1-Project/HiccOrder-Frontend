@@ -1,66 +1,71 @@
-/* 주문기록 확인 스타일 */
-.main-content {
+#history-index {
   width: 100%;
-  max-width: 60rem;
-  display: flex;
-  min-width: 360px;
+  height: 100%;
 }
-
-
-.history-table {
-  /*width: 1000px;*/
+.table {
   width: 100%;
-  /* 셀 간의 경계선 합치기! */
+  height: 100%;
+  overflow-y: auto;
+  border-radius: 0.75rem;
+  border: solid 0.1rem rgb(210, 210, 210);
+}
+#history-index-table {
+  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
-.history-table th,
-.history-table td {
-  border: 1px solid #d9d9d9; /* 셀 경계선 */
-  padding: 10px;
+#history-index-table tr {
+  height: 2rem;
+}
+#history-index-table th,
+#history-index-table td {
+  padding: 0;
+  height: 100%;
   text-align: center;
+  border-right: solid 0.1rem rgb(210, 210, 210);
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+}
+#history-index-table th:last-child,
+#history-index-table td:last-child {
+  border-right: none;
+}
+#history-index-table th {
+  cursor: pointer;
+}
+#history-index-table .title {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+#history-index-table .title > span {
+  font-size: inherit;
+  font-weight: 600;
+}
+#history-index-table thead tr {
+  position: sticky;
+  top: 0;
+  background: rgb(240, 240, 240);
+  border-bottom: solid 0.1rem rgb(210, 210, 210);
 }
 
-.history-table th {
-  background-color: #f0f0f0;
-  color: #333;
-  cursor: pointer; 
+#history-index-table .date {
+  text-align: left;
+  font-family: monospace;
+}
+#history-index-table .timestamp {
+  text-align: left;
+  font-family: monospace;
+}
+#history-index-table .quantity {
+  text-align: right;
+  font-family: monospace;
+}
+#history-index-table .menu_price {
+  text-align: right;
+  font-family: monospace;
 }
 
-.history-table th .text{
-  padding-left: 0.8rem;
-  transition: padding-left 0.3s ease-out;
-}
-
-.arrow {
-  font-family: 'Material Symbols Outlined';
-  font-weight: bold;
-  vertical-align: bottom;
-}
-
-@media (max-width: 685px) {
-  .arrow {
-    display: none;
-  }
-  .arrowDisable {
-    display: none;
-  }
-  .history-table th .text{
-    padding-left: 0px;
-  }
-}
-
-.arrowDisable{
-  color: rgba(0, 0, 0, 0.438);
-  font-family: 'Material Symbols Outlined';
-  font-weight: lighter;
-  padding-top: 0px;
-  vertical-align: bottom;
-}
-
-.history-table tbody tr:nth-child(even) {
-  /* 짝수 행(even)의 배경색을 #ffeee9로 설정 */
-  /* nth-child(even)은 css의 의사 클래스 선택자: 짝수번째 child를 선택 */
+#history-index-table > tbody > tr:nth-child(even) {
   background-color: #ffeee9;
 }

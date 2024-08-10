@@ -47,7 +47,7 @@ export default customElements.define(
           width: 1.25rem;
           height: 1.25rem;
           border-radius: 0.35rem;
-          border: solid 1px rgb(180, 180, 180);
+          border: solid 1px rgb(255, 51, 0);
         }
         :host > .wrapper > .content > .checkbox > span {
           width: 100%;
@@ -59,7 +59,7 @@ export default customElements.define(
           color: white;
         }
         :host > .wrapper > input:checked ~ .content > .checkbox {
-          background: black;
+          background: rgb(255, 100, 60);
         }
         :host > .wrapper > .content > label {
           line-height: 1.25rem;

@@ -96,8 +96,9 @@ main#auth-reset-password > .inputs > .set {
 main#auth-reset-password > .inputs > .set > button {
   position: absolute;
   width: 6rem;
-  top: 1.75rem;
-  right: 0.5rem;
+  top: 1.5rem;
+  right: 0.25rem;
+  padding: 0;
 }
 main button,
 main [type='button'] {
@@ -143,7 +144,7 @@ main > .links > .content {
 }
 main > .links > .content > a {
   font-size: 0.8rem;
-  color: rgb(180, 180, 180);
+  color: rgb(150, 150, 150);
   font-weight: 500;
   text-decoration: none;
 }

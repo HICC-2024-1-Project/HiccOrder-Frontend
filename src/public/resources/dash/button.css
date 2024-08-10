@@ -46,7 +46,7 @@ button[disabled],
 [type='button'][disabled] {
   background: var(--button-disabled-bg);
   color: var(--button-disabled-fg);
-  border-color: var(--button-ol);
+  border-color: var(--button-disabled-ol);
   cursor: not-allowed;
 }
 button:focus-visible,
@@ -79,6 +79,9 @@ button[primary],
   --button-hover-bg: rgb(255, 80, 37);
   --button-hover-fg: white;
   --button-hover-ol: rgb(255, 51, 0);
+  --button-disabled-bg: rgb(150, 87, 72);
+  --button-disabled-fg: white;
+  --button-disabled-ol: rgb(111, 65, 54);
 }
 button[second],
 [type='button'][second] {

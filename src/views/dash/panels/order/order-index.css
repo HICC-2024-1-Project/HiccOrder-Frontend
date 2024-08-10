@@ -1,148 +1,145 @@
 :root {
-    --bg: rgb(255, 100, 60);
-    --cpl: rgb(163, 163, 163);
-    --cncl: rgb(104, 104, 104);
-    --le: rgb(255, 255, 255);
-    --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
-  }
+  --bg: rgb(255, 100, 60);
+  --cpl: rgb(163, 163, 163);
+  --cncl: rgb(104, 104, 104);
+  --le: rgb(255, 255, 255);
+  --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+}
 
 #order-index {
-    width: 100%;
-    max-width: 60rem;
-    min-width: 15rem;
-    display: flex;
-  }
+  width: 100%;
+  max-width: 60rem;
+  min-width: 15rem;
+  display: flex;
+}
 
 #order-index > .part {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 1rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem;
 
-
-    /*dsadsa*/
-    /*justify-content: space-evenly;*/
+  /*dsadsa*/
+  /*justify-content: space-evenly;*/
 }
 
 #order-index > .part > .order {
-    display: flex;
-    
-    width: 31.5%;
-    height: 11rem;
-    background: var(--bg);
-    border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    justify-content: center;
-    
+  display: flex;
 
-    /*dsadsa*/
-    max-width: 17rem;
-    min-width: 14rem;
+  width: 31.5%;
+  height: 11rem;
+  background: var(--bg);
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
 
-    /*flex: 1 1 13rem;*/
+  /*dsadsa*/
+  max-width: 17rem;
+  min-width: 14rem;
+
+  /*flex: 1 1 13rem;*/
 }
 
 #order-index > .part > .order-completed {
-    display: flex;
-    max-width: 17rem;
-    min-width: 14rem;
-    width: 31.5%;
-    height: 11rem;
-    flex-wrap: wrap;
-    background: var(--cpl);
-    border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    justify-content: center;
+  display: flex;
+  max-width: 17rem;
+  min-width: 14rem;
+  width: 31.5%;
+  height: 11rem;
+  flex-wrap: wrap;
+  background: var(--cpl);
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
 }
 
 #order-index > .part > .order-cancel {
-    display: flex;
-    max-width: 17rem;
-    min-width: 14rem;
-    width: 31.5%;
-    height: 11rem;
-    flex-wrap: wrap;
-    background: var(--cncl);
-    border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    justify-content: center;
+  display: flex;
+  max-width: 17rem;
+  min-width: 14rem;
+  width: 31.5%;
+  height: 11rem;
+  flex-wrap: wrap;
+  background: var(--cncl);
+  border-radius: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: center;
 }
 
 .state {
-    width: 90%;
-    display: flex;
-    flex-direction: column;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
 }
 
 .state > .info {
-    width: 100%;
-    flex-direction: row;
-    display: flex;
-    padding: 0.4rem;
-    padding-top: 0.6rem;
-    padding-bottom: 0.8rem;
-    color: white;
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  padding: 0.4rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.8rem;
+  color: white;
 }
 
 .state > .info > .table {
-    width: 50%;
-    font-size: 20px;
-    font-weight: 700;
+  width: 50%;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .state > .info > .time {
-    width: 50%;
-    text-align: right;
+  width: 50%;
+  text-align: right;
 }
 
 .state > .quantity {
-    width: 100%;
-    display: flex;
-    padding-bottom: 4rem;
-    padding-left: 0.4rem;
-    color: white;
+  width: 100%;
+  display: flex;
+  padding-bottom: 4rem;
+  padding-left: 0.4rem;
+  color: white;
 }
 
 .state > .button {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 .state > .button > .set-left {
-    width: 50%;
-    gap: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+  width: 50%;
+  gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .set-left > #button-order-cancel {
-    color: black;
-    background-color: white;
-    height: 2rem;
-    width: 90%;
-    padding: 0 15%;
-    border: none;
+  color: black;
+  background-color: white;
+  height: 2rem;
+  width: 90%;
+  padding: 0 15%;
+  border: none;
 }
 
 .state > .button > .set-right {
-    width: 50%;
-    gap: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 50%;
+  gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .set-right > #button-order-complete {
-    display: flex;
-    padding: 0 15%;
-    width: 90%;
-    height: 2rem;
-    border: none;
+  display: flex;
+  padding: 0 15%;
+  width: 90%;
+  height: 2rem;
+  border: none;
 }

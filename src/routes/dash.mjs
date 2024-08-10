@@ -98,14 +98,14 @@ router.get('/table/:tid/done', (req, res) => {
 
 router.get('/order', (req, res) => {
   res.render('dash/index', {
-    panel: 'history/history-index',
+    panel: 'order/order-index',
     title: '주문 현황',
   });
 });
 
 router.get('/history', (req, res) => {
   res.render('dash/index', {
-    panel: 'order/order-index',
+    panel: 'history/history-index',
     title: '주문 기록',
   });
 });

@@ -4,7 +4,7 @@ const tableInfo = await APIGetRequest(`booth/${localStorage.booth}/table/`);
 const menuInfo = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
 const tables = await APIGetRequest(`booth/${localStorage.booth}/table/`);
 
-console.log(typeof(tableInfo[2].id));
+console.log(typeof tableInfo[2].id);
 console.log(menuInfo);
 
 /*
@@ -36,13 +36,14 @@ const t2_order = await APIGetRequest(`booth/${localStorage.booth}/order/${index2
 */
 var orders = [];
 for (const table of tables) {
-  const orderList = await APIGetRequest(`booth/${localStorage.booth}/order/${table.id}/`)
-  .catch((error) => {
+  const orderList = await APIGetRequest(
+    `booth/${localStorage.booth}/order/${table.id}/`
+  ).catch((error) => {
     console.log(error);
     return 0;
   });
 
-  if(orderList) {
+  if (orderList) {
     for (const order of orderList) {
       orders.push(order);
     }
@@ -53,45 +54,49 @@ const MAIN = {
   // 주문 현황 표시
   async displayOrder(orders) {
     document.querySelector('.part').innerHTML = '';
-    
+
     let orderElement = '';
 
     // 상태가 조리중인경우
-    for (const [orderID, order] of Object.entries(orders)) {  
-
+    for (const [orderID, order] of Object.entries(orders)) {
       console.log(order.table_id);
       console.log(tableInfo.table_name);
-      
-      if (order.state === "주문완료") {
+
+      if (order.state === '주문완료') {
         orderElement = this.getOrderElement(order, orderID);
         document.querySelector('.part').appendChild(orderElement);
         console.log(orderElement);
 
         // 조리 완료(여기서 post 하면 됨)
-        orderElement.querySelector('#button-order-complete').addEventListener('click', (event) => {
-          let target = event.target;
-          const orderIndex = this.getOrderID(target);
+        orderElement
+          .querySelector('#button-order-complete')
+          .addEventListener('click', (event) => {
+            let target = event.target;
+            const orderIndex = this.getOrderID(target);
 
-          // post....
-          console.log(orders[orderIndex]);
-          zzz(orders[orderIndex]);
-        });
+            // post....
+            console.log(orders[orderIndex]);
+            zzz(orders[orderIndex]);
+          });
         // 취소
-        orderElement.querySelector('#button-order-cancel').addEventListener('click', (event) => {
-          let target = event.target;
-          const orderIndex = this.getOrderID(target);
+        orderElement
+          .querySelector('#button-order-cancel')
+          .addEventListener('click', (event) => {
+            let target = event.target;
+            const orderIndex = this.getOrderID(target);
 
-          // post....
-          console.log(orders[orderIndex]);
-          zzz(orders[orderIndex]);
-        });
+            // post....
+            console.log(orders[orderIndex]);
+            zzz(orders[orderIndex]);
+          });
       }
     }
 
     // 나머지놈들
-    for (const [orderID, order] of Object.entries(orders)) { 
-      if (order.state !== "주문완료") {
-        if(order.state === "취소") orderElement = this.getOrderCancelElement(order)
+    for (const [orderID, order] of Object.entries(orders)) {
+      if (order.state !== '주문완료') {
+        if (order.state === '취소')
+          orderElement = this.getOrderCancelElement(order);
         else orderElement = this.getOrderCompeleElement(order);
       }
 
@@ -110,7 +115,9 @@ const MAIN = {
     html += `<div class="state">`;
     html += `  <div class="info">`;
     html += `    <div class="table">${tableName}</div>`;
-    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
+    html += `    <div class="time">${order.timestamp
+      .split('T')[1]
+      .substring(0, 8)}</div>`;
     html += `  </div>`;
     html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
     html += `    <div class="button">`;
@@ -121,7 +128,7 @@ const MAIN = {
     html += `      <button id="button-order-complete">조리 완료</button>`;
     html += `    </div>`;
     html += `  </div>`;
-    html += `</div>`;    
+    html += `</div>`;
     element.innerHTML = html;
     return element;
   },
@@ -136,12 +143,14 @@ const MAIN = {
     html += `<div class="state">`;
     html += `  <div class="info">`;
     html += `    <div class="table">${tableName}</div>`;
-    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
+    html += `    <div class="time">${order.timestamp
+      .split('T')[1]
+      .substring(0, 8)}</div>`;
     html += `  </div>`;
     html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
     html += `    <div class="button">조리 완료</div>`;
     html += `  </div>`;
-    html += `</div>`;    
+    html += `</div>`;
     element.innerHTML = html;
     return element;
   },
@@ -156,12 +165,14 @@ const MAIN = {
     html += `<div class="state">`;
     html += `  <div class="info">`;
     html += `    <div class="table">${tableName}</div>`;
-    html += `    <div class="time">${order.timestamp.split('T')[1].substring(0, 8)}</div>`;
+    html += `    <div class="time">${order.timestamp
+      .split('T')[1]
+      .substring(0, 8)}</div>`;
     html += `  </div>`;
     html += `  <div class="quantity">${menuName} x ${order.quantity}개</div>`;
     html += `    <div class="button">취소 완료</div>`;
     html += `  </div>`;
-    html += `</div>`;    
+    html += `</div>`;
     element.innerHTML = html;
     return element;
   },
@@ -169,7 +180,7 @@ const MAIN = {
   // 테이블 이름
   getTableName(index) {
     for (const table of tableInfo) {
-      if(table.id === index) return table.table_name;
+      if (table.id === index) return table.table_name;
     }
     return 0;
   },
@@ -177,7 +188,7 @@ const MAIN = {
   // 메뉴 이름
   getMenuName(index) {
     for (const menu of menuInfo) {
-      if(menu.id === index) return menu.menu_name;
+      if (menu.id === index) return menu.menu_name;
     }
     return 0;
   },
@@ -190,7 +201,7 @@ const MAIN = {
     const orderID = target.getAttribute('order');
     const orderIndex = Number(orderID);
     return orderIndex;
-  }
+  },
 };
 
 async function zzz(a) {
@@ -198,7 +209,7 @@ async function zzz(a) {
   console.log(a.table_id);
   console.log(a.order_id);
   const orderID = Number(a.order_id);
-  alert("아직 값 변경이 안됩니다!!")
+  alert('아직 값 변경이 안됩니다!!');
   /*
   await APIPostRequest(`booth/${localStorage.booth}/order/${a.table_id}/${orderID}/`, {
     state: "취소",
@@ -211,8 +222,8 @@ function sortByKey(array, key, order) {
     let x = a[key];
     let y = b[key];
     if (typeof x === 'string') {
-        x = x.toLowerCase();
-        y = y.toLowerCase();
+      x = x.toLowerCase();
+      y = y.toLowerCase();
     }
 
     console.log(a);
@@ -220,11 +231,9 @@ function sortByKey(array, key, order) {
     console.log(x);
 
     if (order === 'asc') {
-        return x < y ? -1 : x > y ? 1 : 0;
-    } 
-    else 
-    {
-        return x > y ? -1 : x < y ? 1 : 0;
+      return x < y ? -1 : x > y ? 1 : 0;
+    } else {
+      return x > y ? -1 : x < y ? 1 : 0;
     }
   });
 }
