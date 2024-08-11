@@ -1,16 +1,18 @@
 <link href="table-index.css" rel="stylesheet" />
 
+<script src="/resources/qrcode.min.js"></script>
 <script src="table-index.mjs" type="module"></script>
 
-<div class="main-content">
-  <h2>테이블 관리</h2>
-  <div class="table-list"></div>
-  <div class="add-table">
-    <input type="text" id="table-name-input" placeholder="테이블 이름을 입력하세요" />
-    <button class="add-btn">추가하기</button>
+<section id="table-index">
+  <div class="display">
+    <div class="content">
+      <div class="empty">부스에 테이블이 없습니다. 테이블을 추가해보세요!</div>
+    </div>
   </div>
-  <button class="save-btn">저장하기</button>
-</div>
+  <div class="control">
+    <button id="button-table-index-create" primary>테이블 추가</button>
+  </div>
+</section>
 
 <!--
 <section id="table-index">

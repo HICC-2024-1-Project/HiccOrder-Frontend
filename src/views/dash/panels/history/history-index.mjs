@@ -7,8 +7,6 @@ const table = document.querySelector('#history-index-table');
 let orderKey = 'timestamp';
 let orderSort = 'asc';
 
-let totalSales = 0;
-
 async function readOrders() {
   const tables = await APIGetRequest(`booth/${bid}/table/`);
   const menus = await APIGetRequest(`booth/${bid}/menu/`);
@@ -47,8 +45,6 @@ async function readOrders() {
   }
   orders = sortByKey(orders, orderKey, orderSort);
 
-  console.log(orders);
-
   return orders;
 
   function sortByKey(array, key, order) {
@@ -69,6 +65,7 @@ async function readOrders() {
 }
 
 async function displayOrders(orders) {
+  let totalSales = 0;
   table.innerHTML = '';
 
   const thead = document.createElement('thead');
@@ -131,8 +128,15 @@ async function displayOrders(orders) {
         tbody.appendChild(getDayElement(order.timestamp));
       }
     }*/
+    if (order.state === '결제 완료') {
+      totalSales += order.price_total;
+    }
   }
   table.appendChild(tbody);
+
+  document.querySelector(
+    '#history-index-sales'
+  ).innerHTML = `${totalSales.toLocaleString('ko-kr')}원`;
 }
 
 function getOrderElement(order) {

@@ -53,46 +53,27 @@ router.get('/table', (req, res) => {
   });
 });
 
-router.get('/table/manage', (req, res) => {
-  res.render('dash/index', {
-    panel: 'table/table-manage',
-    title: '테이블 관리',
-  });
-});
-
-router.get('/table/:tid', (req, res) => {
-  res.render('dash/index', {
-    panel: 'table/table-table',
-    title: '테이블 관리',
-  });
-});
-
-router.get('/table/:tid/history', (req, res) => {
+router.get('/table/:tid/order', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-history',
-    title: '테이블 관리',
+    title: '<a href="/dash/table">테이블 관리</a> / 주문 현황',
     table: req.params.tid,
-  });
-});
-
-router.get('/table/:tid/qr', (req, res) => {
-  res.render('dash/index', {
-    panel: 'table/table-qr',
-    title: '테이블 관리',
   });
 });
 
 router.get('/table/:tid/pay', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-pay',
-    title: '테이블 관리',
+    title: '<a href="/dash/table">테이블 관리</a> / 결제',
+    table: req.params.tid,
   });
 });
 
 router.get('/table/:tid/done', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-done',
-    title: '결제 완료',
+    title: '<a href="/dash/table">테이블 관리</a> / 결제',
+    table: req.params.tid,
   });
 });
 

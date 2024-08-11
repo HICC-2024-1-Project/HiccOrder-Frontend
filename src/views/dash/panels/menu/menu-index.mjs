@@ -5,6 +5,10 @@ const bid = localStorage.booth;
 (async () => {
   const menus = await APIGetRequest(`booth/${bid}/menu/`);
 
+  if (menus.length <= 0) {
+    return;
+  }
+
   let categories = [];
   for (const menu of menus) {
     if (!categories.includes(menu.category)) {
