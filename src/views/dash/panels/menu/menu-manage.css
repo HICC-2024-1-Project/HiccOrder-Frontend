@@ -41,6 +41,11 @@
     gap: 1rem;
   }
 
+  .set-right > #button-menu-index-update{
+    background-color: #ff643c;
+    border: none;
+  }
+
   .set-description {
     display: flex;
     gap: 1rem;
