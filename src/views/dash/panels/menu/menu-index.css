@@ -7,9 +7,8 @@
   --bgl: rgb(245, 245, 245);
   --fg: rgb(0, 0, 0);
   --fgl: rgb(128, 128, 128);
-
-  --sans-serif: 'Pretendard Variable', sans-serif;
   --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+  --text-shadow: 0 0.1rem 0.7rem rgba(0, 0, 0, 0.15);
 }
 
 main > .content {
@@ -49,7 +48,8 @@ input[type="radio"] {
 input[type="radio"]:checked + label {
   background-color: var(--th);
   color: white;
-  text-shadow: 0px 1px 5px black;
+  text-shadow: var(--text-shadow);
+  box-shadow: var(--box-shadow);
 }
 #menu-index {
   width: 100%;
@@ -69,6 +69,7 @@ input[type="radio"]:checked + label {
   padding-left: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
+  text-shadow: var(--text-shadow);
 }
 #menu > .category[selected=true] > .title {
   border-left: solid 3px var(--th);
@@ -178,13 +179,13 @@ input[type="radio"]:checked + label {
 }
 
 #button-menu-delete:hover {
-  background: rgba(0, 0, 0, 0.384);
+  background: rgba(0, 0, 0, 0.400);
   color: white;
 }
 .set-right > a {
   margin-right: 0.5rem;
-  text-shadow: 0px 1px 5px black;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.600);
+  text-shadow: var(--text-shadow);
+  box-shadow: var(--box-shadow);
   background-color: #ff643c;
   border: none;
 }

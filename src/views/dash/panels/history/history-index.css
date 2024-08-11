@@ -1,3 +1,12 @@
+:root {
+  --bg: rgb(255, 100, 60);
+  --cpl: rgb(163, 163, 163);
+  --cncl: rgb(104, 104, 104);
+  --le: rgb(255, 255, 255);
+  --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+  --text-shadow: 0 0.1rem 0.7rem rgba(0, 0, 0, 0.2);
+}
+
 /* 주문기록 확인 스타일 */
 .main-content {
   width: 100%;
@@ -26,7 +35,6 @@ th:first-child {
 }
 th:last-child {
   border-top-right-radius: 8px;
-  color: aqua;
 }
 
 .history-table th,

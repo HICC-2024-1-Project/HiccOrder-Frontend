@@ -4,8 +4,10 @@
     --cncl: rgb(104, 104, 104);
     --le: rgb(255, 255, 255);
     --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+    --text-shadow: 0 0.1rem 0.7rem rgba(0, 0, 0, 0.2);
   }
 
+  
 #order-index {
     width: 100%;
     max-width: 80rem;
@@ -31,10 +33,12 @@
     width: 23%;
     height: 11rem;
     border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    margin: 0.5rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
     justify-content: center;
     transition: width 0.3s ease-out;
+    box-shadow: var(--box-shadow);
 }
 #order-index > .part > .order {
     background: var(--bg);
@@ -93,6 +97,7 @@
     width: 50%;
     font-size: 20px;
     font-weight: 700;
+    text-shadow: var(--text-shadow);
 }
 
 .state > .info > .time {
@@ -122,7 +127,6 @@
     align-items: center;
     
 }
-
 .set-left > #button-order-cancel {
     color: black;
     background-color: white;
@@ -130,6 +134,7 @@
     width: 90%;
     padding: 0 15%;
     border: none;
+    box-shadow: var(--box-shadow);
 }
 
 .state > .button > .set-right {
@@ -146,4 +151,5 @@
     width: 90%;
     height: 2rem;
     border: none;
+    box-shadow: var(--box-shadow);
 }
