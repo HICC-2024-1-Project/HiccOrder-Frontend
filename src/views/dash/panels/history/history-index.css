@@ -1,9 +1,8 @@
 /* 주문기록 확인 스타일 */
 .main-content {
   width: 100%;
-  max-width: 60rem;
+  max-width: 80rem;
   display: flex;
-  min-width: 360px;
 }
 
 
@@ -11,8 +10,23 @@
   /*width: 1000px;*/
   width: 100%;
   /* 셀 간의 경계선 합치기! */
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 20px;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+th:first-child {
+  border-top-left-radius: 8px;
+}
+th:last-child {
+  border-top-right-radius: 8px;
+  color: aqua;
 }
 
 .history-table th,
@@ -26,6 +40,14 @@
   background-color: #f0f0f0;
   color: #333;
   cursor: pointer; 
+  white-space:nowrap;
+}
+.history-table td {
+  word-break: break-all;
+}
+.history-table td:nth-child(5) {
+  text-align: end;
+  padding-right: 5%;
 }
 
 .history-table th .text{
@@ -39,7 +61,7 @@
   vertical-align: bottom;
 }
 
-@media (max-width: 685px) {
+@media (max-width: 600px) {
   .arrow {
     display: none;
   }
@@ -48,6 +70,16 @@
   }
   .history-table th .text{
     padding-left: 0px;
+  }
+  .history-table th:nth-child(1),
+  .history-table th:nth-child(6) {
+    white-space:pre-line;
+    /*min-width: 44px;*/
+    min-width: 4rem;
+  }
+  .history-table th:nth-child(2) {
+    white-space:normal;
+    min-width: 5rem;
   }
 }
 

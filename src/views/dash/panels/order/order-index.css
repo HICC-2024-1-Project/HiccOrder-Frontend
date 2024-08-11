@@ -8,7 +8,7 @@
 
 #order-index {
     width: 100%;
-    max-width: 60rem;
+    max-width: 80rem;
     min-width: 15rem;
     display: flex;
   }
@@ -17,59 +17,60 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
     gap: 1rem;
-
-
-    /*dsadsa*/
+    align-items: flex-start;
     /*justify-content: space-evenly;*/
 }
 
-#order-index > .part > .order {
-    display: flex;
-    
-    width: 31.5%;
-    height: 11rem;
-    background: var(--bg);
-    border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    justify-content: center;
-    
-
-    /*dsadsa*/
-    max-width: 17rem;
-    min-width: 14rem;
-
-    /*flex: 1 1 13rem;*/
-}
-
-#order-index > .part > .order-completed {
-    display: flex;
-    max-width: 17rem;
-    min-width: 14rem;
-    width: 31.5%;
-    height: 11rem;
-    flex-wrap: wrap;
-    background: var(--cpl);
-    border-radius: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    justify-content: center;
-}
-
+#order-index > .part > .order,
+#order-index > .part > .order-completed,
 #order-index > .part > .order-cancel {
     display: flex;
-    max-width: 17rem;
+    max-width: 18rem;
     min-width: 14rem;
-    width: 31.5%;
+    width: 23%;
     height: 11rem;
-    flex-wrap: wrap;
-    background: var(--cncl);
     border-radius: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     justify-content: center;
+    transition: width 0.3s ease-out;
+}
+#order-index > .part > .order {
+    background: var(--bg);
+}
+#order-index > .part > .order-completed {
+    background: var(--cpl);
+}
+#order-index > .part > .order-cancel {
+    background: var(--cncl);
+}
+
+@media (max-width: 70rem) {
+    #order-index > .part > .order,
+    #order-index > .part > .order-completed,
+    #order-index > .part > .order-cancel {
+        min-width: 14rem;
+        width: 30%;
+        transition: width 0.3s ease-out;
+    }
+}
+@media (max-width: 45rem) {
+    #order-index > .part > .order,
+    #order-index > .part > .order-completed,
+    #order-index > .part > .order-cancel {
+        max-width: 20rem;
+        min-width: 14rem;
+        width: 45%;
+        transition: width 0.3s ease-out;
+    }
+}
+@media (max-width: 25rem) {
+    #order-index > .part > .order,
+    #order-index > .part > .order-completed,
+    #order-index > .part > .order-cancel {
+        width: 100%;
+    }
 }
 
 .state {
@@ -82,7 +83,7 @@
     width: 100%;
     flex-direction: row;
     display: flex;
-    padding: 0.4rem;
+    padding: 0.5rem;
     padding-top: 0.6rem;
     padding-bottom: 0.8rem;
     color: white;
@@ -102,8 +103,8 @@
 .state > .quantity {
     width: 100%;
     display: flex;
-    padding-bottom: 4rem;
-    padding-left: 0.4rem;
+    padding-bottom: 3.5rem;
+    padding-left: 0.5rem;
     color: white;
 }
 

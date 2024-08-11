@@ -20,13 +20,13 @@ const index = Number(tables[0].id);
 const index2 = Number(tables[1].id);
 const t1 = await APIGetRequest(`booth/${localStorage.booth}/table/${index}/`);
 const menu1 = await APIGetRequest(`booth/${localStorage.booth}/menu/50/`);
-
-const a12 = await APIPostRequest(`booth/${localStorage.booth}/order/${index2}/`, {
+console.log(t1);
+const a12 = await APIPostRequest(`booth/${localStorage.booth}/order/${index}/`, {
 	"content":[
 		{
-			"menu_id" : 50,
-			"menu_name": "1번",
-			"quantity" : 150,
+			"menu_id" : 86,
+			"menu_name": "ㄴㅁㅇ",
+			"quantity" : 10,
 		},
 	],
 });
