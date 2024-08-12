@@ -37,13 +37,6 @@ router.get('/table', (req, res) => {
   });
 });
 
-router.get('/table/manage', (req, res) => {
-  res.render('dash/index', {
-    panel: 'table/table-manage',
-    title: '테이블 관리',
-  });
-});
-
 router.get('/table/:tid', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-table',
