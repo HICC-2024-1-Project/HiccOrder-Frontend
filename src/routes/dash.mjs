@@ -34,7 +34,7 @@ router.get('/menu/manage', (req, res) => {
   res.render('dash/index', {
     panel: 'menu/menu-manage',
     title: '메뉴 추가',
-    menuId: 0, // 캐신기
+    menuId: 0,
   });
 });
 

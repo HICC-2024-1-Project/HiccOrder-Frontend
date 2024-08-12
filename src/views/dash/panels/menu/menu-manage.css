@@ -36,6 +36,8 @@
     /*height: 13rem;*/
     border-radius: 0.75rem;
     background-color: rgb(240, 240, 240);
+    align-items: center;
+    justify-content: center;
   }
 
 .profile > label {

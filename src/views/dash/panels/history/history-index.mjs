@@ -110,7 +110,7 @@ const MAIN = {
     html += `<td>${menuName}</td>`; // 메뉴명
     html += `<td>${order.quantity}</td>`; // 개수
     html += `<td>${price.toLocaleString('ko-KR')}원</td>`; // 가격
-    if (order.state === "결제 완료") { // 결제 여부
+    if (order.state === "결제완료") { // 결제 여부
       html += `<td>o</td>`; 
       totalSales += price;
     }

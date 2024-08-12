@@ -153,6 +153,7 @@ const MAIN = {
 };
 
 async function deleteMenu(menuIndex) {
+  console.log(menus);
   await APIDeleteRequest(`booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`)
   .then(() => {
     init();
@@ -166,6 +167,7 @@ async function deleteMenu(menuIndex) {
       init();
     }
   });
+  if(menus.length <= 1) window.location.reload();
 }
 // ㅜㅜㅜ 버그남
 async function bug(menuIndex) {

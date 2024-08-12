@@ -69,7 +69,7 @@ input[type="radio"]:checked + label {
   padding-left: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
-  text-shadow: var(--text-shadow);
+  /*text-shadow: var(--text-shadow);*/
 }
 #menu > .category[selected=true] > .title {
   border-left: solid 3px var(--th);
@@ -95,6 +95,11 @@ input[type="radio"]:checked + label {
   background: var(--fgl);
   overflow: hidden;
 }
+.menu > .wrapper > .image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .menu > .wrapper > .imagePlace {
   width: 5rem;
   height: 5rem;
@@ -102,11 +107,6 @@ input[type="radio"]:checked + label {
   background: gray;
   overflow: hidden;
   text-align: center;
-}
-.menu > .wrapper > .image > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 .menu > .wrapper > .content {
   width: 100%;
@@ -163,7 +163,6 @@ input[type="radio"]:checked + label {
   justify-content: flex-end;
   gap: 1rem;
 }
-
 #button-menu-delete {
   display: flex;
   width: 2%;
@@ -177,7 +176,6 @@ input[type="radio"]:checked + label {
   transition: background 0.12s ease-in-out,
               color 0.12s ease-in-out;
 }
-
 #button-menu-delete:hover {
   background: rgba(0, 0, 0, 0.400);
   color: white;
