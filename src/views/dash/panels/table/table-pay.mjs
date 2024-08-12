@@ -90,6 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // 완료 버튼 누르면 done으로 이동
   document.getElementById('complete-payment-btn').addEventListener('click', function() {
     // /table/:tid/done 경로로 리디렉션
-    window.location.href = `/table/${tableId}/done`;
+    window.location.href = `/dash/table/${tableId}/done`;
   });
 });
