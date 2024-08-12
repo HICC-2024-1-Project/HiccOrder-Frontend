@@ -166,12 +166,12 @@ export default customElements.define(
       function showQR() {
         APIPatchRequest(`auth/qrlink/`, {
           table_id: tid,
-        }).then((url) => {
+        }).then((data) => {
           const modal = document.createElement('ho-modal');
           modal.setAttribute('title', `${title.innerHTML} 입장 QR`);
           const qr = document.createElement('div');
           new QRCode(qr, {
-            text: url,
+            text: data.temporary_url,
             width: 1000,
             height: 1000,
           });

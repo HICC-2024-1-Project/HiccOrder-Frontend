@@ -81,50 +81,50 @@
   margin-top: 20px;
 }
 
-#table-history-orders {
+#table-order-orders {
   width: 100%;
 }
-#table-history-orders > .table {
+#table-order-orders > .table {
   width: 100%;
   border-radius: 0.75rem;
   overflow: hidden;
 }
-#table-history-orders > .table > .title {
+#table-order-orders > .table > .title {
   width: 100%;
   display: flex;
   background: #ffc0b1;
   font-weight: 700;
 }
-#table-history-orders > .table > .title > * {
+#table-order-orders > .table > .title > * {
   flex: 1;
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-#table-history-orders > .table > .content {
+#table-order-orders > .table > .content {
   overflow-y: auto;
 }
-#table-history-orders > .table > .content > .order {
+#table-order-orders > .table > .content > .order {
   display: flex;
   background: white;
 }
-#table-history-orders > .table > .content > .order:nth-child(even) {
+#table-order-orders > .table > .content > .order:nth-child(even) {
   background: #ffeee9;
 }
-#table-history-orders > .table .item {
+#table-order-orders > .table .item {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   height: 2.5rem;
 }
-#table-history-orders > .table .item.quant > input {
+#table-order-orders > .table .item.quant > input {
   width: 100%;
 }
-#table-history-orders > .table .item {
+#table-order-orders > .table .item {
   flex: 1;
   font-size: 1rem;
   padding-left: 0.5rem;
 }
-#table-history-orders > .table .item.name {
+#table-order-orders > .table .item.name {
   flex: 2;
 }
