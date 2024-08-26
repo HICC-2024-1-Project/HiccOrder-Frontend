@@ -74,9 +74,24 @@ input[type="radio"]:checked + label {
 #menu > .category[selected=true] > .title {
   border-left: solid 3px var(--th);
 }
+
+
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+}
 .menu {
+  width: 50%;
   padding: 0 1rem;
   cursor: pointer; 
+}
+@media (max-width: 600px) {
+  .menu {
+    width: 100%;
+    padding: 0 1rem;
+    cursor: pointer; 
+  }
 }
 .menu > .wrapper {
   width: 100%;

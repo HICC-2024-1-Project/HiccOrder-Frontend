@@ -32,10 +32,12 @@ const MAIN = {
       // 메뉴 수정
       menuElement.addEventListener('click', (event) => {
         let target = event.target;
-        const menuIndex = this.getMenuID(target);
-        const mid = menus[menuIndex].id;
-        //localStorage.setItem('menuId', menuIndex);
+        const mid = menus[this.getMenuID(target)].id;
         window.location.href = `/dash/menu/${mid}/manage`;
+        /*
+        const menuPopup = document.getElementById('menu-popup');
+        menuPopup.style.display = 'flex';
+        */
       });
 
       // 메뉴 삭제
