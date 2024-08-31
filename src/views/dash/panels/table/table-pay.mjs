@@ -87,15 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // 결제 완료 버튼 누름
-  document
-    .querySelector(".complete-payment-btn")
-    .addEventListener("click", function () {
-      console.log("결제완료 버튼 클릭");
-      
-      const totalPrice = totalPriceElement.textContent;
-      const paymentMethod = "카카오 페이"; // 임의의 결제 수단 설정
-      // table-done 으로 이동
-      window.location.href = `/table/${tableId}/done`;
-    });
+  // 완료 버튼 누르면 done으로 이동
+  document.getElementById('complete-payment-btn').addEventListener('click', function() {
+    // /table/:tid/done 경로로 리디렉션
+    window.location.href = `/dash/table/${tableId}/done`;
+  });
 });

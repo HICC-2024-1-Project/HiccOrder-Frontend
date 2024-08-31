@@ -11,11 +11,4 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("payment-method").textContent = paymentMethod || "";
 
   loadBoothData();
-
-  // 완료 버튼 누르면 테이블관리 기본 페이지로 돌아감
-  document
-    .getElementById("complete-btn")
-    .addEventListener("click", function () {
-      window.location.href = "/views/dash/panels/table";
-    });
 });
