@@ -1,12 +1,5 @@
 import { APIGetRequest, APIPostRequest, APIPatchRequest } from '/modules/api.mjs';
 
-
-const menus = await APIGetRequest(`booth/${localStorage.booth}/menu/`).catch(
-  (error) => {
-    console.log(error);
-  }
-);
-
 async function init() {
   const input = {
     menuCate: document.querySelector('#input-menu-category'),
@@ -16,8 +9,9 @@ async function init() {
   };
   
   // 넘어온 데이터가 있으면 수정하기임!!!
-  if(localStorage.getItem('menuId') !== '-1') {
-    const menuData = await APIGetRequest(`booth/${localStorage.booth}/menu/${menus[localStorage.getItem('menuId')].id}/`);
+  //if(localStorage.getItem('menuId') !== '-1') {
+  if(window.mid !== '0') {
+    const menuData = await APIGetRequest(`booth/${localStorage.booth}/menu/${window.mid}/`);
 
     input.menuCate.value = menuData.category;
     input.menuName.value = menuData.menu_name;
@@ -31,8 +25,9 @@ async function init() {
   });
   
   async function updateBooth() {
-    if(localStorage.getItem('menuId') !== '-1') {
-      const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/${menus[localStorage.getItem('menuId')].id}/`, {
+    //if(localStorage.getItem('menuId') !== '-1') {
+    if(window.mid !== '0') {
+      const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/${window.mid}/`, {
         category: input.menuCate.value,
         menu_name: input.menuName.value,
         price: input.menuPrice.value,
@@ -55,7 +50,7 @@ async function init() {
       });
     }
     else { // 추가하기
-      const data = await APIPatchRequest(`booth/${localStorage.booth}/menu/`, {  
+      const data = await APIPostRequest(`booth/${localStorage.booth}/menu/`, {  
         category: input.menuCate.value,
         menu_name: input.menuName.value,
         price: input.menuPrice.value,

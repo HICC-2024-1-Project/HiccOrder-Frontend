@@ -7,48 +7,92 @@
   --bgl: rgb(245, 245, 245);
   --fg: rgb(0, 0, 0);
   --fgl: rgb(128, 128, 128);
-
-  --sans-serif: 'Pretendard Variable', sans-serif;
   --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
+  --text-shadow: 0 0.1rem 0.7rem rgba(0, 0, 0, 0.15);
 }
 
-#menu {
-  padding-bottom: 0rem;
+main > .content {
+  padding-top: 0rem;
+}
+
+#menu-category {
+  width: 100%;
+  display: flex;
+  padding-bottom: 1.5rem;
+}
+#category-group{
+  background: white;
+  margin-left: 1rem;
+  border-top: solid 2.5px var(--th);
+}
+#no-cate {
+  width: 100%;
+  border-top: solid 2.5px;
+  border-image: linear-gradient(to right, var(--th), var(--bgl)) 1;
+}
+#category-group div {
+  display: flex;
+}
+label {
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem 2rem;  
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  white-space:nowrap;
+  text-align: center;
+}
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"]:checked + label {
+  background-color: var(--th);
+  color: white;
+  text-shadow: var(--text-shadow);
+  box-shadow: var(--box-shadow);
+}
+#menu-index {
+  width: 100%;
+  max-width: 70rem;
 }
 #menu > .category {
   background: white;
   margin-bottom: 1rem;
   border-bottom: solid 5px var(--bgl);
 }
-
-#menu > .category:first-child {
-  background: white;
-  margin-bottom: 1rem;
-  border-bottom: solid 5px var(--bgl);
-}
-
 #menu > .category:last-child {
   border-bottom: none;
 }
-
 #menu > .category > .title {
-  padding: 1rem;
-  padding-top: 5px;
-  padding-bottom: 0;
+  margin-left: 1rem;
+  border-left: solid 3px var(--fgl);
+  padding-left: 1rem;
   font-size: 1.5rem;
   font-weight: 700;
+  /*text-shadow: var(--text-shadow);*/
+}
+#menu > .category[selected=true] > .title {
+  border-left: solid 3px var(--th);
+}
+
+
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
 }
 .menu {
+  width: 50%;
   padding: 0 1rem;
-  /*
-  얘땜에 클릭되는구나
-  일단 나중에 메뉴 수정 추가할때 넣자
-  cursor: pointer; 
-  */
   cursor: pointer; 
 }
-
-
+@media (max-width: 600px) {
+  .menu {
+    width: 100%;
+    padding: 0 1rem;
+    cursor: pointer; 
+  }
+}
 .menu > .wrapper {
   width: 100%;
   padding: 1rem 0;
@@ -66,7 +110,11 @@
   background: var(--fgl);
   overflow: hidden;
 }
-
+.menu > .wrapper > .image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .menu > .wrapper > .imagePlace {
   width: 5rem;
   height: 5rem;
@@ -74,42 +122,6 @@
   background: gray;
   overflow: hidden;
   text-align: center;
-}
-
-#menu-index {
-  width: 100%;
-  max-width: 60rem;
-}
-
-.set-right {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-}
-
-#button-menu-delete {
-  display: flex;
-  width: 2%;
-  height: 50%;
-  font-size: 17px;
-  color: black;
-  background-color: rgb(255, 255, 255);
-  border: none;
-  border-radius: 7px;
-  padding: 5px 15px;
-  transition: background 0.12s ease-in-out,
-              color 0.12s ease-in-out;
-}
-
-#button-menu-delete:hover {
-  background: black;
-  color: white;
-}
-
-.menu > .wrapper > .image > img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 .menu > .wrapper > .content {
   width: 100%;
@@ -159,4 +171,34 @@
   gap: 1rem;
   text-align: right;
   font-weight: 700;
+}
+
+.set-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+#button-menu-delete {
+  display: flex;
+  width: 2%;
+  height: 50%;
+  font-size: 17px;
+  color: black;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 7px;
+  padding: 5px 15px;
+  transition: background 0.12s ease-in-out,
+              color 0.12s ease-in-out;
+}
+#button-menu-delete:hover {
+  background: rgba(0, 0, 0, 0.400);
+  color: white;
+}
+.set-right > a {
+  margin-right: 0.5rem;
+  text-shadow: var(--text-shadow);
+  box-shadow: var(--box-shadow);
+  background-color: #ff643c;
+  border: none;
 }

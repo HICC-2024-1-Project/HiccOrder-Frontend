@@ -33,8 +33,16 @@ router.get('/menu', (req, res) => {
 router.get('/menu/manage', (req, res) => {
   res.render('dash/index', {
     panel: 'menu/menu-manage',
+    title: '메뉴 추가',
+    menuId: 0,
+  });
+});
+
+router.get('/menu/:mid/manage', (req, res) => {
+  res.render('dash/index', {
+    panel: 'menu/menu-manage',
     title: '메뉴 수정',
-    mid: req.params.menuId, // 캐신기
+    menuId: req.params.mid, // 캐신기
   });
 });
 
@@ -88,17 +96,17 @@ router.get('/table/:tid/done', (req, res) => {
   });
 });
 
-router.get('/order', (req, res) => {
+router.get('/history', (req, res) => {
   res.render('dash/index', {
     panel: 'history/history-index',
-    title: '주문 현황',
+    title: '주문 기록',
   });
 });
 
-router.get('/history', (req, res) => {
+router.get('/order', (req, res) => {
   res.render('dash/index', {
     panel: 'order/order-index',
-    title: '주문 기록',
+    title: '주문 현황',
   });
 });
 

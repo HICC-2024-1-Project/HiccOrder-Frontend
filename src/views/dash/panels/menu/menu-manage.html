@@ -4,18 +4,27 @@
       rel="stylesheet"
     />
 
+
+<script>
+  window.mid = `#{menuId}`;
+</script>
+
 <section id="menu-index">
   <div class="top">
     <button id="arrow">
       <span class="material-symbols-outlined"> arrow_back </span>
     </button>
-    <div class="title">메뉴 수정</div>
+    <div class="title">메뉴 관리</div>
   </div>
   <div class="part">
     <div class="set-profile">
       <siv class="profile">
         <label>메뉴 이미지</label>
-        <div class="image"></div>
+        <div class="image">
+          <span class="material-symbols-outlined">
+            add_photo_alternate
+            </span>  
+        </div>
       </siv>
       <div class="inputs">
         <ho-input-select
