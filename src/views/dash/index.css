@@ -58,7 +58,7 @@ header > .left > .button[state='open'] > .line.bottom {
   transform: rotate(-45deg);
 }
 header > .left > .logo {
-  height: 2.5rem;
+  height: 2rem;
   font-size: 1.75rem;
   font-weight: 700;
   color: var(--th);

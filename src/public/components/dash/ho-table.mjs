@@ -164,7 +164,7 @@ export default customElements.define(
       }
 
       function showQR() {
-        APIPatchRequest(`auth/qrlink/`, {
+        APIPostRequest(`auth/qrlink/`, {
           table_id: tid,
         }).then((data) => {
           const modal = document.createElement('ho-modal');
@@ -180,6 +180,10 @@ export default customElements.define(
           img.style.height = '100%';
           img.style.objectFit = 'contain';
           modal.appendChild(qr);
+          const a = document.querySelector('a');
+          a.href = data.temporary_url;
+          a.innerHTML = data.temporary_url;
+          modal.appendChild(a);
           document.body.appendChild(modal);
         });
       }

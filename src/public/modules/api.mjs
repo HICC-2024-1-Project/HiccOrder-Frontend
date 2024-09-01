@@ -6,7 +6,7 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
     method: method,
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
+    credentials: 'include',
     headers: {},
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
