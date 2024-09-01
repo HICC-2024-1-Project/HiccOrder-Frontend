@@ -73,6 +73,15 @@ main > .buttons > a {
   height: 3rem;
 }
 
+main > .logo {
+  display: flex;
+  justify-content: center;
+  height: 2rem;
+  margin-bottom: 2rem;
+}
+main > .logo > img {
+  height: 2rem;
+}
 main > h1 {
   line-height: 100%;
   font-size: 1.5rem;

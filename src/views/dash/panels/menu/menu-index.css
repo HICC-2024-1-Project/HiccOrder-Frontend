@@ -43,6 +43,11 @@
 .menus .list > ho-menu {
   width: calc((100% - 1rem) / 2);
 }
+@media (max-width: 600px) {
+  .menus .list > ho-menu {
+    width: 100%;
+  }
+}
 
 #menu-index > .control {
   width: 100%;
