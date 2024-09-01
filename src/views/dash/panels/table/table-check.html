@@ -1,13 +1,33 @@
-<link href="table-done.css" rel="stylesheet" />
-<script src="table-done.mjs" type="module"></script>
+<link href="table-check.css" rel="stylesheet" />
+<script src="table-check.mjs" type="module"></script>
 
-<div class="main-content">
-    <h1>결제 완료 되었습니다.</h1>
-    <div class="payment-details">
-      <p>점포명: <span id="booth-name"></span></p>
-      <p>결제자 정보: <span id="table-name"></span></p>
-      <p>결제 금액: <span id="total-price"></span> 원</p>
-      <p>결제 수단: <span id="payment-method"></span></p>
+<script>
+  window.tid = `#{table}`;
+</script>
+
+<section id="table-check">
+  <h3>&nbsp;</h3>
+  <div class="display">
+    <div class="title set">
+      <div class="item left">처리</div>
+      <div class="item left menu">메뉴</div>
+      <div class="item right num">수량</div>
+      <div class="item right num">가격</div>
+      <div class="item right num">합계</div>
     </div>
-    <button class="complete-btn" id="complete-btn">완료</button>
+    <div class="content">
+      <div class="empty">테이블에 들어온 주문이 없습니다.</div>
+    </div>
   </div>
+  <div class="control">
+    <div class="left">
+      <div class="count"></div>
+      <div class="price"></div>
+    </div>
+    <div class="right">
+      <button type="button" id="button-table-check" primary disabled>
+        결제하기
+      </button>
+    </div>
+  </div>
+</section>

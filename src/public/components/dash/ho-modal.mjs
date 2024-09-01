@@ -81,7 +81,7 @@ export default customElements.define(
       const bg = document.createElement('div');
       bg.classList.add('bg');
       bg.addEventListener('click', () => {
-        this.remove();
+        this.close();
       });
       shadow.appendChild(bg);
 
@@ -103,7 +103,7 @@ export default customElements.define(
       close.innerHTML += `<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />`;
       close.innerHTML += `<span class="material-symbols-outlined"> close </span>`;
       close.addEventListener('click', () => {
-        this.remove();
+        this.close();
       });
       title.appendChild(close);
 
@@ -111,13 +111,9 @@ export default customElements.define(
       content.classList.add('content');
       fg.appendChild(content);
     }
+
+    close() {
+      this.remove();
+    }
   }
 );
-
-function modal(title, html) {
-  const root = document.createElement('');
-  const bg = document.createElement('div');
-  bg.width = '100vw';
-  bg.height = '100vh';
-  const fg = document.createElement('div');
-}

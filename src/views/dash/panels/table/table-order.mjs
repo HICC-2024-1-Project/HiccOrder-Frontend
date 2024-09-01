@@ -1,4 +1,3 @@
-// 주문내역 페이지
 import {
   APIGetRequest,
   APIPostRequest,
@@ -6,207 +5,174 @@ import {
   APIDeleteRequest,
 } from '/modules/api.mjs';
 
-let menus = [];
+const bid = localStorage.booth;
+const tid = window.tid;
+
+let table = {};
+let menus = {};
 let orders = [];
+let totalCount = 0;
+let totalPrice = 0;
 
-document.addEventListener('DOMContentLoaded', function () {
-  update();
+async function getTable() {
+  table = await APIGetRequest(`booth/${bid}/table/${tid}/`);
+}
 
-  return;
-
-  const orderDetails = document.querySelector('.order-details');
-  const addMenuButton = document.querySelector('.add-menu-btn');
-  const totalPriceElement = document.getElementById('total-price');
-  const tableNameElement = document.getElementById('table-name');
-
-  // URL의 쿼리 문자열을 파싱하여 키-값 쌍으로 관리하는 객체URLSearchParams 생성
-  // 현재 페이지의 URL에서 쿼리 문자열(window.location.search)을 가져와 이를 파싱하여 URLSearchParams 객체를 생성
-  //const params = new URLSearchParams(window.location.search);
-  //const tableId = params.get('table'); // table 이름 가져옴
-
-  if (tableId !== null) {
-    loadTableNameAndOrderData(tableId);
-
-    addMenuButton.addEventListener('click', function () {
-      getOrderElement();
-    });
-
-    document.querySelector('.save-btn').addEventListener('click', function () {
-      saveOrderData(tableId);
-    });
+async function getMenus() {
+  const data = await APIGetRequest(`booth/${bid}/menu/`);
+  for (const menu of data) {
+    menus[menu.id] = menu;
   }
+}
 
-  // 메뉴 추가하기
-
-  // 총액 업데이트하기
-  function updateTotalPrice() {
-    let totalPrice = 0;
-
-    document.querySelectorAll('.order-entry').forEach(function (entry) {
-      const quantity =
-        parseInt(entry.querySelector('.order-quantity').value, 10) || 0;
-      const price =
-        parseInt(entry.querySelector('.order-price').value, 10) || 0;
-      totalPrice += quantity * price;
-    });
-    totalPriceElement.textContent = `${totalPrice.toLocaleString()}원`;
-  }
-
-  // 주문내역 로드
-  async function loadTableNameAndOrderData(tableId) {
-    try {
-      const tableResponse = await APIGetRequest(
-        `booth/${localStorage.booth}/table/${tableId}/`
-      );
-      const tableData = tableResponse;
-      // 테이블 이름 로드
-      tableNameElement.textContent = `${tableData.table_name} 주문 내역`;
-
-      // 주문정보 가져오기
-      const orderResponse = await APIGetRequest(
-        `booth/${localStorage.booth}/order/${tableId}/`
-      );
-
-      const orders = document.querySelector('.orders > .table > .content');
-      orderResponse.forEach((item) => {
-        orders.appendChild(
-          getOrderElement(item.menu_id, item.quantity, item.price)
-        );
-      });
-
-      updateTotalPrice();
-    } catch (error) {
-      console.log(error);
+async function getOrders() {
+  const data = await APIGetRequest(`booth/${bid}/order/${tid}/`);
+  for (const order of data) {
+    order.menu = menus[order['menu_id']];
+    orders.push(order);
+    if (order.state != '취소') {
+      totalCount += order.quantity;
+      totalPrice += order.quantity * order.menu.price;
     }
   }
+  orders = orders.reverse();
+}
 
-  async function saveOrderData(tableId) {
-    const orderEntries = [];
-    document.querySelectorAll('.order-entry').forEach(function (entry) {
-      const name = entry.querySelector('.order-name').value;
-      const quantity = parseInt(
-        entry.querySelector('.order-quantity').value,
-        10
-      );
-      const price = parseInt(entry.querySelector('.order-price').value, 10);
-      if (name && quantity && price) {
-        orderEntries.push({ menu_name: name, quantity, price });
+function getOrderElement(order) {
+  const element = document.createElement('div');
+  element.classList.add('set');
+  let html = ``;
+  html += `<div class="item left"><div class="tag ${order.state}">${order.state}</div></div>`;
+  html += `<div class="item left menu">${order.menu.menu_name}</div>`;
+  html += `<div class="item right num">${order.quantity.toLocaleString(
+    'ko-KR'
+  )}개</div>`;
+  html += `<div class="item right num">${order.menu.price.toLocaleString(
+    'ko-KR'
+  )}원</div>`;
+  html += `<div class="item right num">${(
+    order.quantity * order.menu.price
+  ).toLocaleString('ko-KR')}원</div>`;
+  html += `<div class="item right control"></div>`;
+  element.innerHTML = html;
+
+  let states = ['주문완료', '조리시작', '조리완료', '처리완료'];
+  let si = states.indexOf(order.state);
+
+  if (-1 < si) {
+    //const prevState = states[Math.max(0, si - 1)];
+    //addButton(prevState, prevState, si - 1 < 0);
+    const nextState = states[Math.min(states.length - 1, si + 1)];
+    addButton(nextState, nextState, si + 1 > states.length - 1);
+  }
+  if (order.state === '취소') {
+    addButton('복원', '주문완료');
+  } else {
+    addButton('취소', '취소');
+  }
+
+  function addButton(message, state, disabled = false) {
+    const button = document.createElement('button');
+    button.classList.add('tag');
+    button.classList.add(message);
+    button.disabled = disabled;
+    button.innerHTML = message;
+    button.addEventListener('click', () => {
+      changeOrderState(order.order_id, state);
+    });
+    element.querySelector('.control').appendChild(button);
+  }
+  return element;
+}
+
+function changeOrderState(oid, state) {
+  return APIPatchRequest(`booth/${bid}/order/${tid}/${oid}/`, {
+    state: state,
+  })
+    .then(() => {
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+(async () => {
+  await getTable();
+  await getMenus();
+  await getOrders();
+
+  document.querySelector('#table-order h3').innerHTML = `${
+    table.table_name
+  } 주문 현황<span class="right">합계 ${totalCount.toLocaleString(
+    'ko-KR'
+  )}개 메뉴 / 총액 ${totalPrice.toLocaleString('ko-KR')}원</span>`;
+
+  document
+    .querySelector('#button-table-order-add')
+    .addEventListener('click', () => {
+      const modal = document.createElement('ho-modal');
+      modal.setAttribute('title', '주문 추가');
+
+      const mInput = document.createElement('ho-input-select');
+      mInput.setAttribute('label', '메뉴');
+      mInput.appendChild(getOption('메뉴 선택', '0', true, true));
+      for (const mid in menus) {
+        const menu = menus[mid];
+        mInput.appendChild(
+          getOption(menu.category + ' / ' + menu.menu_name, menu.id)
+        );
+      }
+      modal.appendChild(mInput);
+
+      const qInput = document.createElement('ho-input-string');
+      qInput.setAttribute('label', '수량');
+      qInput.setAttribute('type', 'number');
+      qInput.setAttribute('value', 1);
+      modal.appendChild(qInput);
+
+      const button = document.createElement('button');
+      button.innerHTML = '주문 추가';
+      button.setAttribute('primary', '');
+      button.addEventListener('click', () => {
+        const orders = {
+          content: [
+            {
+              menu_id: mInput.value,
+              quantity: qInput.value,
+            },
+          ],
+        };
+        APIPostRequest(`booth/${bid}/order/${tid}/`, orders)
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+      modal.appendChild(button);
+
+      document.body.appendChild(modal);
+
+      function getOption(key, value, disabled = false, selected = false) {
+        const element = document.createElement('option');
+        element.innerHTML = key;
+        element.value = value;
+        element.disabled = disabled;
+        element.selected = selected;
+        return element;
       }
     });
 
-    try {
-      await APIPostRequest(`booth/${localStorage.booth}/order/${tableId}`, {
-        content: orderEntries,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-});
-
-function getOrderElement(index, order) {
-  const orderElement = document.createElement('div');
-  orderElement.classList.add('order');
-
-  function getItemElement(name) {
-    const item = document.createElement('div');
-    item.classList.add('item');
-    item.classList.add(name);
-    return item;
+  if (orders.length <= 0) {
+    return;
   }
 
-  const nameElement = getItemElement('name');
-  nameElement.innerHTML = order.menu_name;
-  orderElement.appendChild(nameElement);
+  const content = document.querySelector('#table-order .content');
+  content.innerHTML = '';
 
-  const quantityElement = getItemElement('quant');
-  const quantityInput = document.createElement('input');
-  quantityInput.type = 'number';
-  quantityInput.value = order.quantity;
-  quantityElement.appendChild(quantityInput);
-  orderElement.appendChild(quantityElement);
-
-  const priceElement = getItemElement('price');
-  priceElement.innerHTML = order.price;
-  orderElement.appendChild(priceElement);
-
-  const sumElement = getItemElement('sum');
-  sumElement.innerHTML = order.quantity * order.price;
-  orderElement.appendChild(sumElement);
-
-  const stateElement = getItemElement('state');
-  stateElement.innerHTML = order.state;
-  orderElement.appendChild(stateElement);
-
-  const controlsElement = getItemElement('controls');
-  const deleteButton = document.createElement('button');
-  deleteButton.setAttribute('small', '');
-  deleteButton.innerHTML = '삭제';
-  controlsElement.appendChild(deleteButton);
-  orderElement.appendChild(controlsElement);
-
-  quantityInput.addEventListener('change', (event) => {
-    orders[index].quantity = quantityInput.value;
-    sumElement.innerHTML = orders[index].quantity * order.price;
-  });
-
-  deleteButton.addEventListener('click', (event) => {
-    APIDeleteOrder(order.order_id).then(() => {
-      update();
-    });
-  });
-
-  return orderElement;
-}
-
-async function APIUpdateMenus() {
-  menus = await APIGetRequest(`booth/${localStorage.booth}/menu/`);
-}
-
-function getMenu(id) {
-  for (const menu of menus) {
-    if (menu.id === id) {
-      return menu;
-    }
+  for (const order of orders) {
+    content.appendChild(getOrderElement(order));
   }
-  return null;
-}
-
-async function APIUpdateOrders() {
-  const data = await APIGetRequest(
-    `booth/${localStorage.booth}/order/${window.tid}/`
-  );
-
-  orders = [];
-  for (const order of data) {
-    const menu = getMenu(order.menu_id);
-    orders.push({
-      order_id: order.order_id,
-      menu_id: order.menu_id,
-      menu_name: menu.menu_name,
-      price: menu.price,
-      quantity: order.quantity,
-      timestamp: new Date(order.timestamp),
-      state: order.state,
-    });
-  }
-}
-
-async function APIDeleteOrder(oid) {
-  await APIDeleteRequest(
-    `booth/${localStorage.booth}/order/${window.tid}/${oid}/`
-  );
-}
-
-async function update() {
-  await APIUpdateMenus();
-  await APIUpdateOrders();
-
-  const ordersElement = document.querySelector('.orders > .table > .content');
-  ordersElement.innerHTML = [];
-  for (let i = 0; i < orders.length; i++) {
-    const order = orders[i];
-    const orderElement = getOrderElement(i, order);
-    ordersElement.appendChild(orderElement);
-  }
-}
+})();

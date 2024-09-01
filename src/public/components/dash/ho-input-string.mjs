@@ -108,7 +108,9 @@ export default customElements.define(
       } else {
         this.removeAttribute('type');
       }
-      this.shadowRoot.querySelector('input').type = newValue || '';
+      this.shadowRoot
+        ? (this.shadowRoot.querySelector('input').type = newValue || '')
+        : null;
     }
 
     get value() {
@@ -121,7 +123,9 @@ export default customElements.define(
       } else {
         this.removeAttribute('value');
       }
-      this.shadowRoot.querySelector('input').value = newValue || '';
+      this.shadowRoot
+        ? (this.shadowRoot.querySelector('input').value = newValue || '')
+        : null;
     }
 
     get placeholder() {
@@ -175,7 +179,9 @@ export default customElements.define(
       } else {
         this.removeAttribute('label');
       }
-      this.shadowRoot.querySelector('label').innerHTML = newValue || '';
+      this.shadowRoot
+        ? (this.shadowRoot.querySelector('label').innerHTML = newValue || '')
+        : null;
     }
 
     get message() {

@@ -113,7 +113,7 @@ export default customElements.define(
       this.appendChild(button_check);
 
       const button_changename = document.createElement('button');
-      button_changename.slot = 'line1';
+      button_changename.slot = 'line2';
       button_changename.classList.add('check');
       button_changename.setAttribute('small', '');
       button_changename.innerHTML = '이름 변경';
@@ -121,7 +121,7 @@ export default customElements.define(
       this.appendChild(button_changename);
 
       const button_delete = document.createElement('button');
-      button_delete.slot = 'line1';
+      button_delete.slot = 'line2';
       button_delete.classList.add('delete');
       button_delete.setAttribute('small', '');
       button_delete.innerHTML = '삭제';
@@ -180,7 +180,7 @@ export default customElements.define(
           img.style.height = '100%';
           img.style.objectFit = 'contain';
           modal.appendChild(qr);
-          const a = document.querySelector('a');
+          const a = document.createElement('a');
           a.href = data.temporary_url;
           a.innerHTML = data.temporary_url;
           modal.appendChild(a);

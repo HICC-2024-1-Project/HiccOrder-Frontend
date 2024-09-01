@@ -63,7 +63,7 @@ h4 {
 #booth-index-image > button {
   position: absolute;
   bottom: -1rem;
-  left: 0.75rem;
+  right: 0.75rem;
 }
 
 .set-bank {

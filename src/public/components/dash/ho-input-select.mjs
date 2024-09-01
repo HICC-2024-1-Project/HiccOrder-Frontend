@@ -125,7 +125,9 @@ export default customElements.define(
       } else {
         this.removeAttribute('label');
       }
-      this.shadowRoot.querySelector('label').innerHTML = newValue || '';
+      this.shadowRoot
+        ? (this.shadowRoot.querySelector('label').innerHTML = newValue || '')
+        : null;
     }
 
     get message() {

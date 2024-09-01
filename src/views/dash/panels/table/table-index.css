@@ -32,7 +32,7 @@
   justify-content: center;
 }
 #table-index > .display > .content ho-table {
-  width: calc((100% - 2rem) / 3);
+  width: calc((100% - 1rem) / 2);
 }
 #table-index > .control {
   width: 100%;
@@ -44,14 +44,9 @@
   gap: 1rem;
 }
 ho-table button {
-  width: calc((100% - 1rem) / 3);
+  width: calc((100% - 2rem) / 5);
   align-self: flex-end;
   padding: 0 !important;
-}
-@media (max-width: 900px) {
-  #table-index > .display > .content ho-table {
-    width: calc((100% - 1rem) / 2);
-  }
 }
 @media (max-width: 600px) {
   #table-index > .display > .content ho-table {

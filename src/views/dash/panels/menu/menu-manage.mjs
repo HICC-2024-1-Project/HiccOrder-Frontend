@@ -16,7 +16,7 @@ const button = {
   create: document.querySelector('#button-menu-manage-create'),
   update: document.querySelector('#button-menu-manage-update'),
   delete: document.querySelector('#button-menu-manage-delete'),
-  imageUpload: document.querySelector('#button-menu-manage-upload-image'),
+  image: document.querySelector('#button-menu-manage-image'),
 };
 
 async function createMenu() {
@@ -87,6 +87,40 @@ async function deleteMenu() {
     .catch((error) => {});
 }
 
+async function postImage() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/jpeg, image/png, image/webp';
+
+  input.addEventListener('change', (event) => {
+    const files = event.target.files;
+
+    if (files.length < 1) {
+      // 선택된 파일 없음
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', files[0]);
+
+    fetch('/profiles/@me/image', {
+      method: 'PATCH',
+      headers: {}, // 비워 놓아야 함
+      body: formData,
+    })
+      .then((res) => {
+        // 이미지 업로드 완료
+        alert('업로드 성공');
+        //window.location.reload();
+      })
+      .catch((error) => {
+        // 오류
+      });
+  });
+
+  input.click();
+}
+
 (async () => {
   if (!mid) {
     button.update.style.display = 'none';
@@ -108,4 +142,5 @@ async function deleteMenu() {
   button.create.addEventListener('click', createMenu);
   button.update.addEventListener('click', updateMenu);
   button.delete.addEventListener('click', deleteMenu);
+  button.image.addEventListener('click', postImage);
 })();

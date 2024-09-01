@@ -1,130 +1,156 @@
-.order-list {
-  margin-top: 20px;
-}
-
-.order-item {
+#table-order {
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  padding: 10px;
-  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
 }
-
-.order-item:hover {
+h3 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+h3 > .right {
+  text-align: right;
+}
+.set {
+  display: flex;
+  flex-direction: row;
+  height: 2rem;
+}
+.set > .item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5rem;
+  font-size: 0.9rem;
+  border-right: solid 0.1rem rgb(210, 210, 210);
+}
+.set > .item:last-child {
+  border-right: none;
+}
+.set.title {
+  background: rgb(240, 240, 240);
+}
+.set.title > .item {
+  font-weight: 700;
+}
+.set > .item.left {
+  justify-content: flex-start;
+}
+.set > .item.right {
+  justify-content: flex-end;
+}
+.set > .item.num {
+  font-family: monospace;
+}
+.set > .item > .tag {
+  border-radius: 1rem;
+  background: black;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+}
+.set:nth-child(even) {
   background-color: #ffeee9;
-  border-radius: 10px;
+}
+.set:last-child {
+  border-bottom: solid 0.1rem rgb(210, 210, 210);
 }
 
-.order-item .order-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
+.set > .item.menu {
+  flex: 3;
 }
-
-.order-item .order-name {
-  flex: 1;
-  font-size: 25px;
+.set > .item.control {
+  flex: 1.5;
 }
-
-/* 상세 페이지 스타일 */
-.order-details {
-  margin-top: 20px;
+.set > .item > .tag.주문완료 {
+  background: rgb(255, 45, 85);
 }
-
-.order-entry {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+.set > .item > .tag.조리시작 {
+  background: rgb(255, 149, 0);
 }
-
-.order-entry .order-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
+.set > .item > .tag.조리완료 {
+  background: rgb(52, 199, 89);
 }
-
-.order-entry input,
-.order-entry .order-quantity,
-.order-entry .order-price {
-  width: 200px;
-  height: 50px;
-  padding: 5px;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
-  margin-right: 10px;
+.set > .item > .tag.취소 {
+  background: rgb(128, 128, 128);
 }
-
-.order-entry .delete-btn {
-  background-color: #ff643c;
+.set > .item > button {
+  border-radius: 1rem;
   color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  height: unset;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  margin-left: 0.25rem;
+}
+.set > .item > button.tag:disabled {
+  background: rgb(128, 128, 128);
 }
 
-.save-btn,
-.add-menu-btn {
-  background-color: #ff643c;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.total-amount {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-#table-order-orders {
+#table-order > .display {
   width: 100%;
-}
-#table-order-orders > .table {
-  width: 100%;
-  border-radius: 0.75rem;
+  height: calc(100% - 2.5rem);
+  padding: 0;
   overflow: hidden;
+  border-radius: 0.75rem;
+  border: solid 0.1rem rgb(210, 210, 210);
 }
-#table-order-orders > .table > .title {
+#table-order > .display > .title {
+  height: 2rem;
+  border-bottom: solid 0.1rem rgb(210, 210, 210);
+}
+#table-order > .display > .title.set > .item {
+  font-weight: 700;
+}
+#table-order > .display > .content {
   width: 100%;
-  display: flex;
-  background: #ffc0b1;
-  font-weight: 700;
-}
-#table-order-orders > .table > .title > * {
-  flex: 1;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-#table-order-orders > .table > .content {
+  height: calc(100% - 2rem);
+  padding: 0;
   overflow-y: auto;
 }
-#table-order-orders > .table > .content > .order {
-  display: flex;
-  background: white;
-}
-#table-order-orders > .table > .content > .order:nth-child(even) {
-  background: #ffeee9;
-}
-#table-order-orders > .table .item {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 2.5rem;
-}
-#table-order-orders > .table .item.quant > input {
+#table-order > .display > .content > .empty {
+  font-size: 1.25rem;
+  font-weight: 700;
   width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-#table-order-orders > .table .item {
-  flex: 1;
-  font-size: 1rem;
-  padding-left: 0.5rem;
+.menus > h3 {
+  font-size: 1.25rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.5rem;
 }
-#table-order-orders > .table .item.name {
-  flex: 2;
+.menus:first-child > h3 {
+  margin-top: 0;
+}
+.menus .list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.menus .list > ho-menu {
+  width: calc((100% - 1rem) / 2);
+}
+@media (max-width: 600px) {
+  .menus .list > ho-menu {
+    width: 100%;
+  }
+}
+
+#table-order > .control {
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
 }

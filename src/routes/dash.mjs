@@ -64,7 +64,7 @@ router.get('/table/:tid/order', (req, res) => {
 router.get('/table/:tid/check', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-check',
-    title: '<a href="/dash/table">테이블 관리</a> / 결제',
+    title: '<a href="/dash/table">테이블 관리</a> / 주문 내역 확인',
     table: req.params.tid,
   });
 });
@@ -80,7 +80,7 @@ router.get('/table/:tid/pay', (req, res) => {
 router.get('/table/:tid/done', (req, res) => {
   res.render('dash/index', {
     panel: 'table/table-done',
-    title: '<a href="/dash/table">테이블 관리</a> / 결제',
+    title: '<a href="/dash/table">테이블 관리</a> / 결제 완료',
     table: req.params.tid,
   });
 });

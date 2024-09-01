@@ -3,7 +3,7 @@
 import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
 const bid = 'wnynya@gmail.com';
-const tid = 323;
+const tid = 1;
 
 class Client {
   constructor(bid, tid) {
@@ -392,14 +392,14 @@ class CartPanel extends ClientPanel {
         const phase = this.panel.getAttribute('phase');
         switch (phase) {
           case 'cart': {
-            this.order(CLIENT.menus, CLIENT.ordersCart);
+            this.order();
             break;
           }
           case 'order': {
             break;
           }
           default: {
-            this.open(CLIENT.menus, CLIENT.ordersCart);
+            this.open();
             break;
           }
         }
@@ -421,7 +421,9 @@ class CartPanel extends ClientPanel {
       });
   }
 
-  open(menus, cart) {
+  open() {
+    const menus = this.client.menus;
+    const cart = this.client.ordersCart;
     this.panel.querySelector('.fg-content > .cart > .list').innerHTML = '';
     for (let [menuID, count] of Object.entries(cart)) {
       const menu = JSON.parse(JSON.stringify(menus[menuID]));
