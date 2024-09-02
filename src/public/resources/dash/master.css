@@ -110,7 +110,7 @@ label {
   color: white;
   font-size: 0.7rem;
   font-weight: 700;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.75rem;
   box-shadow: 0 0.1rem 0.25rem 0 rgba(0, 0, 0, 0.3);
 }
 .set:nth-child(even) {
@@ -151,6 +151,9 @@ label {
 .set > .item > .tag.취소 {
   background: rgb(128, 128, 128);
 }
+.set > .item > .tag.결제완료 {
+  background: rgb(128, 128, 128);
+}
 .set > .item > button {
   border-radius: 1rem;
   color: white;
@@ -160,6 +163,9 @@ label {
   height: unset;
   border: none;
   margin-left: 0.25rem;
+}
+.set > .item > button:first-child {
+  margin-left: 0;
 }
 .set > .item > button.tag:disabled {
   background: rgb(128, 128, 128);

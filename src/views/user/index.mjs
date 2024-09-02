@@ -2,9 +2,6 @@
 
 import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
-const bid = 'wnynya@gmail.com';
-const tid = 1;
-
 class Client {
   constructor(bid, tid) {
     if (!bid || !tid) {

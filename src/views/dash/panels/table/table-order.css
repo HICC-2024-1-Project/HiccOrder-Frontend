@@ -41,7 +41,7 @@
 }
 
 .set > .item.state {
-  width: 4.6rem;
+  width: 5.1rem;
   flex: unset;
 }
 .set > .item.menu {
@@ -57,6 +57,6 @@
   flex: 1;
 }
 .set > .item.control {
-  width: 7.15rem;
+  width: 8.1rem;
   flex: unset;
 }

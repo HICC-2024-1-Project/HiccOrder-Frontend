@@ -132,6 +132,17 @@ async function displayOrders(orders) {
 }
 
 function getOrderElement(order) {
+  let states = ['주문완료', '조리시작', '조리완료', '처리완료'];
+  let msgs = ['새주문', '조리중', '서빙필요'];
+  let si = states.indexOf(order.state);
+  let sm = msgs[si];
+  if (order.state === '취소') {
+    sm = '취소됨';
+  }
+  if (order.state == '처리완료') {
+    sm = '처리됨';
+  }
+
   const tr = document.createElement('div');
   tr.classList.add('set');
   let html = ``;
@@ -139,13 +150,12 @@ function getOrderElement(order) {
   if (!order.state) {
     html += `<div class="tag 결제완료">결제완료</div>`;
   } else {
-    html += `<div class="tag ${order.state}">${order.state}</div>`;
+    html += `<div class="tag ${order.state}">${sm}</div>`;
   }
   html += `</div>`;
-  html += `<div class="item left timestamp">${order.timestamp
-    .toJSON()
-    .substring(0, 19)
-    .replace('T', ' ')}</div>`; // 주문시간
+  html += `<div class="item left timestamp">${formatDatetime(
+    order.timestamp
+  )}</div>`; // 주문시간
   html += `<div class="item left table_name">${order.table_name}</div>`; // 테이블이름
   html += `<div class="item left menu_name">${order.menu_name}</div>`; // 메뉴명
   html += `<div class="item right quantity">${order.quantity}개</div>`; // 개수
@@ -156,16 +166,16 @@ function getOrderElement(order) {
   return tr;
 }
 
-function getDayElement(date) {
+function formatDatetime(date) {
   const tr = document.createElement('tr');
-  let y = date.getFullYear();
-  let m = date.getMonth() + 1;
-  let d = date.getDate();
-  let val = `${y}년 ${m}월 ${d}일`;
-  let html = ``;
-  html += `<td class="date"  colspan="6">${val}</td>`;
-  tr.innerHTML = html;
-  return tr;
+  let Y = date.getFullYear();
+  let M = (date.getMonth() + 1 + '').padStart(2, '0');
+  let D = (date.getDate() + '').padStart(2, '0');
+  let h = (date.getHours() + '').padStart(2, '0');
+  let m = (date.getMinutes() + '').padStart(2, '0');
+  let s = (date.getSeconds() + '').padStart(2, '0');
+  let val = `${Y}-${M}-${D} ${h}:${m}:${s}`;
+  return val;
 }
 
 (async () => {

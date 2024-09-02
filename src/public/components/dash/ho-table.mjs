@@ -169,9 +169,11 @@ export default customElements.define(
         }).then((data) => {
           const modal = document.createElement('ho-modal');
           modal.setAttribute('title', `${title.innerHTML} 입장 QR`);
+          let url = data.temporary_url;
+          url += `?r=https://ho.ccc.vg/user/${bid}/${tid}/`;
           const qr = document.createElement('div');
           new QRCode(qr, {
-            text: data.temporary_url,
+            text: url,
             width: 1000,
             height: 1000,
           });
@@ -179,10 +181,9 @@ export default customElements.define(
           img.style.width = '100%';
           img.style.height = '100%';
           img.style.objectFit = 'contain';
-          modal.appendChild(qr);
           const a = document.createElement('a');
-          a.href = data.temporary_url;
-          a.innerHTML = data.temporary_url;
+          a.href = url;
+          a.appendChild(img);
           modal.appendChild(a);
           document.body.appendChild(modal);
         });

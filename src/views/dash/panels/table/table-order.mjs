@@ -39,10 +39,21 @@ async function getOrders() {
 }
 
 function getOrderElement(order) {
+  let states = ['주문완료', '조리시작', '조리완료', '처리완료'];
+  let msgs = ['새주문', '조리중', '서빙필요'];
+  let si = states.indexOf(order.state);
+  let sm = msgs[si];
+  if (order.state === '취소') {
+    sm = '취소됨';
+  }
+  if (order.state == '처리완료') {
+    sm = '처리됨';
+  }
+
   const element = document.createElement('div');
   element.classList.add('set');
   let html = ``;
-  html += `<div class="item state"><div class="tag ${order.state}">${order.state}</div></div>`;
+  html += `<div class="item state"><div class="tag ${order.state}">${sm}</div></div>`;
   html += `<div class="item left menu">${order.menu.menu_name}</div>`;
   html += `<div class="item right num count">${order.quantity.toLocaleString(
     'ko-KR'
@@ -55,9 +66,6 @@ function getOrderElement(order) {
   ).toLocaleString('ko-KR')}원</div>`;
   html += `<div class="item control"></div>`;
   element.innerHTML = html;
-
-  let states = ['주문완료', '조리시작', '조리완료', '처리완료'];
-  let si = states.indexOf(order.state);
 
   if (-1 < si) {
     //const prevState = states[Math.max(0, si - 1)];

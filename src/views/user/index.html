@@ -21,6 +21,24 @@
     <link href="index.css" rel="stylesheet" />
 
     <title>힉오더</title>
+
+    <script>
+      window.bid = `#{bid}`;
+      if (bid) {
+        localStorage.bid = window.bid;
+      } else {
+        window.bid = localStorage.bid;
+      }
+      window.tid = `#{tid}`;
+      if (tid) {
+        localStorage.tid = window.tid;
+      } else {
+        window.tid = localStorage.tid;
+      }
+      if (window.location.pathname != '/user') {
+        window.location.href = '/user';
+      }
+    </script>
   </head>
 
   <body>

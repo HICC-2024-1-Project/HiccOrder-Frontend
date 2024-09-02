@@ -91,6 +91,7 @@ header > .right > .account {
   transition: box-shadow ease-out 0.1s, border-radius ease-out 0.1s;
   user-select: none;
   overflow: hidden;
+  cursor: pointer;
 }
 header > .right > .account[state='close'] {
   border-radius: 1rem;
@@ -125,14 +126,14 @@ header > .right > .account > .dropdown {
   overflow: hidden;
   white-space: nowrap;
   width: 12rem;
-  max-height: 8rem;
-  transition: width ease-out 0.1s, max-height ease-out 0.1s;
+  height: 3rem;
+  transition: width ease-out 0.1s, height ease-out 0.1s;
 }
 header > .right > .account[state='close'] > .dropdown {
   width: 0;
-  max-height: 0;
+  height: 0;
   pointer-events: none;
-  transition: width ease-out 0.2s, max-height ease-out 0.2s;
+  transition: width ease-out 0.2s, height ease-out 0.2s;
 }
 header > .right > .account > .dropdown > .button {
   padding: 0.5rem 1rem;

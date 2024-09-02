@@ -9,7 +9,17 @@ router.get('*', (req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  res.render('user/index');
+  res.render('user/index', {
+    bid: '',
+    tid: '',
+  });
+});
+
+router.get('/:bid/:tid', (req, res) => {
+  res.render('user/index', {
+    bid: req.params.bid,
+    tid: req.params.tid,
+  });
 });
 
 export default router;

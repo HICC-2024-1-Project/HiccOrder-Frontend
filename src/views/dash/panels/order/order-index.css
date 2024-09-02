@@ -8,146 +8,176 @@
 }
 
 #order-index {
-  width: 100%;
-  max-width: 80rem;
-  min-width: 15rem;
   display: flex;
-}
-
-#order-index > .part {
-  width: 100%;
-  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 1rem;
-  align-items: flex-start;
-  /*justify-content: space-evenly;*/
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
 }
 
-#order-index > .part > .order,
-#order-index > .part > .order-completed,
-#order-index > .part > .order-cancel {
-  display: flex;
-  max-width: 18rem;
-  min-width: 14rem;
-  width: 23%;
+.order {
+  width: calc((100% - 2rem) / 3);
   height: 11rem;
-  border-radius: 15px;
-  margin: 0.5rem;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-  justify-content: center;
-  transition: width 0.3s ease-out;
-  box-shadow: var(--box-shadow);
-}
-#order-index > .part > .order {
-  background: var(--bg);
-}
-#order-index > .part > .order-completed {
-  background: var(--cpl);
-}
-#order-index > .part > .order-cancel {
-  background: var(--cncl);
-}
-
-@media (max-width: 70rem) {
-  #order-index > .part > .order,
-  #order-index > .part > .order-completed,
-  #order-index > .part > .order-cancel {
-    min-width: 14rem;
-    width: 30%;
-    transition: width 0.3s ease-out;
-  }
-}
-@media (max-width: 45rem) {
-  #order-index > .part > .order,
-  #order-index > .part > .order-completed,
-  #order-index > .part > .order-cancel {
-    max-width: 20rem;
-    min-width: 14rem;
-    width: 45%;
-    transition: width 0.3s ease-out;
-  }
-}
-@media (max-width: 25rem) {
-  #order-index > .part > .order,
-  #order-index > .part > .order-completed,
-  #order-index > .part > .order-cancel {
-    width: 100%;
-  }
-}
-
-.state {
-  width: 90%;
+  border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  background: white;
+  border: solid 0.1rem black;
+  overflow: hidden;
 }
-
-.state > .info {
+.order > .info {
   width: 100%;
-  flex-direction: row;
-  display: flex;
-  padding: 0.5rem;
-  padding-top: 0.6rem;
-  padding-bottom: 0.8rem;
-  color: white;
+  padding: 0.75rem;
 }
-
-.state > .info > .table {
-  width: 50%;
-  font-size: 20px;
+.order > .info > .menu {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  line-height: 100%;
   font-weight: 700;
-  text-shadow: var(--text-shadow);
+  margin-bottom: 0.75rem;
 }
-
-.state > .info > .time {
-  width: 50%;
+.order > .info > .menu > .name {
+  width: calc(100% - 3.5rem);
+  max-height: 2.5rem;
+  overflow: hidden;
+}
+.order > .info > .menu > .count {
+  width: 4rem;
   text-align: right;
+  font-size: 1.5rem;
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 1.25rem;
 }
-
-.state > .quantity {
-  width: 100%;
+.order > .info > .menu > .count .light {
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
+}
+.order > .info > .table {
   display: flex;
-  padding-bottom: 3.5rem;
-  padding-left: 0.5rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.order > .info > .table > .name {
+  font-size: 1.25rem;
+  height: 1.25rem;
+  line-height: 100%;
+  font-weight: 400;
+}
+.order > .info > .table > .name > a {
+  color: black !important;
+  text-decoration: none;
+}
+.order > .info > .table > .name > a:hover {
+  text-decoration: underline;
+}
+.order > .info > .table > .message {
   color: white;
-}
-
-.state > .button {
-  width: 100%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  line-height: 100%;
+  font-weight: 700;
+  border-radius: 2rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-}
-.state > .button > .set-left {
-  width: 50%;
-  gap: 1rem;
-  display: flex;
-  justify-content: center;
   align-items: center;
 }
-.set-left > #button-order-cancel {
+.order > .control {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.75rem;
+  height: 3.5rem;
+}
+.order > .control > button:last-child {
+  width: 50%;
+}
+.order[state='취소'] > .control,
+.order[state='처리완료'] > .control,
+.order[state='결제완료'] > .control {
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .order {
+    width: calc((100% - 1rem) / 2);
+  }
+}
+@media (max-width: 600px) {
+  .order {
+    width: calc((100% - 1rem) / 2);
+  }
+}
+
+button[state='조리시작'] {
+  background: rgb(255, 45, 85) !important;
+  border-color: rgb(221, 16, 53) !important;
+}
+button[state='조리완료'] {
+  background: rgb(255, 149, 0) !important;
+  border-color: rgb(255, 128, 0) !important;
+}
+button[state='처리완료'] {
+  background: rgb(52, 199, 89) !important;
+  border-color: rgb(17, 170, 55) !important;
+}
+button[state='취소'] {
   color: black;
-  background-color: white;
-  height: 2rem;
-  width: 90%;
-  padding: 0 15%;
-  border: none;
-  box-shadow: var(--box-shadow);
+  background: white !important;
+  border-color: rgb(210, 210, 210) !important;
 }
 
-.state > .button > .set-right {
-  width: 50%;
-  gap: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.order[state='주문완료'] {
+  background: rgba(255, 224, 230);
+  border-color: rgb(255, 45, 85);
 }
-
-.set-right > #button-order-complete {
-  display: flex;
-  padding: 0 15%;
-  width: 90%;
-  height: 2rem;
-  border: none;
-  box-shadow: var(--box-shadow);
+.order[state='조리시작'] {
+  background: rgb(255, 241, 220);
+  border-color: rgb(255, 149, 0);
+}
+.order[state='조리완료'] {
+  background: rgb(234, 255, 240);
+  border-color: rgb(52, 199, 89);
+}
+.order[state='취소'],
+.order[state='처리완료'],
+.order[state='결제완료'] {
+  background: rgb(180, 180, 180);
+  border-color: rgb(128, 128, 128);
+}
+.order[state='주문완료'] .message {
+  background: rgb(255, 45, 85);
+}
+.order[state='조리시작'] .message {
+  background: rgb(255, 149, 0);
+}
+.order[state='조리완료'] .message {
+  background: rgb(52, 199, 89);
+}
+.order[state='취소'] .message,
+.order[state='처리완료'] .message,
+.order[state='결제완료'] .message {
+  background: rgb(128, 128, 128);
+}
+.order[state='주문완료'] .table .name {
+  color: rgb(255, 45, 85);
+}
+.order[state='조리시작'] .table .name {
+  color: rgb(255, 149, 0);
+}
+.order[state='조리완료'] .table .name {
+  color: rgb(52, 199, 89);
+}
+.order[state='취소'] .table .name,
+.order[state='처리완료'] .table .name,
+.order[state='결제완료'] .table .name {
+  color: rgb(128, 128, 128);
 }
