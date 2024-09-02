@@ -38,7 +38,11 @@ class Client {
 
   async getBooth() {
     this.booth = await APIGetRequest(`booth/${this.bid}/`).catch((error) => {
-      window.location.href = '/error/403';
+      if (!this.booth) {
+        window.location.href = '/error/403';
+      } else {
+        window.location.href = '/done';
+      }
     });
   }
 
