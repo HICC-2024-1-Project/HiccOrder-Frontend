@@ -697,4 +697,8 @@ class HistoryPanel extends ClientPanel {
   }
 }
 
+setInterval(() => {
+  getBooth();
+}, 5000);
+
 window.CLIENT = new Client(bid, tid);
