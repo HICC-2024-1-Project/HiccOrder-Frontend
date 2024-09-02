@@ -5,7 +5,7 @@ import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 class Client {
   constructor(bid, tid) {
     if (!bid || !tid) {
-      window.location.href = '/error-403';
+      window.location.href = '/error/403';
       return;
     }
     this.bid = bid;
@@ -33,7 +33,9 @@ class Client {
   }
 
   async getBooth() {
-    this.booth = await APIGetRequest(`booth/${this.bid}/`);
+    this.booth = await APIGetRequest(`booth/${this.bid}/`).catch((error) => {
+      window.location.href = '/error/403';
+    });
   }
 
   async getTable() {

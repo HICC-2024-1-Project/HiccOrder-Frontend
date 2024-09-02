@@ -11,6 +11,10 @@ router.get('/', (req, res) => {
   }
 });
 
+router.get('/error/403', (req, res) => {
+  res.render('error/403');
+});
+
 import dashRouter from './dash.mjs';
 router.use('/dash', dashRouter);
 
