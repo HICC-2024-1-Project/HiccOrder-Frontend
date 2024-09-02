@@ -5,89 +5,47 @@
   flex-direction: column;
   gap: 1rem;
 }
-.table {
+#history-index > .display {
   width: 100%;
-  height: calc(100% - 3.5rem);
-  overflow-y: auto;
-  border-radius: 0.75rem;
-  border: solid 0.1rem rgb(210, 210, 210);
-}
-.info {
-  width: 100%;
-  height: 2.5rem;
-  display: flex;
-}
-.sales {
-  height: 2.5rem;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 0 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.75rem;
-  border: solid 0.1rem rgb(210, 210, 210);
-}
-#history-index-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-#history-index-table tr {
-  height: 2rem;
-}
-#history-index-table th,
-#history-index-table td {
-  padding: 0;
   height: 100%;
-  text-align: center;
-  border-right: solid 0.1rem rgb(210, 210, 210);
-  padding: 0 0.5rem;
-  font-size: 0.8rem;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: solid 0.1rem rgb(210, 210, 210);
 }
-#history-index-table th:last-child,
-#history-index-table td:last-child {
-  border-right: none;
+#history-index > .display > .content {
+  width: calc(100% + 17px);
+  height: calc(100% - 2rem);
+  padding: 0;
+  overflow-y: scroll;
+  box-sizing: content-box;
 }
-#history-index-table th {
-  cursor: pointer;
-}
-#history-index-table .title {
-  display: inline-flex;
-  justify-content: center;
+#history-index > .display > .content > .empty {
+  font-size: 1.25rem;
+  font-weight: 700;
+  width: 100%;
+  height: 100%;
+  display: flex;
   align-items: center;
-}
-#history-index-table .title > span {
-  font-size: inherit;
-  font-weight: 600;
-}
-#history-index-table thead tr {
-  position: sticky;
-  top: 0;
-  background: rgb(240, 240, 240);
-  border-bottom: solid 0.1rem rgb(210, 210, 210);
-}
-#history-index-table tr:last-child {
-  border-bottom: solid 0.1rem rgb(210, 210, 210);
+  justify-content: center;
 }
 
-#history-index-table .date {
-  text-align: left;
-  font-family: monospace;
+.set > .item.state {
+  width: 4.6rem;
+  flex: unset;
 }
-#history-index-table .timestamp {
-  text-align: left;
-  font-family: monospace;
+.set > .item.timestamp {
+  flex: 2;
 }
-#history-index-table .quantity {
-  text-align: right;
-  font-family: monospace;
+.set > .item.table_name {
+  flex: 1;
 }
-#history-index-table .menu_price {
-  text-align: right;
-  font-family: monospace;
+.set > .item.menu_name {
+  flex: 3;
 }
-
-#history-index-table > tbody > tr:nth-child(even) {
-  background-color: #ffeee9;
+.set > .item.quantity {
+  flex: 0.5;
+}
+.set > .item.price {
+  flex: 1;
 }

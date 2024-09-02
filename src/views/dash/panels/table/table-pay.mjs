@@ -90,13 +90,17 @@ async function getOrders() {
     `supertoss://send?amount=${tp}&bank=${bn}&accountNo=${ac}&origin=qr`,
     document.querySelector(`.qr.toss > .image`)
   );
-  qrcode(`awdawd`, document.querySelector(`.qr.kakao > .image`));
-  qrcode(`awdawd`, document.querySelector(`.qr.naver > .image`));
 
   document.querySelector('#button-table-pay').disabled = err;
 
   document.querySelector('#button-table-pay').addEventListener('click', () => {
-    //window.location.href = `/dash/table/${tid}/pay`;
+    APIPostRequest(`booth/${bid}/payment/${tid}/`)
+      .then(() => {
+        window.location.href = `/dash/table/${tid}/done`;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
 
   function qrcode(string, element) {

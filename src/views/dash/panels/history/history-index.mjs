@@ -2,46 +2,39 @@ import { APIGetRequest } from '/modules/api.mjs';
 
 const bid = localStorage.booth;
 
-const table = document.querySelector('#history-index-table');
+const table = document.querySelector('#history-index .display > .content');
 
 let orderKey = 'timestamp';
 let orderSort = 'asc';
 
 async function readOrders() {
+  const processingOrders = await APIGetRequest(`booth/${bid}/order/`);
   const tables = await APIGetRequest(`booth/${bid}/table/`);
   const menus = await APIGetRequest(`booth/${bid}/menu/`);
 
   let orders = [];
-  for (const table of tables) {
-    let tableOrders = await APIGetRequest(
-      `booth/${bid}/order/${table.id}/`
-    ).catch(() => {
-      return [];
-    });
-
-    for (const order of tableOrders) {
-      for (const table of tables) {
-        if (table.id === order.table_id) {
-          for (const key in table) {
-            order[`table_${key.replace(/^table_/, '')}`] = table[key];
-          }
+  for (const order of processingOrders) {
+    for (const table of tables) {
+      if (table.id === order.table_id) {
+        for (const key in table) {
+          order[`table_${key.replace(/^table_/, '')}`] = table[key];
         }
       }
-
-      for (const menu of menus) {
-        if (menu.id === order.menu_id) {
-          for (const key in menu) {
-            order[`menu_${key.replace(/^menu_/, '')}`] = menu[key];
-          }
-        }
-      }
-
-      order.timestamp = new Date(order.timestamp);
-
-      order.price_total = order.quantity * order.menu_price;
-
-      orders.push(order);
     }
+
+    for (const menu of menus) {
+      if (menu.id === order.menu_id) {
+        for (const key in menu) {
+          order[`menu_${key.replace(/^menu_/, '')}`] = menu[key];
+        }
+      }
+    }
+
+    order.timestamp = new Date(order.timestamp);
+
+    order.price_total = order.quantity * order.menu_price;
+
+    orders.push(order);
   }
   orders = sortByKey(orders, orderKey, orderSort);
 
@@ -68,11 +61,13 @@ async function displayOrders(orders) {
   let totalSales = 0;
   table.innerHTML = '';
 
-  const thead = document.createElement('thead');
-  const theadtr = document.createElement('tr');
-  function thElement(name, key) {
-    const th = document.createElement('th');
+  const thead = document.querySelector('#history-index .display > .title');
+  thead.innerHTML = '';
+  function thElement(name, key, classes = []) {
+    const th = document.createElement('div');
+    th.classList.add('item');
     th.classList.add(key);
+    th.classList.add(...classes);
     let html = '';
     html += '<div class="title">';
     html += name;
@@ -100,20 +95,18 @@ async function displayOrders(orders) {
     return th;
   }
 
-  theadtr.appendChild(thElement('주문 시간', 'timestamp'));
-  theadtr.appendChild(thElement('테이블', 'table_name'));
-  theadtr.appendChild(thElement('메뉴', 'menu_name'));
-  theadtr.appendChild(thElement('수량', 'quantity'));
-  theadtr.appendChild(thElement('가격', 'menu_price'));
-  theadtr.appendChild(thElement('결제 여부', 'state'));
+  thead.appendChild(thElement('처리', 'state'));
+  thead.appendChild(thElement('주문 시간', 'timestamp', ['left']));
+  thead.appendChild(thElement('테이블', 'table_name', ['left']));
+  thead.appendChild(thElement('메뉴', 'menu_name', ['left']));
+  thead.appendChild(thElement('수량', 'quantity', ['right']));
+  thead.appendChild(thElement('가격', 'menu_price', ['right']));
 
-  thead.appendChild(theadtr);
-  table.appendChild(thead);
+  //table.appendChild(thead);
 
-  const tbody = document.createElement('tbody');
   //let lastDay = orderSort == 'asc' ? 0 : Infinity;
   for (const order of orders) {
-    tbody.appendChild(getOrderElement(order));
+    table.appendChild(getOrderElement(order));
     /*const d = new Date(order.timestamp.toJSON().substring(0, 10));
     if (orderSort == 'asc') {
       if (d > lastDay) {
@@ -132,7 +125,6 @@ async function displayOrders(orders) {
       totalSales += order.price_total;
     }
   }
-  table.appendChild(tbody);
 
   document.querySelector(
     '#history-index-sales'
@@ -140,23 +132,26 @@ async function displayOrders(orders) {
 }
 
 function getOrderElement(order) {
-  const tr = document.createElement('tr');
+  const tr = document.createElement('div');
+  tr.classList.add('set');
   let html = ``;
-  html += `<td class="timestamp">${order.timestamp
+  html += `<div class="item state">`;
+  if (!order.state) {
+    html += `<div class="tag 결제완료">결제완료</div>`;
+  } else {
+    html += `<div class="tag ${order.state}">${order.state}</div>`;
+  }
+  html += `</div>`;
+  html += `<div class="item left timestamp">${order.timestamp
     .toJSON()
     .substring(0, 19)
-    .replace('T', ' ')}</td>`; // 주문시간
-  html += `<td>${order.table_name}</td>`; // 테이블이름
-  html += `<td>${order.menu_name}</td>`; // 메뉴명
-  html += `<td class="quantity">${order.quantity}개</td>`; // 개수
-  html += `<td class="menu_price">${order.menu_price.toLocaleString(
+    .replace('T', ' ')}</div>`; // 주문시간
+  html += `<div class="item left table_name">${order.table_name}</div>`; // 테이블이름
+  html += `<div class="item left menu_name">${order.menu_name}</div>`; // 메뉴명
+  html += `<div class="item right quantity">${order.quantity}개</div>`; // 개수
+  html += `<div class="item right menu_price">${order.menu_price.toLocaleString(
     'ko-KR'
-  )}원</td>`; // 가격
-  if (order.state === '결제 완료') {
-    html += `<td>O</td>`;
-  } else {
-    html += `<td>X</td>`;
-  }
+  )}원</div>`; // 가격
   tr.innerHTML = html;
   return tr;
 }

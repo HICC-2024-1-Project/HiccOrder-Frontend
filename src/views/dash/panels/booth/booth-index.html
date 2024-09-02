@@ -3,6 +3,8 @@
 <section id="booth-index">
   <h3>부스 정보</h3>
 
+  <hr />
+
   <div class="form">
     <div class="left">
       <ho-input-string
@@ -20,7 +22,7 @@
         type="text"
         value="test"
         placeholder="부스 이름"
-        label="부스 이름"
+        label="부스 이름<span class='star'>*</span>"
         message=""
       ></ho-input-string>
     </div>
@@ -38,27 +40,40 @@
     <div class="left">
       <h3>결제 계좌 정보</h3>
 
+      <hr />
+
       <div class="set-bank">
         <ho-input-select
           id="input-booth-index-bank-name"
           value="test"
           placeholder="은행"
-          label="은행"
+          label="은행<span class='star'>*</span>"
           message=""
         >
           <option value="" disabled selected>은행 선택</option>
-          <option value="국민은행">국민은행</option>
           <option value="신한은행">신한은행</option>
+          <option value="IBK기업은행">IBK기업은행</option>
+          <option value="국민은행">국민은행</option>
           <option value="하나은행">하나은행</option>
-          <option value="기업은행">기업은행</option>
-          <option value="쀕">몰라은행</option>
+          <option value="우리은행">우리은행</option>
+          <option value="SC제일은행">SC제일은행</option>
+          <option value="부산은행">부산은행</option>
+          <option value="경남은행">경남은행</option>
+          <option value="광주은행">광주은행</option>
+          <option value="전북은행">전북은행</option>
+          <option value="제주은행">제주은행</option>
+          <option value="우체국">우체국</option>
+          <option value="농협">농협</option>
+          <option value="신협">신협</option>
+          <option value="수협">수협</option>
+          <option value="씨티뱅크">씨티뱅크</option>
         </ho-input-select>
         <ho-input-string
           id="input-booth-index-bank-account-number"
           type="text"
           value="test"
           placeholder="계좌번호"
-          label="계좌번호"
+          label="계좌번호<span class='star'>*</span>"
           message=""
         ></ho-input-string>
         <ho-input-string
@@ -66,7 +81,7 @@
           type="text"
           value="test"
           placeholder="예금주"
-          label="예금주"
+          label="예금주<span class='star'>*</span>"
           message=""
         ></ho-input-string>
       </div>
@@ -87,6 +102,8 @@
   <div class="form-margin"></div>
 
   <h3>계정 삭제</h3>
+
+  <hr />
 
   <div class="set-right">
     <button id="button-booth-index-delete">계정 삭제</button>

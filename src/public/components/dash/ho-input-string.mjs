@@ -61,6 +61,9 @@ export default customElements.define(
           color: rgb(128,128,128);
           min-height: 1rem;
         }
+        :host .star {
+          color: var(--th);
+        }
       `;
       shadow.appendChild(style);
 

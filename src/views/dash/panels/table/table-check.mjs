@@ -32,7 +32,7 @@ async function getOrders() {
       order.menu = menus[order.menu_id];
       let add = false;
       for (const o of orders) {
-        if (o.menu_id == order.menu_id) {
+        if (o.menu_id == order.menu_id && o.state == order.state) {
           add = true;
           o.quantity += order.quantity;
           break;
@@ -52,15 +52,15 @@ function getOrderElement(order) {
   const element = document.createElement('div');
   element.classList.add('set');
   let html = ``;
-  html += `<div class="item left"><div class="tag ${order.state}">${order.state}</div></div>`;
+  html += `<div class="item state"><div class="tag ${order.state}">${order.state}</div></div>`;
   html += `<div class="item left menu">${order.menu.menu_name}</div>`;
-  html += `<div class="item right num">${order.quantity.toLocaleString(
+  html += `<div class="item right num count">${order.quantity.toLocaleString(
     'ko-KR'
   )}개</div>`;
-  html += `<div class="item right num">${order.menu.price.toLocaleString(
+  html += `<div class="item right num price">${order.menu.price.toLocaleString(
     'ko-KR'
   )}원</div>`;
-  html += `<div class="item right num">${(
+  html += `<div class="item right num total">${(
     order.quantity * order.menu.price
   ).toLocaleString('ko-KR')}원</div>`;
   element.innerHTML = html;
