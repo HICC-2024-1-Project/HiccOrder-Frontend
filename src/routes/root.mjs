@@ -24,4 +24,7 @@ router.use('/auth', authRouter);
 import userRouter from './user.mjs';
 router.use('/user', userRouter);
 
+import qrRouter from './qr.mjs';
+router.use('/qr', qrRouter);
+
 export default router;

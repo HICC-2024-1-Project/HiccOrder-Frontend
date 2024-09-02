@@ -171,21 +171,34 @@ export default customElements.define(
           modal.setAttribute('title', `${title.innerHTML} 입장 QR`);
           let url = data.temporary_url;
           url += `?r=https://ho.ccc.vg/user/${bid}/${tid}/`;
-          const qr = document.createElement('div');
-          new QRCode(qr, {
-            text: url,
-            width: 1000,
-            height: 1000,
+          fetch('/qr', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              url: url,
+            }),
+          }).then((res) => {
+            res.json().then((data) => {
+              let u = `https://ho.ccc.vg/qr/${data.code}`;
+              const qr = document.createElement('div');
+              new QRCode(qr, {
+                text: u,
+                width: 1000,
+                height: 1000,
+              });
+              const img = qr.querySelector('img');
+              img.style.width = '100%';
+              img.style.height = '100%';
+              img.style.objectFit = 'contain';
+              const a = document.createElement('a');
+              a.href = u;
+              a.appendChild(img);
+              modal.appendChild(a);
+              document.body.appendChild(modal);
+            });
           });
-          const img = qr.querySelector('img');
-          img.style.width = '100%';
-          img.style.height = '100%';
-          img.style.objectFit = 'contain';
-          const a = document.createElement('a');
-          a.href = url;
-          a.appendChild(img);
-          modal.appendChild(a);
-          document.body.appendChild(modal);
         });
       }
     }

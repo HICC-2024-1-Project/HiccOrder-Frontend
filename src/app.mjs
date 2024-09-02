@@ -5,7 +5,7 @@ import config from './config.mjs';
 import express from './express.mjs';
 import http from 'http';
 
-let port = 49280;
+let port = 80;
 for (let i = 0; i < process.argv.length; i++) {
   if (
     process.argv[i] == '-p' &&

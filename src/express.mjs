@@ -17,6 +17,9 @@ app.use(express.static(path.resolve(__dirname, './public')));
 /* 기능 설정 */
 app.disable('x-powered-by');
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: 104857600 }));
+
 /* 미들웨어 설정 */
 import middlewares from './modules/middlewares/index.mjs';
 app.use(middlewares.cookies());
