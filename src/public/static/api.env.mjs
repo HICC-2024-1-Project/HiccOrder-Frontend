@@ -1,3 +1,3 @@
 export default {
-  baseUri: 'http://api.ho.ccc.vg:8000',
+  baseUri: 'https://api.ho.ccc.vg',
 };
