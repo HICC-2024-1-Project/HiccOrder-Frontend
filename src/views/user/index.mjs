@@ -87,7 +87,10 @@ class Client {
       }
       APIPostRequest(`booth/order/`, orders)
         .then(() => {
-          resolve();
+          this.ordersCart = {};
+          setTimeout(() => {
+            resolve();
+          }, 2000);
         })
         .catch((error) => {
           console.error(error);
