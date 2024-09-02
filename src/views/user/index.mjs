@@ -29,7 +29,7 @@ class Client {
     await Promise.all([this.getBooth(), this.getTable(), this.getMenus()]);
 
     setInterval(() => {
-      getBooth();
+      this.getBooth();
     }, 5000);
 
     this.main.displayBooth();
