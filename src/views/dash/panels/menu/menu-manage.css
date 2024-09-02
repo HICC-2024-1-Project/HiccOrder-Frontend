@@ -1,99 +1,50 @@
-:root {
-  --bg: rgb(255, 100, 60);
-  --cpl: rgb(163, 163, 163);
-  --cncl: rgb(104, 104, 104);
-  --le: rgb(255, 255, 255);
-  --box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.3);
-  --text-shadow: 0 0.1rem 0.7rem rgba(0, 0, 0, 0.15);
+#menu-manage {
+  width: 100%;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+.form > .left {
+  flex: 1;
+}
+.form > .right {
+  width: 14rem;
+}
+.form-margin {
+  width: 100%;
+  height: 5rem;
+}
+.part-margin {
+  width: 100%;
+  height: 2.5rem;
+}
+.set-right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
-#menu-index {
-    width: 100%;
-    max-width: 60rem;
-    min-width: 15rem;
-  }
-  
-  .set-profile {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 1rem;
-  }
-  .set-profile > .inputs {
-    width: calc(100% - 7rem);
-  }
-  .set-profile > .profile {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    /*max-width: 13.7rem;*/
-  }
-
-  .profile > .image {
-    display: flex;
-    width: 97%;
-    aspect-ratio: 1 / 1;
-    /*height: 13rem;*/
-    border-radius: 0.75rem;
-    background-color: rgb(240, 240, 240);
-    align-items: center;
-    justify-content: center;
-  }
-
-.profile > label {
-  line-height: 1.25rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+#menu-manage-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.75rem;
+  background-color: rgb(240, 240, 240);
+  border: solid 0.1rem rgb(210, 210, 210);
 }
-
-  .set-right {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-
-  .set-right > #button-menu-index-update{
-    background-color: #ff643c;
-    border: none;
-    box-shadow: var(--box-shadow);
-    text-shadow: var(--text-shadow);
-  }
-
-  .set-description {
-    display: flex;
-    gap: 1rem;
-  }
-  .set-description > *:nth-child(1) {
-    flex: 1;
-  }
-  
-  h3 {
-    font-size: 1.25rem;
-    padding-bottom: 1rem;
-  }
-
-  .top {
-    top: 0;
-    width: calc(100% - 2rem);
-    height: 3rem;
-    padding-bottom: 25px;
-    display: flex;
-    align-items: center;
-    border-bottom: solid 1px var(--bgl);
-  }
-
-  .top > #arrow {
-    display: flex;
-    color: black;
-    background-color: rgb(255, 255, 255);
-    border: none;
-    padding-right: 5px;
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px
-  }
-
-  .top > .title {
-    font-size: 1.25rem;
-    font-weight: 700;
-  }
+#menu-manage-image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+#menu-manage-image > button {
+  position: absolute;
+  bottom: -1rem;
+  right: 0.75rem;
+}

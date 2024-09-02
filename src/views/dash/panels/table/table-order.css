@@ -1,26 +1,27 @@
-#history-index {
+#table-order {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 1rem;
 }
-#history-index > .display {
+#table-order > .display {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 2.5rem);
   padding: 0;
   overflow: hidden;
   border-radius: 0.75rem;
   border: solid 0.1rem rgb(210, 210, 210);
 }
-#history-index > .display > .content {
+#table-order > .display > .content {
   width: calc(100% + 17px);
   height: calc(100% - 2rem);
   padding: 0;
   overflow-y: scroll;
   box-sizing: content-box;
 }
-#history-index > .display > .content > .empty {
+#table-order > .display > .content > .empty {
   font-size: 1.25rem;
   font-weight: 700;
   width: 100%;
@@ -29,23 +30,33 @@
   align-items: center;
   justify-content: center;
 }
+#table-order > .control {
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 1rem;
+}
 
 .set > .item.state {
   width: 5.1rem;
   flex: unset;
 }
-.set > .item.timestamp {
-  flex: 2;
-}
-.set > .item.table_name {
-  flex: 1;
-}
-.set > .item.menu_name {
+.set > .item.menu {
   flex: 3;
 }
-.set > .item.quantity {
+.set > .item.count {
   flex: 0.5;
 }
 .set > .item.price {
   flex: 1;
+}
+.set > .item.total {
+  flex: 1;
+}
+.set > .item.control {
+  width: 8.1rem;
+  flex: unset;
 }

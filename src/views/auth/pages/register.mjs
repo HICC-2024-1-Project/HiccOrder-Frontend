@@ -55,7 +55,7 @@ async function register() {
 
       window.setCookie('booth', data.user.email, 1000 * 60 * 60 * 24 * 365);
 
-      window.location.href = '/booth';
+      window.location.href = '/dash';
     })
     .catch(async (error) => {
       button.disabled = false;

@@ -34,3 +34,18 @@ function vh() {
 }
 window.addEventListener('resize', vh);
 vh();
+
+Date.prototype.toJSONLocal = (function () {
+  function addZ(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+  return function () {
+    return (
+      this.getFullYear() +
+      '-' +
+      addZ(this.getMonth() + 1) +
+      '-' +
+      addZ(this.getDate())
+    );
+  };
+})();

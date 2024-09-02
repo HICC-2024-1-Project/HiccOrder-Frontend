@@ -1,0 +1,33 @@
+<link href="table-check.css" rel="stylesheet" />
+<script src="table-check.mjs" type="module"></script>
+
+<script>
+  window.tid = `#{table}`;
+</script>
+
+<section id="table-check">
+  <h3>&nbsp;</h3>
+  <div class="display">
+    <div class="title set">
+      <div class="item state">처리</div>
+      <div class="item left menu">메뉴</div>
+      <div class="item right num count">수량</div>
+      <div class="item right num price">가격</div>
+      <div class="item right num total">합계</div>
+    </div>
+    <div class="content">
+      <div class="empty">테이블에 들어온 주문이 없습니다.</div>
+    </div>
+  </div>
+  <div class="control">
+    <div class="left">
+      <div class="count"></div>
+      <div class="price"></div>
+    </div>
+    <div class="right">
+      <button type="button" id="button-table-check" primary disabled>
+        결제하기
+      </button>
+    </div>
+  </div>
+</section>

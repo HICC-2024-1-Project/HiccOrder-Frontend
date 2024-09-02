@@ -1,95 +1,120 @@
-import { APIGetRequest } from "/modules/api.mjs";
+import {
+  APIGetRequest,
+  APIPostRequest,
+  APIPatchRequest,
+  APIDeleteRequest,
+} from '/modules/api.mjs';
 
-document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  const tableId = params.get("table");
-  const tableNameElement = document.getElementById("table-name");
-  const totalPriceElement = document.getElementById("total-price");
-  const bankNameElement = document.getElementById("bank-name");
-  const bankOwnerElement = document.getElementById("bank-owner");
-  const bankAccountElement = document.getElementById("bank-account");
+const bid = localStorage.booth;
+const tid = window.tid;
 
-  let boothName = "";
-  let tableName = "";
+let booth = {};
+let table = {};
+let menus = {};
+let orders = [];
+let totalCount = 0;
+let totalPrice = 0;
 
-  
-  loadTableName(tableId); // 테이블 이름 로드
-  loadOrderData(tableId); // 주문 데이터 로드
-  loadBoothData(); // 부스 정보 로드
-  
-  // qr
-  function generateQRCode(elementId, data) {
-    const qrCodeContainer = document.getElementById(elementId);
-    qrCodeContainer.innerHTML = "";
-    new QRCode(qrCodeContainer, {
-      text: data,
-      width: 200,
-      height: 200
-    });
+async function getBooth() {
+  booth = await APIGetRequest(`booth/${bid}/`);
+}
+
+async function getTable() {
+  table = await APIGetRequest(`booth/${bid}/table/${tid}/`);
+}
+
+async function getMenus() {
+  const data = await APIGetRequest(`booth/${bid}/menu/`);
+  for (const menu of data) {
+    menus[menu.id] = menu;
   }
+}
 
-  // 테이블 이름
-  async function loadTableName(tableId) {
-    try {
-      const tableResponse = await APIGetRequest(
-        `booth/${localStorage.booth}/table/${tableId}`
-      );
-      const tableData = tableResponse;
-      tableName = tableData.table_name;
-      tableNameElement.textContent = `${tableName} 결제`;
-    } 
-    catch (error) {
-      console.log("테이블 이름 로드 중 오류 발생", error);
+async function getOrders() {
+  const data = await APIGetRequest(`booth/${bid}/order/${tid}/`);
+  for (const order of data) {
+    if (order.state != '취소') {
+      order.menu = menus[order.menu_id];
+      let add = false;
+      for (const o of orders) {
+        if (o.menu_id == order.menu_id) {
+          add = true;
+          o.quantity += order.quantity;
+          break;
+        }
+      }
+      if (!add) {
+        orders.push(order);
+      }
+      totalCount += order.quantity;
+      totalPrice += order.quantity * order.menu.price;
+    }
+  }
+  orders = orders.reverse();
+}
+
+(async () => {
+  await getBooth();
+  await getTable();
+  await getMenus();
+  await getOrders();
+
+  document.querySelector(
+    '#table-pay h3'
+  ).innerHTML = `${table.table_name} 결제`;
+
+  document.querySelector(
+    '#table-pay > .display .info .count'
+  ).innerHTML = `${totalCount.toLocaleString('ko-KR')}개 메뉴`;
+
+  document.querySelector(
+    '#table-pay > .display .info .price'
+  ).innerHTML = `${totalPrice.toLocaleString('ko-KR')}원`;
+
+  document.querySelector(
+    '#table-pay > .display .bank'
+  ).innerHTML = `${booth.bank_name} ${booth.account_number} ${booth.banker_name}`;
+
+  let err = false;
+  for (const order of orders) {
+    if (!err && !['처리완료', '취소'].includes(order.state)) {
+      err = true;
     }
   }
 
-  // 주문내역
-  async function loadOrderData(tableId) {
-    try {
-      const orderResponse = await APIGetRequest(
-        `booth/${localStorage.booth}/order/${tableId}`
-      );
-      const orderData = orderResponse;
-      let totalPrice = 0;
-      orderData.forEach((item) => {
-        totalPrice += item.quantity * item.price; // 총액
+  const bn = booth.bank_name;
+  const ac = booth.account_number;
+  const tp = totalPrice;
+
+  qrcode(
+    `supertoss://send?amount=${tp}&bank=${bn}&accountNo=${ac}&origin=qr`,
+    document.querySelector(`.qr.toss > .image`)
+  );
+
+  document.querySelector('#button-table-pay').disabled = err;
+
+  document.querySelector('#button-table-pay').addEventListener('click', () => {
+    APIPostRequest(`booth/${bid}/payment/${tid}/`)
+      .then(() => {
+        window.location.href = `/dash/table/${tid}/done`;
+      })
+      .catch((error) => {
+        console.error(error);
       });
-      totalPriceElement.textContent = `${totalPrice.toLocaleString()}`;
-    } 
-    catch (error) {
-      console.log("주문 내역 로드 중 에러 발생", error);
-    }
-  }
-
-  // 부스정보
-  async function loadBoothData() {
-    try {
-      const boothResponse = await APIGetRequest(`booth/${localStorage.booth}/`);
-      const boothData = boothResponse;
-
-      boothName = boothData.booth_name;
-      bankNameElement.textContent = boothData.bank_name;
-      bankOwnerElement.textContent = boothData.banker_name;
-      bankAccountElement.textContent = boothData.account_number;
-
-      // QR 코드 갱신
-      const totalPrice = totalPriceElement.textContent
-        .replace(/,/g, "")
-        .replace("원", "");
-      const paymentInfo = //`총액: ${totalPrice}원\n계좌번호: ${boothData.account_number}`;
-      `https://youtu.be/eP2aJra_8Tw?si=Ekuvh6Tu_ISghnU_`;
-      generateQRCode("kakao-qr", paymentInfo);
-      generateQRCode("toss-qr", paymentInfo);
-      generateQRCode("naver-qr", paymentInfo);
-    } 
-    catch (error) {
-      console.log("부스 정보 로드 중 오류 발생", error);
-    }
-  }
-
-  // 완료 버튼 누르면 done으로 이동
-  document.getElementById('complete-payment-btn').addEventListener('click', function() {
-    // /table/:tid/done 경로로 리디렉션
-    window.location.href = `/dash/table/${tableId}/done`;
   });
-});
+
+  function qrcode(string, element) {
+    string = encodeURI(string);
+    const qr = document.createElement('div');
+    new QRCode(qr, {
+      text: string,
+      width: 1000,
+      height: 1000,
+    });
+    const img = qr.querySelector('img');
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'contain';
+    element.appendChild(img);
+  }
+})();

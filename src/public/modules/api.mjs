@@ -6,7 +6,7 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
     method: method,
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'same-origin',
+    credentials: 'include',
     headers: {},
     redirect: 'follow',
     referrerPolicy: 'no-referrer',
@@ -61,9 +61,62 @@ async function request(method = 'GET', path = '', contentType, data = {}) {
         reject(error);
       }
     });
+  } else if (res.status >= 500) {
+    const serverError = await res.text();
+    errorFrame(res, serverError);
+    throw res;
   } else {
     throw res;
   }
+}
+
+function errorFrame(res, html) {
+  const frame = document.createElement('div');
+  frame.style.position = 'fixed';
+  frame.style.top = '0';
+  frame.style.left = '0';
+  frame.style.width = '100vw';
+  frame.style.height = '100vh';
+  frame.style.display = 'flex';
+  frame.style.flexDirection = 'column';
+  frame.style.zIndex = '100000000';
+  frame.style.padding = '1rem';
+  frame.style.gap = '1rem';
+  frame.style.background = 'red';
+
+  const title = document.createElement('div');
+  title.style.width = '100%';
+  title.style.height = '2.5rem';
+  title.style.display = 'flex';
+  title.style.flexDirection = 'row';
+  title.style.justifyContent = 'space-between';
+  title.style.alignItems = 'center';
+  frame.appendChild(title);
+
+  const text = document.createElement('div');
+  console.log(res);
+  text.innerHTML = `${res.status} ${res.statusText}<br />${res.url}`;
+  text.style.fontSize = '1rem';
+  text.style.color = 'white';
+  text.style.fontFamily = 'monospace';
+  title.appendChild(text);
+
+  const close = document.createElement('button');
+  close.innerHTML = '닫기';
+  close.setAttribute('second', '');
+  close.addEventListener('click', () => {
+    frame.remove();
+  });
+  title.appendChild(close);
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = '100%';
+  iframe.style.height = 'calc(100% - 3.5rem)';
+  frame.appendChild(iframe);
+  document.body.appendChild(frame);
+  iframe.contentWindow.document.open();
+  iframe.contentWindow.document.write(html);
+  iframe.contentWindow.document.close();
 }
 
 async function refreshToken() {

@@ -103,7 +103,7 @@ async function reset() {
   })
     .then((data) => {
       alert('비밀번호가 변경되었습니다. 다시 로그인하십시오.');
-      console.log(data);
+      window.location.href = '/auth/login';
     })
     .catch(async (error) => {
       if (error.status === 400) {

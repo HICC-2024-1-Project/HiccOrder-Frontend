@@ -23,7 +23,7 @@ document.querySelector('#button-account').addEventListener('click', () => {
   }
 });
 
-for (const button of document.querySelectorAll(`aside > a[type='button']`)) {
+for (const button of document.querySelectorAll(`aside > a`)) {
   let href = button.href;
   href = href.replace(/https?:\/?\/?([^/]+)/, '');
   if (location.pathname.startsWith(href)) {

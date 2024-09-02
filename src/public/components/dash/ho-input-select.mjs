@@ -57,6 +57,9 @@ export default customElements.define(
           color: rgb(128,128,128);
           min-height: 1rem;
         }
+        :host .star {
+          color: var(--th);
+        }
       `;
       shadow.appendChild(style);
 
@@ -125,7 +128,9 @@ export default customElements.define(
       } else {
         this.removeAttribute('label');
       }
-      this.shadowRoot.querySelector('label').innerHTML = newValue || '';
+      this.shadowRoot
+        ? (this.shadowRoot.querySelector('label').innerHTML = newValue || '')
+        : null;
     }
 
     get message() {

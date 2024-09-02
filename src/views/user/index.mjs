@@ -1,6 +1,6 @@
-import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
+'use strict';
 
-('use strict');
+import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
 class Client {
   constructor(bid, tid) {
@@ -10,234 +10,133 @@ class Client {
     }
     this.bid = bid;
     this.tid = tid;
-    this.booth = {
-      booth_name: '테스트포차',
-      bank: '한국은행',
-      banker_name: '홍길동',
-      account_number: '1234-1234',
-      booth_image_url: '/images/bg.jpg',
-    };
-    this.table = {
-      id: 1,
-      table_name: '테이블 1',
-    };
-    this.menus = {};
-    this.cart = {};
-    this.history = [];
 
-    const menus = [
-      {
-        menuId: 1,
-        category: '추천 메뉴',
-        menu_name: '닭꼬치 데리야끼맛',
-        description: '무려 사진이 있는 메뉴',
-        price: 4000,
-        menu_img_url: 'images/닭꼬치 데리야끼맛.jpg',
-      },
-      {
-        menuId: 222,
-        category: '추천 메뉴',
-        menu_name: '메뉴 이름',
-        description: '아아아아awdwadaw아아아',
-        price: 12000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 2,
-        category: '추천 메뉴',
-        menu_name: '메뉴 이름',
-        description: '아아아아아아아',
-        price: 12000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 3,
-        category: '추천 메뉴',
-        menu_name: '츄파춥스 딸기맛',
-        description: '블랙카우맛',
-        price: 2100000,
-        menu_img_url: 'images/츄파춥스 딸기맛.jpg',
-      },
-      {
-        menuId: 4,
-        category: '추천 메뉴',
-        menu_name: '딸기초코김치찌개',
-        description: '꼭 먹으셈 두번 먹으셈',
-        price: 27000,
-        menu_img_url: 'images/딸기초코김치찌개.jpg',
-      },
-      {
-        menuId: 5,
-        category: '추천 메뉴',
-        menu_name:
-          '이름도완전길고내용도완전길어서페이지유아이를망가뜨릴지도모르는말도안되는테스트용메뉴이름',
-        description:
-          'Minecraft(Minecraft) 는 마르쿠스 "노치" 페르손에 의해 개발된 샌드박스형 게임으로서, 마이크로소프트 스튜디오 산하의 Mojang Studios에서 관리하고 있다. Minecraft는 Infiniminer 에서 영감을 받은 게임이다.',
-        price: 30000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 6,
-        category: '추천 메뉴',
-        menu_name: '벽돌',
-        description: '먹으면 죽을듯',
-        price: 294000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 201,
-        category: '추천 메뉴',
-        menu_name: '콘치즈',
-        description: '몰라',
-        price: 12000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 202,
-        category: '추천 메뉴',
-        menu_name: '모둠 나쵸',
-        description: '치즈듬뿍 짱 맛있는 나쵸',
-        price: 23000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 911,
-        category: '주류 · 음료',
-        menu_name: '참이슬',
-        description: '',
-        price: 4000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 912,
-        category: '주류 · 음료',
-        menu_name: '처음처럼',
-        description: '',
-        price: 4000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 921,
-        category: '주류 · 음료',
-        menu_name: '카스',
-        description: '',
-        price: 5000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 941,
-        category: '주류 · 음료',
-        menu_name: '콜라',
-        description: '뚱캔 355ml',
-        price: 2000,
-        menu_img_url: '',
-      },
-      {
-        menuId: 942,
-        category: '주류 · 음료',
-        menu_name: '사이다',
-        description: '뚱캔 355ml',
-        price: 2000,
-        menu_img_url: '',
-      },
-    ];
-    for (const menu of menus) {
-      this.menus[menu.menuId] = menu;
-    }
+    this.main = new Main(this);
+    this.menu = new MenuPanel(this, 'panel-menu');
+    this.cart = new CartPanel(this, 'panel-cart');
+    this.history = new HistoryPanel(this, 'panel-history');
+
+    this.booth = {};
+    this.table = {};
+    this.menus = {};
+    this.ordersCart = {};
+    this.ordersHistory = [];
 
     this.init();
   }
 
   async init() {
-    MAIN.init();
-    PANEL_CART.init();
-    PANEL_HISTORY.init();
+    await Promise.all([this.getBooth(), this.getTable(), this.getMenus()]);
 
-    MAIN.displayBooth(this.booth, this.table);
-    MAIN.displayMenu(this.booth, this.menus);
+    this.main.displayBooth();
+    this.main.displayMenus();
   }
 
-  async getMenu() {}
+  async getBooth() {
+    this.booth = await APIGetRequest(`booth/${this.bid}/`);
+  }
 
-  async postCart() {}
+  async getTable() {
+    this.table = await APIGetRequest(`booth/${this.bid}/table/${this.tid}/`);
+  }
 
-  async getHistory() {}
+  async getMenus() {
+    const menus = await APIGetRequest(`booth/${this.bid}/menu/`);
+    for (const menu of menus) {
+      this.menus[menu.id] = menu;
+    }
+  }
+
+  async getOrders() {
+    this.ordersHistory = await APIGetRequest(`booth/order/`);
+  }
+
+  addOrder(menu, count = 1) {
+    if (!this.ordersCart[menu.id]) {
+      this.ordersCart[menu.id] = 0;
+    }
+    this.ordersCart[menu.id] += count;
+    this.cart.updateLabel(this.ordersCart);
+  }
+
+  removeOrder(menu, count = 1) {
+    if (!this.ordersCart[menu.id]) {
+      return;
+    }
+    this.ordersCart[menu.id] -= count;
+    if (this.ordersCart[menu.id] <= 0) {
+      delete this.ordersCart[menu.id];
+    }
+    this.cart.updateLabel(this.ordersCart);
+  }
+
+  async postOrders() {
+    return new Promise((resolve, reject) => {
+      const orders = { content: [] };
+      for (const mid in this.ordersCart) {
+        orders.content.push({
+          menu_id: mid,
+          quantity: this.ordersCart[mid],
+        });
+      }
+      APIPostRequest(`booth/order/`, orders)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error);
+        });
+    });
+  }
+
+  async postOrdersCall() {
+    return new Promise((resolve, reject) => {
+      const orders = { content: [] };
+      APIPostRequest(`booth/order/`, orders)
+        .then(() => {
+          resolve();
+        })
+        .catch((error) => {
+          console.error(error);
+          reject(error);
+        });
+    });
+  }
 
   destroy() {}
 
-  async call() {
-    await (() => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      });
-    })();
+  scrollOff() {
+    document.body.style.overflow = 'hidden';
   }
 
-  addMenuInCart(menu, count = 1) {
-    if (!this.cart[menu.menuId]) {
-      this.cart[menu.menuId] = 0;
-    }
-
-    this.cart[menu.menuId] += count;
-
-    PANEL_CART.updateLabel(this.cart);
-  }
-
-  removeMenuInCart(menu, count = 1) {
-    if (!this.cart[menu.menuId]) {
-      return;
-    }
-
-    this.cart[menu.menuId] -= count;
-    if (this.cart[menu.menuId] <= 0) {
-      delete this.cart[menu.menuId];
-    }
-
-    PANEL_CART.updateLabel(this.cart);
-  }
-
-  async orderMenuInCart() {
-    await (() => {
-      return new Promise((resolve) => {
-        const timestamp = Date.now();
-        for (const item in CLIENT.cart) {
-          const menu = CLIENT.menus[item];
-          const order = {
-            timestamp: timestamp,
-            menu_id: item,
-            menu_name: menu.menu_name,
-            price: menu.price,
-            quantity: CLIENT.cart[item],
-            state: Math.random() > 0.5 ? '조리완료' : '조리중',
-          };
-          CLIENT.history.push(order);
-        }
-        CLIENT.cart = {};
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      });
-    })();
+  scrollOn() {
+    document.body.style.overflow = 'auto';
   }
 }
 
-const MAIN = {
-  init() {
+class Main {
+  constructor(client) {
+    this.client = client;
+  }
+
+  addEventListener() {
     document.addEventListener('scroll', (event) => {
-      MAIN.scroll();
+      this.scroll();
     });
-    MAIN.scroll();
+    this.scroll();
 
     document
       .querySelector('#button-lang')
       .addEventListener('click', async (event) => {
         alert('언어 바꾸는 기능은 아직 없음');
       });
-  },
+  }
 
-  displayBooth(booth, table) {
+  displayBooth() {
+    const booth = this.client.booth;
+    const table = this.client.table;
+
     // 부스 이름, 테이블 이름 설정
     document.querySelector('#nav .desc .booth').innerHTML = booth.booth_name;
     document.querySelector('#nav .desc .table').innerHTML = table.table_name;
@@ -245,10 +144,14 @@ const MAIN = {
     document.querySelector('#main .desc .table').innerHTML = table.table_name;
 
     // 부스 이미지 설정
-    document.querySelector('#cover .image img').src = booth.booth_image_url;
-  },
+    if (booth.booth_image_url) {
+      document.querySelector('#cover .image img').src = booth.booth_image_url;
+    }
+  }
 
-  displayMenu(booth, menus) {
+  displayMenus() {
+    const menus = this.client.menus;
+
     let categories = {};
 
     for (const [menuID, menu] of Object.entries(menus)) {
@@ -266,7 +169,7 @@ const MAIN = {
 
         const menuID = target.getAttribute('menu');
         const menu = menus[menuID];
-        PANEL_MENU.open(menu, booth);
+        this.client.menu.open(menu);
 
         target.style.background = 'rgba(255, 100, 60, 0.5)';
         setTimeout(() => {
@@ -288,9 +191,7 @@ const MAIN = {
     for (const category in categories) {
       document.querySelector('#menu').appendChild(categories[category]);
     }
-  },
-
-  updateMenu() {},
+  }
 
   getCategoryElement(menu) {
     const element = document.createElement('div');
@@ -302,12 +203,12 @@ const MAIN = {
     html += `</div>`;
     element.innerHTML = html;
     return element;
-  },
+  }
 
   getMenuElement(menu) {
     const element = document.createElement('div');
     element.classList.add('menu');
-    element.setAttribute('menu', menu.menuId);
+    element.setAttribute('menu', menu.id);
     let html = ``;
     html += `<div class="wrapper">`;
     if (menu.menu_img_url) {
@@ -357,15 +258,7 @@ const MAIN = {
     html += `</div>`;
     element.innerHTML = html;
     return element;
-  },
-
-  scrollOff() {
-    document.body.style.overflow = 'hidden';
-  },
-
-  scrollOn() {
-    document.body.style.overflow = 'auto';
-  },
+  }
 
   scroll() {
     const h = document.querySelector('header');
@@ -382,13 +275,21 @@ const MAIN = {
     shadow.style.backdropFilter = `blur(${p2 / 10}px)`;
 
     nav.setAttribute('phase', s < ht ? 'up' : 'down');
-  },
-};
+  }
+}
 
-const PANEL_MENU = {
-  panel: document.querySelector('#panel-menu'),
+class ClientPanel {
+  constructor(client, panel) {
+    this.panel = document.querySelector(`#${panel}`);
+    this.client = client;
+    this.addEventListener();
+  }
 
-  open(menu, booth) {
+  addEventListener() {}
+}
+
+class MenuPanel extends ClientPanel {
+  open(menu) {
     let html = ``;
     html += `<div class="top">`;
     html += `  <button id="button-panel-menu-close">`;
@@ -446,25 +347,24 @@ const PANEL_MENU = {
     });
 
     this.panel.querySelector('.bottom button').addEventListener('click', () => {
-      CLIENT.addMenuInCart(menu, count);
+      this.client.addOrder(menu, count);
       this.close();
     });
 
     this.panel.setAttribute('phase', 'open');
-    MAIN.scrollOff();
-  },
+    this.client.scrollOff();
+  }
 
   close() {
     this.panel.setAttribute('phase', 'close');
-    MAIN.scrollOn();
-  },
-};
+    this.client.scrollOn();
+  }
+}
 
-const PANEL_CART = {
-  panel: document.querySelector('#panel-cart'),
-  orderProcessing: false,
+class CartPanel extends ClientPanel {
+  orderProcessing = false;
 
-  init() {
+  addEventListener() {
     this.panel
       .querySelector('#button-panel-cart-left')
       .addEventListener('click', () => {
@@ -489,14 +389,14 @@ const PANEL_CART = {
         const phase = this.panel.getAttribute('phase');
         switch (phase) {
           case 'cart': {
-            this.order(CLIENT.menus, CLIENT.cart);
+            this.order();
             break;
           }
           case 'order': {
             break;
           }
           default: {
-            this.open(CLIENT.menus, CLIENT.cart);
+            this.open();
             break;
           }
         }
@@ -516,14 +416,16 @@ const PANEL_CART = {
       .addEventListener('click', () => {
         this.close();
       });
-  },
+  }
 
-  open(menus, cart) {
+  open() {
+    const menus = this.client.menus;
+    const cart = this.client.ordersCart;
     this.panel.querySelector('.fg-content > .cart > .list').innerHTML = '';
     for (let [menuID, count] of Object.entries(cart)) {
       const menu = JSON.parse(JSON.stringify(menus[menuID]));
       menu.control = true;
-      const menuElement = MAIN.getMenuElement(menu);
+      const menuElement = this.client.main.getMenuElement(menu);
       menuElement.querySelector('.buttons .count').innerHTML = count;
       menuElement.querySelector('.buttons .minus span').innerHTML =
         count > 1 ? 'remove' : 'delete';
@@ -531,7 +433,7 @@ const PANEL_CART = {
         .querySelector('.buttons .minus')
         .addEventListener('click', () => {
           count--;
-          CLIENT.removeMenuInCart(menu, 1);
+          this.client.removeOrder(menu, 1);
           this.updateTotal(menus, cart);
           menuElement.querySelector('.buttons .count').innerHTML = count;
           menuElement.querySelector('.buttons .minus span').innerHTML =
@@ -539,7 +441,7 @@ const PANEL_CART = {
           if (count <= 0) {
             menuElement.parentElement.removeChild(menuElement);
           }
-          if (Object.keys(CLIENT.cart).length <= 0) {
+          if (Object.keys(this.client.ordersCart).length <= 0) {
             this.close();
           }
         });
@@ -547,7 +449,7 @@ const PANEL_CART = {
         .querySelector('.buttons .plus')
         .addEventListener('click', () => {
           count++;
-          CLIENT.addMenuInCart(menu, 1);
+          this.client.addOrder(menu, 1);
           this.updateTotal(menus, cart);
           menuElement.querySelector('.buttons .count').innerHTML = count;
           menuElement.querySelector('.buttons .minus span').innerHTML =
@@ -571,8 +473,8 @@ const PANEL_CART = {
 
     this.updateLabel({});
 
-    MAIN.scrollOff();
-  },
+    this.client.scrollOff();
+  }
 
   async order() {
     this.panel.querySelector(
@@ -588,7 +490,7 @@ const PANEL_CART = {
     this.panel.setAttribute('phase', 'order');
 
     this.orderProcessing = true;
-    await CLIENT.orderMenuInCart();
+    await this.client.postOrders();
     this.orderProcessing = false;
 
     this.panel.querySelector(
@@ -600,7 +502,11 @@ const PANEL_CART = {
     this.panel.querySelector('#button-panel-cart-left').disabled = false;
 
     this.updateLabel({});
-  },
+
+    setTimeout(() => {
+      this.close();
+    }, 5000);
+  }
 
   close() {
     if (this.orderProcessing) {
@@ -615,10 +521,10 @@ const PANEL_CART = {
     this.panel.querySelector('#button-panel-cart-left').disabled = false;
     this.panel.querySelector('#button-panel-cart-right').disabled = false;
 
-    this.updateLabel(CLIENT.cart);
+    this.updateLabel(this.client.ordersCart);
 
-    MAIN.scrollOn();
-  },
+    this.client.scrollOn();
+  }
 
   call() {
     this.lineMessage('직원을 호출하였습니다. 잠시만 기다려주세요.');
@@ -629,9 +535,9 @@ const PANEL_CART = {
     this.panel.querySelector('#button-panel-cart-right').disabled = true;
     setTimeout(() => {
       this.panel.querySelector('#button-panel-cart-left').disabled = false;
-      this.updateLabel(CLIENT.cart);
+      this.updateLabel(this.client.ordersCart);
     }, 1000);
-  },
+  }
 
   updateLabel(cart) {
     let total = 0;
@@ -655,7 +561,7 @@ const PANEL_CART = {
     } else {
       countElement.setAttribute('phase', 'hide');
     }
-  },
+  }
 
   updateTotal(menus, cart) {
     let total = 0;
@@ -675,7 +581,7 @@ const PANEL_CART = {
     this.panel.querySelector(
       '.fg-content .total > .price'
     ).innerHTML = `${price.toLocaleString('ko-KR')}원`;
-  },
+  }
 
   lineMessage(content) {
     const messages = this.panel.querySelector('.fg-message');
@@ -694,39 +600,41 @@ const PANEL_CART = {
     setTimeout(() => {
       messages.removeChild(message);
     }, 5500);
-  },
-};
+  }
+}
 
-const PANEL_HISTORY = {
-  panel: document.querySelector('#panel-history'),
-
-  init() {
+class HistoryPanel extends ClientPanel {
+  addEventListener() {
     document
       .querySelector('#button-history')
       .addEventListener('click', async (event) => {
-        this.open(CLIENT.history);
+        await this.client.getOrders();
+        this.open();
       });
-  },
+  }
 
-  open(history) {
+  open() {
+    const data = this.client.ordersHistory;
+
     let totalCount = 0;
     let totalPrice = 0;
 
     const orders = {};
-    for (const order of history) {
+    for (const order of data) {
+      const menu = CLIENT.menus[order.menu_id];
       if (!orders[order.timestamp]) {
         orders[order.timestamp] = [];
       }
       orders[order.timestamp].push({
         menuId: order.menu_id,
-        menu_name: order.menu_name,
+        menu_name: menu.menu_name,
         description: '',
-        price: order.price,
+        price: menu.price,
         count: order.quantity,
         state: order.state,
       });
       totalCount += order.quantity;
-      totalPrice += order.price * order.quantity;
+      totalPrice += menu.price * order.quantity;
     }
 
     let html = ``;
@@ -763,7 +671,7 @@ const PANEL_HISTORY = {
       html += `<div class="content"></div>`;
       order.innerHTML = html;
       for (const menu of orders[timestamp]) {
-        const menuElement = MAIN.getMenuElement(menu);
+        const menuElement = this.client.main.getMenuElement(menu);
         order.querySelector('.content').appendChild(menuElement);
       }
       this.panel.querySelector('.history').appendChild(order);
@@ -778,16 +686,13 @@ const PANEL_HISTORY = {
     });
 
     this.panel.setAttribute('phase', 'open');
-    MAIN.scrollOff();
-  },
+    this.client.scrollOff();
+  }
 
   close() {
     this.panel.setAttribute('phase', 'close');
-    MAIN.scrollOn();
-  },
-};
-
-const bid = 'testbooth';
-const tid = 'testTable';
+    this.client.scrollOn();
+  }
+}
 
 window.CLIENT = new Client(bid, tid);

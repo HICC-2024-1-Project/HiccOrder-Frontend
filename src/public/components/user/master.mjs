@@ -1,1 +1,1 @@
-import HO_USER_MENU from './ho-user-menu.mjs';
+import ho_menu from './ho-menu.mjs';

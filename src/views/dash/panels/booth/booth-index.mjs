@@ -4,6 +4,7 @@ import {
   APIDeleteRequest,
 } from '/modules/api.mjs';
 
+const bid = localStorage.booth;
 const input = {
   email: document.querySelector('#input-booth-index-email'),
   name: document.querySelector('#input-booth-index-name'),
@@ -19,11 +20,9 @@ const input = {
 const image = document.querySelector('#booth-index-image');
 
 async function readBooth() {
-  const data = await APIGetRequest(`booth/${localStorage.booth}/`).catch(
-    (error) => {
-      console.log(error);
-    }
-  );
+  const data = await APIGetRequest(`booth/${bid}/`).catch((error) => {
+    console.log(error);
+  });
 
   if (!data) {
     return;
@@ -37,10 +36,8 @@ async function readBooth() {
   image.src = data.booth_image_url || '';
 }
 
-readBooth();
-
 async function updateBooth() {
-  await APIPatchRequest(`booth/${localStorage.booth}/`, {
+  await APIPatchRequest(`booth/${bid}/`, {
     booth_name: input.name.value,
     bank_name: input.bankName.value,
     account_number: input.bankAccountNumber.value,
@@ -77,7 +74,7 @@ async function updateBoothImage() {}
 async function deleteBooth() {
   if (
     !confirm(
-      '정말로 회원을 탈퇴하시겠습니까? 회원 탈퇴 시 모든 부스 관련 정보가 즉시 제거되며 복구할 수 없습니다.'
+      '정말로 계정을 삭제하시겠습니까? 계정 삭제 시 모든 부스 관련 정보가 즉시 제거되며 복구할 수 없습니다.'
     )
   ) {
     return;
@@ -85,15 +82,15 @@ async function deleteBooth() {
 
   if (
     prompt(
-      `회원 탈퇴를 계속하려면 아래의 입력창에 '${window.localStorage.booth}'를 입력하여 주십시오`
-    ) !== window.localStorage.booth
+      `계정 삭제를 계속하려면 아래의 입력창에 '${window.bid}'를 입력하여 주십시오`
+    ) !== window.bid
   ) {
     return;
   }
 
   await APIDeleteRequest(`auth/sign/`)
     .then(() => {
-      alert('회원 탈퇴가 정상적으로 처리되었습니다.');
+      alert('계정 삭제가 정상적으로 처리되었습니다.');
 
       window.location.href = '/';
     })
@@ -102,17 +99,21 @@ async function deleteBooth() {
     });
 }
 
-document
-  .querySelector('#button-booth-index-update')
-  .addEventListener('click', () => {
-    updateBooth();
-  });
+(async () => {
+  readBooth();
 
-document
-  .querySelector('#button-booth-index-delete')
-  .addEventListener('click', () => {
-    deleteBooth();
-  });
+  document
+    .querySelector('#button-booth-index-update')
+    .addEventListener('click', () => {
+      updateBooth();
+    });
+
+  document
+    .querySelector('#button-booth-index-delete')
+    .addEventListener('click', () => {
+      deleteBooth();
+    });
+})();
 
 /*
 // 부스 사진 업로드 및 미리보기
