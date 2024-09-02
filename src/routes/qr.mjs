@@ -11,6 +11,7 @@ router.get('/:code', (req, res) => {
     res.render('error/403');
     return;
   }
+  delete qrs[code];
   res.redirect(qrs[code]);
 });
 
