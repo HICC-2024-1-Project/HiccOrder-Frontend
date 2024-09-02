@@ -28,6 +28,10 @@ class Client {
   async init() {
     await Promise.all([this.getBooth(), this.getTable(), this.getMenus()]);
 
+    setInterval(() => {
+      getBooth();
+    }, 5000);
+
     this.main.displayBooth();
     this.main.displayMenus();
   }
@@ -531,7 +535,7 @@ class CartPanel extends ClientPanel {
   call() {
     this.lineMessage('직원을 호출하였습니다. 잠시만 기다려주세요.');
 
-    CLIENT.call();
+    this.client.postOrdersCall();
 
     this.panel.querySelector('#button-panel-cart-left').disabled = true;
     this.panel.querySelector('#button-panel-cart-right').disabled = true;
@@ -696,9 +700,5 @@ class HistoryPanel extends ClientPanel {
     this.client.scrollOn();
   }
 }
-
-setInterval(() => {
-  getBooth();
-}, 5000);
 
 window.CLIENT = new Client(bid, tid);
