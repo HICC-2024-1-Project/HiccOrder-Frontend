@@ -99,4 +99,11 @@ router.get('/history', (req, res) => {
   });
 });
 
+router.get('/order', (req, res) => {
+  res.render('dash/index', {
+    panel: 'order/order-index',
+    title: '주문 현황',
+  });
+});
+
 export default router;

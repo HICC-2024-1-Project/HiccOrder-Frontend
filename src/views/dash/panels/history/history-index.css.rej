@@ -1,0 +1,49 @@
+diff a/src/views/dash/panels/history/history-index.css b/src/views/dash/panels/history/history-index.css	(rejected hunks)
+@@ -15,44 +15,12 @@
+ }
+ 
+ .history-table th {
+-  background-color: #f0f0f0;
++  background-color: #ffffff;
+   color: #333;
+-  cursor: pointer; 
+-}
+-
+-.history-table th .text{
+-  padding-left: 0.8rem;
+-  transition: padding-left 0.3s ease-out;
+-}
+-
+-.arrow {
+-  font-family: 'Material Symbols Outlined';
+-  font-weight: bold;
+-  vertical-align: bottom;
+-}
+-
+-@media (max-width: 685px) {
+-  .arrow {
+-    display: none;
+-  }
+-  .arrowDisable {
+-    display: none;
+-  }
+-  .history-table th .text{
+-    padding-left: 0px;
+-  }
+-}
+-
+-.arrowDisable{
+-  color: rgba(0, 0, 0, 0.438);
+-  font-family: 'Material Symbols Outlined';
+-  font-weight: lighter;
+-  padding-top: 0px;
+-  vertical-align: bottom;
+ }
+ 
+ .history-table tbody tr:nth-child(even) {
+   /* 짝수 행(even)의 배경색을 #ffeee9로 설정 */
+   /* nth-child(even)은 css의 의사 클래스 선택자: 짝수번째 child를 선택 */
+   background-color: #ffeee9;
+-}
+\ No newline at end of file
++}
