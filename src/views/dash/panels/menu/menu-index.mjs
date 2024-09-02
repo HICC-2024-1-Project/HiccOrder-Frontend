@@ -6,8 +6,6 @@ import {
 
 let menus = 0;
 let selCate = 0;
-let menus = 0;
-let selCate = 0;
 
 const MAIN = {
   async displayMenu(menus) {
