@@ -1,4 +1,4 @@
-session=github-actions-hiccorder-frontend
+session=ga-ho-f
 tmux has-session -t $session || tmux new-session -d -s $session
 tmux set-option -t $session -p remain-on-exit
 tmux send-keys -t $session C-c
