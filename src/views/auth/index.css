@@ -101,6 +101,8 @@ main#auth-reset-password > .inputs {
 }
 main#auth-reset-password > .inputs > .set {
   position: relative;
+  display: unset;
+  height: unset;
 }
 main#auth-reset-password > .inputs > .set > button {
   position: absolute;
