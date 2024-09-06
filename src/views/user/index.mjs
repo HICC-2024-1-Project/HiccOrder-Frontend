@@ -224,9 +224,9 @@ class Main {
     element.setAttribute('menu', menu.id);
     let html = ``;
     html += `<div class="wrapper">`;
-    if (menu.menu_img_url) {
+    if (menu.menu_image_url) {
       html += `  <div class="image">`;
-      html += `    <img src="${menu.menu_img_url}" />`;
+      html += `    <img src="${menu.menu_image_url}" />`;
       html += `  </div>`;
     }
     html += `  <div class="content">`;

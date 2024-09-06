@@ -18,6 +18,7 @@ const button = {
   delete: document.querySelector('#button-menu-manage-delete'),
   image: document.querySelector('#button-menu-manage-image'),
 };
+const image = document.querySelector('#menu-manage-image > img');
 
 async function createMenu() {
   await APIPostRequest(`booth/${bid}/menu/`, {
@@ -88,6 +89,7 @@ async function deleteMenu() {
 }
 
 async function postImage() {
+  const btn = button.image;
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/jpeg, image/png, image/webp';
@@ -100,21 +102,34 @@ async function postImage() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('image', files[0]);
+    btn.disabled = true;
+    btn.innerHTML = '업로드 중...';
 
-    fetch('/profiles/@me/image', {
-      method: 'PATCH',
-      headers: {}, // 비워 놓아야 함
+    const formData = new FormData();
+    formData.append('file', files[0]);
+
+    fetch(`https://api.ho.ccc.vg/api/s3/booth/${bid}/menu/${mid}/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.accessToken}`,
+      },
       body: formData,
     })
       .then((res) => {
-        // 이미지 업로드 완료
-        alert('업로드 성공');
-        //window.location.reload();
+        if (res.status >= 200) {
+          window.location.reload();
+        } else {
+          res.text().then((data) => {
+            console.error(data);
+            btn.disabled = false;
+            btn.innerHTML = '이미지 업로드';
+          });
+        }
       })
       .catch((error) => {
-        // 오류
+        console.error(error);
+        btn.disabled = false;
+        btn.innerHTML = '이미지 업로드';
       });
   });
 
@@ -137,6 +152,7 @@ async function postImage() {
     input.name.value = menu.menu_name;
     input.price.value = menu.price;
     input.desc.value = menu.description;
+    image.src = menu.menu_image_url;
   }
 
   button.create.addEventListener('click', createMenu);

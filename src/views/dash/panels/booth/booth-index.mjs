@@ -17,7 +17,7 @@ const input = {
     '#input-booth-index-bank-account-owner'
   ),
 };
-const image = document.querySelector('#booth-index-image');
+const image = document.querySelector('#booth-index-image > img');
 
 async function readBooth() {
   const data = await APIGetRequest(`booth/${bid}/`).catch((error) => {
@@ -99,6 +99,8 @@ async function deleteBooth() {
     });
 }
 
+const imageButton = document.querySelector('#button-booth-index-image-upload');
+
 (async () => {
   readBooth();
 
@@ -113,78 +115,56 @@ async function deleteBooth() {
     .addEventListener('click', () => {
       deleteBooth();
     });
+
+  imageButton.addEventListener('click', () => {
+    postImage();
+  });
 })();
 
-/*
-// 부스 사진 업로드 및 미리보기
-const boothPhotoInput = document.getElementById('booth-photo-input');
-const boothPhoto = document.getElementById('booth-photo');
-const previewButton = document.getElementById('preview-button');
+async function postImage() {
+  const btn = imageButton;
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/jpeg, image/png, image/webp';
 
-boothPhotoInput.addEventListener('change', function (event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      boothPhoto.src = e.target.result;
-      boothPhoto.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-  }
-});
+  input.addEventListener('change', (event) => {
+    const files = event.target.files;
 
-previewButton.addEventListener('click', function () {
-  if (boothPhotoInput.files.length === 0) {
-    alert('먼저 사진을 업로드해주세요.');
-    return;
-  }
-  const file = boothPhotoInput.files[0];
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    const previewWindow = window.open();
-    previewWindow.document.write(
-      '<img src="' + e.target.result + '" alt="부스 사진">'
-    );
-  };
-  reader.readAsDataURL(file);
-});
-
-// 데이터 저장하기
-document.getElementById('save-booth').addEventListener('click', function () {
-  const boothData = {
-    photo: boothPhoto.src,
-    name: document.getElementById('booth-name').value,
-    bank: document.getElementById('bank').value,
-    accountName: document.getElementById('account-name').value,
-    accountNumber: document.getElementById('account-number').value,
-  };
-  localStorage.setItem('boothData', JSON.stringify(boothData));
-  alert('부스 정보가 저장되었습니다.');
-});
-
-// 부스 정보 불러오기 및 표시
-function loadBoothData() {
-  const boothData = JSON.parse(localStorage.getItem('boothData'));
-  if (boothData) {
-    if (boothPhoto.src.length != 0) {
-      const boothPhoto = document.getElementById('booth-photo');
-      boothPhoto.src = boothData.photo;
-      boothPhoto.style.display = 'block';
+    if (files.length < 1) {
+      // 선택된 파일 없음
+      return;
     }
 
-    const boothName = document.getElementById('booth-name');
-    boothName.value = boothData.name;
+    btn.disabled = true;
+    btn.innerHTML = '업로드 중...';
 
-    const bankSelect = document.getElementById('bank');
-    bankSelect.value = boothData.bank;
+    const formData = new FormData();
+    formData.append('file', files[0]);
 
-    const accountName = document.getElementById('account-name');
-    accountName.value = boothData.accountName;
+    fetch(`https://api.ho.ccc.vg/api/s3/booth/${bid}/`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.accessToken}`,
+      },
+      body: formData,
+    })
+      .then((res) => {
+        if (res.status >= 200) {
+          window.location.reload();
+        } else {
+          res.text().then((data) => {
+            console.error(data);
+            btn.disabled = false;
+            btn.innerHTML = '이미지 업로드';
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        btn.disabled = false;
+        btn.innerHTML = '이미지 업로드';
+      });
+  });
 
-    const accountNumber = document.getElementById('account-number');
-    accountNumber.value = boothData.accountNumber;
-  }
+  input.click();
 }
-
-// 페이지 로드할 때 저장된 부스정보 로드
-loadBoothData();*/
