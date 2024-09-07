@@ -4,14 +4,15 @@
 .form {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   gap: 1rem;
 }
 .form > .left {
   flex: 1;
 }
 .form > .right {
-  width: 14rem;
+  MAX-width: 14rem;
+  width: 40%
 }
 .form-margin {
   width: 100%;
@@ -49,10 +50,14 @@
   right: 0rem;
 }
 @media (max-width: 400px) {
-  .form {
-    flex-direction: column;
+  #menu-manage-image > button {
+    bottom: -2.5rem;
   }
-  .part-margin {
-    height: 5rem;
+  .form {
+    flex-direction: column-reverse;
+    gap: 3rem;
+  }
+  .form > .right {
+    width: 100%;
   }
 }
