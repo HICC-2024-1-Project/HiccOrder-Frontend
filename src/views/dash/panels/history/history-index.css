@@ -29,12 +29,9 @@
   align-items: center;
   justify-content: center;
 }
-
-
 #disable {
   color: gray;
 }
-
 .set > .item.state {
   width: 5.1rem;
   flex: unset;

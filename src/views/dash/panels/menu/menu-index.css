@@ -85,19 +85,21 @@ input[type='radio']:checked + label {
   display: flex;
   flex-wrap: wrap;
 }
+
 .menu {
-  width: 50%;
   width: 50%;
   padding: 0 1rem;
   cursor: pointer;
+  transition: width 0.3s ease;
 }
-@media (max-width: 600px) {
+@media (max-width: 550px) {
   .menu {
     width: 100%;
     padding: 0 1rem;
     cursor: pointer;
   }
 }
+
 .menu > .wrapper {
   width: 100%;
   padding: 1rem 0;

@@ -27,9 +27,10 @@ const MAIN = {
           menu.category
         ] += `><label for="${menu.category}">${menu.category}</label>`;
       }
-
       const menuElement = this.getMenuElement(menu);
-      // 임시조치
+
+
+      // 500에러 임시조치
       if (menu.category !== '삭제된 메뉴') {
         categories[menu.category]
           .querySelector('.content')
