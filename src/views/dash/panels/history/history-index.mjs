@@ -68,16 +68,29 @@ async function displayOrders(orders) {
     th.classList.add('item');
     th.classList.add(key);
     th.classList.add(...classes);
+
+    /*
+    console.log(orders);
+    console.log(orderKey); 정렬할 거
+    console.log(key); 지금 어디?
+    console.log(orderSort); 오름차순 내림차순
+    */
     let html = '';
     html += '<div class="title">';
     html += name;
     html += `<span class="material-symbols-outlined" `;
-    html += orderKey === key ? 'active' : '';
+    html += orderKey === key ? '' : 'id="disable"';
     html += `>`;
-    html += `keyboard_arrow_`;
-    html += orderSort === 'desc' ? 'up' : 'down';
+    if(orderKey != key) {
+      html += `keyboard_arrow_down`;
+    }
+    else {
+      html += `keyboard_arrow_`;
+      html += orderSort === 'desc' ? 'down' : 'up';
+    }
     html += `</span>`;
     html += '</div>';
+
     th.innerHTML = html;
     th.addEventListener('click', async () => {
       if (orderKey === key) {
