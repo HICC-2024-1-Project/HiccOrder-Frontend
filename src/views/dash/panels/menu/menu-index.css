@@ -87,6 +87,7 @@ input[type='radio']:checked + label {
 }
 
 .menu {
+  flex-grow: 1;
   width: 50%;
   padding: 0 1rem;
   cursor: pointer;
@@ -94,6 +95,7 @@ input[type='radio']:checked + label {
 }
 @media (max-width: 550px) {
   .menu {
+    flex-grow: 0;
     width: 100%;
     padding: 0 1rem;
     cursor: pointer;
