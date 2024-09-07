@@ -127,7 +127,7 @@ async function postImage() {
   input.type = 'file';
   input.accept = 'image/jpeg, image/png, image/webp';
 
-  input.addEventListener('change', (event) => {
+  input.addEventListener('change', async (event) => {
     const files = event.target.files;
 
     if (files.length < 1) {
@@ -135,11 +135,15 @@ async function postImage() {
       return;
     }
 
+    const file = files[0];
+    const resized = await resizeImage(file);
+    const resizedFile = dataURItoBlob(resized.src);
+
     btn.disabled = true;
     btn.innerHTML = '업로드 중...';
 
     const formData = new FormData();
-    formData.append('file', files[0]);
+    formData.append('file', resizedFile);
 
     fetch(`https://api.ho.ccc.vg/api/s3/booth/${bid}/`, {
       method: 'POST',
@@ -149,11 +153,11 @@ async function postImage() {
       body: formData,
     })
       .then((res) => {
-        if (res.status >= 200) {
+        if (200 <= res.status && res.status <= 299) {
           window.location.reload();
         } else {
-          res.text().then((data) => {
-            console.error(data);
+          res.json().then((data) => {
+            alert(data.message);
             btn.disabled = false;
             btn.innerHTML = '이미지 업로드';
           });
@@ -167,4 +171,44 @@ async function postImage() {
   });
 
   input.click();
+
+  function resizeImage(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          let s;
+          if (img.width > img.height) {
+            s = 2000 / img.width;
+          } else {
+            s = 2000 / img.height;
+          }
+          canvas.width = img.width * s;
+          canvas.height = img.height * s;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const resizedDataURL = canvas.toDataURL('image/jpeg');
+          const resized = new Image();
+          resized.src = resizedDataURL;
+          resolve(resized);
+        };
+      };
+    });
+  }
+
+  // https://stackoverflow.com/questions/6850276/how-to-convert-dataurl-to-file-object-in-javascript
+  function dataURItoBlob(dataURI) {
+    var byteString = atob(dataURI.split(',')[1]);
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+  }
 }
