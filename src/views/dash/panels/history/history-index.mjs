@@ -128,7 +128,7 @@ async function displayOrders(orders) {
 
   document.querySelector(
     '#history-index-sales'
-  ).innerHTML = `${totalSales.toLocaleString('ko-kr')}원`;
+  ).innerHTML = `총매출: ${totalSales.toLocaleString('ko-kr')}원`;
 }
 
 function getOrderElement(order) {

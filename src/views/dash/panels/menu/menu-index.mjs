@@ -119,8 +119,6 @@ const MAIN = {
       html += `  <div class="image">`;
       html += `    <img src="${menu.menu_image_url}" />`;
       html += `  </div>`;
-    } else {
-      html += `  <div class="imagePlace"></div>`;
     }
     html += `  <div class="content">`;
     html += `    <div class="main">`;
@@ -170,14 +168,13 @@ async function deleteMenu(menuIndex) {
   )
     .then(() => {
       init();
-      //window.location.reload();
     })
     .catch((error) => {
       // 에러나면 얘가 F12, COnsole 로그 창에 뭔 에러인지 보여줌
       if (error.status == 500) {
         console.log(menus[menuIndex]);
+        alert('이미 주문이 들어간 메뉴입니다.1');
         bug(menuIndex);
-        //window.location.reload();
         init();
       }
     });
@@ -185,7 +182,7 @@ async function deleteMenu(menuIndex) {
 }
 // ㅜㅜㅜ 버그남
 async function bug(menuIndex) {
-  alert('이미 주문이 들어간 메뉴입니다.');
+  alert('이미 주문이 들어간 메뉴입니다.2');
   const data = await APIPatchRequest(
     `booth/${localStorage.booth}/menu/${menus[menuIndex].id}/`,
     {
