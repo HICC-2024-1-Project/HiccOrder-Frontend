@@ -28,7 +28,6 @@
   align-items: flex-end;
   gap: 1rem;
 }
-
 #menu-manage-image {
   position: relative;
   width: 100%;
@@ -48,4 +47,12 @@
   position: absolute;
   bottom: -3rem;
   right: 0rem;
+}
+@media (max-width: 400px) {
+  .form {
+    flex-direction: column;
+  }
+  .part-margin {
+    height: 5rem;
+  }
 }
