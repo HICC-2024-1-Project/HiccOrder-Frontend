@@ -121,7 +121,7 @@ async function displayOrders(orders) {
         tbody.appendChild(getDayElement(order.timestamp));
       }
     }*/
-    if (order.state === '결제 완료') {
+    if (!order.state || order.state === '결제 완료') {
       totalSales += order.price_total;
     }
   }
@@ -132,6 +132,8 @@ async function displayOrders(orders) {
 }
 
 function getOrderElement(order) {
+  console.log(order);
+
   let states = ['주문완료', '조리시작', '조리완료', '처리완료'];
   let msgs = ['새주문', '조리중', '서빙필요'];
   let si = states.indexOf(order.state);
@@ -153,9 +155,14 @@ function getOrderElement(order) {
     html += `<div class="tag ${order.state}">${sm}</div>`;
   }
   html += `</div>`;
+
+  let timestampWidth = document.querySelector('.item.timestamp');
+  console.log(timestampWidth.offsetWidth);
+
   html += `<div class="item left timestamp">${formatDatetime(
     order.timestamp
   )}</div>`; // 주문시간
+
   html += `<div class="item left table_name">${order.table_name}</div>`; // 테이블이름
   html += `<div class="item left menu_name">${order.menu_name}</div>`; // 메뉴명
   html += `<div class="item right quantity">${order.quantity}개</div>`; // 개수

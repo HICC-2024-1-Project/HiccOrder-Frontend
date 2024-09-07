@@ -14,10 +14,12 @@
   border: solid 0.1rem rgb(210, 210, 210);
 }
 #history-index > .display > .content {
-  width: 100%;
   /*
-  width: calc(100% + 17px);
+  width: 100%;
   */
+  
+  width: calc(100% + 17px);
+  
   height: calc(100% - 2rem);
   padding: 0;
   overflow-y: scroll;
