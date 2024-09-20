@@ -27,7 +27,6 @@ class Client {
   }
 
   async init() {
-    const _this = this;
     await Promise.all([this.getBooth(), this.getTable(), this.getMenus()]);
 
     setInterval(() => {
@@ -49,7 +48,7 @@ class Client {
     this.wsc.on('close', () => {
       console.log('close');
     });
-    this.wsc.open(`wss://api.ho.ccc.vg/ws/user/${_this.bid}/${_this.tid}/`);
+    this.wsc.open(`wss://api.ho.ccc.vg/ws/user/${this.bid}/${this.tid}/`);
   }
 
   async getBooth() {
@@ -120,9 +119,8 @@ class Client {
   }
 
   async postOrdersCall() {
-    const _this = this;
     this.wsc.send('staffCall', {
-      table_id: _this.tid,
+      table_id: tid * 1,
     });
   }
 
