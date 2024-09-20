@@ -1,6 +1,5 @@
 'use strict';
 
-import e from 'express';
 import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
 class Client {
