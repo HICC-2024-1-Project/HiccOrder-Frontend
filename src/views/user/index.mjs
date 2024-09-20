@@ -1,5 +1,6 @@
 'use strict';
 
+import e from 'express';
 import { APIGetRequest, APIPostRequest } from '/modules/api.mjs';
 
 class Client {
@@ -10,6 +11,7 @@ class Client {
     }
     this.bid = bid;
     this.tid = tid;
+    this.wsc = new WSClient();
 
     this.main = new Main(this);
     this.menu = new MenuPanel(this, 'panel-menu');
@@ -34,6 +36,20 @@ class Client {
 
     this.main.displayBooth();
     this.main.displayMenus();
+
+    this.wsc.on('open', () => {
+      console.log('open');
+      this.wsc.send('auth', {
+        temporary_user_id: getCookie('temporary_user_id'),
+      });
+    });
+    this.wsc.on('message', (event) => {
+      console.log(event.data);
+    });
+    this.wsc.on('close', () => {
+      console.log('close');
+    });
+    this.wsc.open(`wss://api.ho.ccc.vg/user/${this.bid}/${this.tid}/`);
   }
 
   async getBooth() {
@@ -104,16 +120,8 @@ class Client {
   }
 
   async postOrdersCall() {
-    return new Promise((resolve, reject) => {
-      const orders = { content: [] };
-      APIPostRequest(`booth/order/`, orders)
-        .then(() => {
-          resolve();
-        })
-        .catch((error) => {
-          console.error(error);
-          reject(error);
-        });
+    this.wsc.send('staffCall', {
+      table_id: this.tid,
     });
   }
 
@@ -705,6 +713,85 @@ class HistoryPanel extends ClientPanel {
   close() {
     this.panel.setAttribute('phase', 'close');
     this.client.scrollOn();
+  }
+}
+
+class WSClient {
+  #listeners = {};
+
+  constructor() {
+    this.status = 'closed';
+    this.socket = null;
+
+    setInterval(() => {
+      if (this.status == 'closed') {
+        if (this.url) {
+          this.open(this.url);
+        }
+      }
+    }, 2000);
+  }
+
+  open(url) {
+    this.url = url;
+    this.status = 'connecting';
+
+    this.socket = new WebSocket(url);
+
+    this.socket.addEventListener('open', (event) => {
+      this.status = 'open';
+      this.emit('open', event);
+    });
+
+    this.socket.addEventListener('message', (event) => {
+      this.emit('message', event);
+
+      const json = JSON.parse(event.data);
+      this.emit(json.event, json.data);
+    });
+
+    this.socket.addEventListener('close', (event) => {
+      this.status = 'closed';
+      this.emit('close', event);
+    });
+
+    this.socket.addEventListener('error', (event) => {
+      console.error(event);
+      this.emit('error', event);
+    });
+  }
+
+  send(event, data) {
+    if (this.socket && this.socket.readyState == 1) {
+      this.socket.send(
+        JSON.stringify({
+          event: event,
+          data: data,
+        })
+      );
+    }
+  }
+
+  close() {
+    if (this.socket != null) {
+      this.socket.close();
+    }
+  }
+
+  on(event, listener) {
+    if (!this.#listeners[event]) {
+      this.#listeners[event] = [];
+    }
+    this.#listeners[event].push(listener);
+  }
+
+  emit(event, ...args) {
+    if (!this.#listeners[event]) {
+      return;
+    }
+    for (const listener of this.#listeners[event]) {
+      listener(...args);
+    }
   }
 }
 
