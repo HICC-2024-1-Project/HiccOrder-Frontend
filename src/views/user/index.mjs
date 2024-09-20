@@ -48,7 +48,7 @@ class Client {
     this.wsc.on('close', () => {
       console.log('close');
     });
-    this.wsc.open(`wss://api.ho.ccc.vg/user/${this.bid}/${this.tid}/`);
+    this.wsc.open(`wss://api.ho.ccc.vg/ws/user/${this.bid}/${this.tid}/`);
   }
 
   async getBooth() {
