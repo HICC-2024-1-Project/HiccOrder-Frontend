@@ -27,6 +27,7 @@ class Client {
   }
 
   async init() {
+    const _this = this;
     await Promise.all([this.getBooth(), this.getTable(), this.getMenus()]);
 
     setInterval(() => {
@@ -48,11 +49,11 @@ class Client {
     this.wsc.on('close', () => {
       console.log('close');
     });
-    this.wsc.open(`wss://api.ho.ccc.vg/ws/user/${this.bid}/${this.tid}/`);
+    this.wsc.open(`wss://api.ho.ccc.vg/ws/user/${_this.bid}/${_this.tid}/`);
   }
 
   async getBooth() {
-    this.booth = await APIGetRequest(`booth/${this.bid}/`).catch((error) => {
+    this.booth = await APIGetRequest(`booth/${_this.bid}/`).catch((error) => {
       if (!this.booth?.booth_name) {
         window.location.href = '/error/403';
       } else {
@@ -119,8 +120,9 @@ class Client {
   }
 
   async postOrdersCall() {
+    const _this = this;
     this.wsc.send('staffCall', {
-      table_id: this.tid,
+      table_id: _this.tid,
     });
   }
 
